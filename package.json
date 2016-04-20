@@ -1,0 +1,20 @@
+{
+  "name": "tkpraktikum",
+  "version": "0.0.1",
+  "description": "tk project of TU Darmstadt",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"no tests added, yet\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarekauel/tkpraktikum.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tarekauel/tkpraktikum/issues"
+  },
+  "homepage": "https://github.com/tarekauel/tkpraktikum#readme"
+}
