@@ -7,8 +7,13 @@ before_install:
   - psql -c 'create database tk;' -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'root';" -U postgres
   - npm i -g strongloop bower
+  - npm list -g
 addons:
   hosts:
     - postgres
 notifications:
   email: false
+cache:
+  directories:
+    - /usr/local/lib/node_modules
+    - /usr/local/lib/node
