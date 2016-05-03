@@ -1,0 +1,10 @@
+node:
+    image: node:5.11
+    links:
+        - postgres
+    ports:
+        - "3000:3000"
+    volumes:
+        - "./:/usr/src/app"
+    working_dir: "/usr/src/app"
+    command: ["npm", "run-script", "startdocker"]

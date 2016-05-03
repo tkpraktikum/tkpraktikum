@@ -6,7 +6,9 @@
     "start": "node .",
     "pretest": "jshint .",
     "posttest": "nsp check",
-    "postinstall": "lb-ng server/server.js client/js/services/lb-services.js && bower install angular angular-resource angular-ui-router bootstrap && node bin/automigrate.js"
+    "postinstall": "lb-ng server/server.js client/js/services/lb-services.js && bower install angular angular-resource angular-ui-router bootstrap && node bin/automigrate.js",
+    "prestartdocker": "node bin/automigrate.js",
+    "startdocker": "node ."
   },
   "dependencies": {
     "compression": "^1.0.3",

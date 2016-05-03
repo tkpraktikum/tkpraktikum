@@ -7,14 +7,5 @@
     "name": "postgres",
     "user": "postgres",
     "connector": "postgresql"
-  },
-  "mysql": {
-    "host": "mysql",
-    "port": 3306,
-    "database": "tk",
-    "password": "root",
-    "name": "mysql",
-    "user": "root",
-    "connector": "mysql"
   }
 }

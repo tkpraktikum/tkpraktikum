@@ -38,5 +38,13 @@ npm install
 npm start
 ```
 
+### Run on Docker only ##
+```shell
+docker-compose -f docker-compose.yml -f docker-compose-run.yml up -d
+```
+
+Open in browser (OSX and Windows): [http://192.168.99.100:3000](http://192.168.99.100:3000)
+
+Open in browser (Linux): [http://localhost:3000](http://localhost:3000)
 ## ER diagram ##
 ![ER diagram](https://rawgit.com/tarekauel/tkpraktikum/master/doc/ER.svg)
