@@ -1,0 +1,31 @@
+{
+  "name": "conference",
+  "plural": "conferences",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "submissionDeadline": {
+      "type": "date"
+    },
+    "reviewDeadline": {
+      "type": "date"
+    },
+    "statusSubmission": {
+      "type": "number"
+    },
+    "statusReview": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

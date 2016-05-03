@@ -1,0 +1,44 @@
+{
+  "name": "review",
+  "plural": "reviews",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "expertise": {
+      "type": "number"
+    },
+    "evaluation": {
+      "type": "number"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "strong": {
+      "type": "string"
+    },
+    "weak": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "submission": {
+      "type": "belongsTo",
+      "model": "submission",
+      "foreignKey": "submissionId"
+    },
+    "reviewer": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": "reviewerId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

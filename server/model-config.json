@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "user": {
+    "dataSource": "postgres",
+    "public": false
+  },
+  "submission": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "tag": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "review": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "affiliation": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "role": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "submissiontag": {
+    "dataSource": "postgres",
+    "public": false
+  },
+  "useraffiliation": {
+    "dataSource": "postgres",
+    "public": false
+  },
+  "conference": {
+    "dataSource": "postgres",
+    "public": true
+  }
+}

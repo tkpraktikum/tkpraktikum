@@ -1,0 +1,24 @@
+{
+  "name": "submissiontag",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "tag": {
+      "type": "belongsTo",
+      "model": "tag",
+      "foreignKey": "tagId"
+    },
+    "submission": {
+      "type": "belongsTo",
+      "model": "submission",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

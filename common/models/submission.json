@@ -1,0 +1,49 @@
+{
+  "name": "submission",
+  "plural": "submissions",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "abstract": {
+      "type": "string",
+      "required": true
+    },
+    "file": {
+      "type": "buffer"
+    },
+    "status": {
+      "type": "number",
+      "required": true,
+      "default": "0"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "tags": {
+      "type": "hasMany",
+      "model": "tag",
+      "foreignKey": "submissionId",
+      "through": "submissiontag"
+    },
+    "authors": {
+      "type": "hasMany",
+      "model": "user",
+      "foreignKey": "userId"
+    },
+    "reviewers": {
+      "type": "hasMany",
+      "model": "user",
+      "foreignKey": "reviewId",
+      "through": "review"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
