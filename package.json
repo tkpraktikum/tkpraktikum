@@ -6,7 +6,6 @@
     "start": "node .",
     "pretest": "jshint .",
     "posttest": "nsp check",
-    "preinstall": "npm i -g strongloop",
     "postinstall": "lb-ng server/server.js client/js/services/lb-services.js && bower install angular angular-resource angular-ui-router bootstrap && node bin/automigrate.js"
   },
   "dependencies": {

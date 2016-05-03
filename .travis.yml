@@ -3,9 +3,10 @@ node_js:
   - "5"
 services:
   - postgresql
-before_script:
+before_install:
   - psql -c 'create database tk;' -U postgres
   - psql -c 'ALTER USER Postgres WITH PASSWORD \'root\';' -U postgres
+  - npm i -g strongloop
 addons:
   hosts:
     - postgres
