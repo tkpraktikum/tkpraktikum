@@ -6,7 +6,7 @@ services:
 before_install:
   - psql -c 'create database tk;' -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'root';" -U postgres
-  - npm i -g strongloop
+  - npm i -g strongloop bower
 addons:
   hosts:
     - postgres

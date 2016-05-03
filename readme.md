@@ -5,7 +5,7 @@
 ### Prerequisite ###
 postgres database available on host: postgres, port: 5432, user: postgres, password: root, database: tk
 
-#### Docker ####
+#### Docker (Optional) ####
 
 Using docker and docker-compose to setup database:
 ```
