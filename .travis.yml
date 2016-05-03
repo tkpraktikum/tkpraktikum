@@ -7,7 +7,6 @@ before_install:
   - psql -c 'create database tk;' -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'root';" -U postgres
   - if [ -d /home/travis/.nvm/versions/node/v5.11.0/lib/strongloop/bin ]; then echo "strongloop already installed"; else npm i -g strongloop bower; fi;
-  - npm list -g
   - npm install
 addons:
   hosts:
