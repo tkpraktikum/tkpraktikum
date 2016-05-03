@@ -19,22 +19,55 @@
   <!-- Default panel contents -->
   <div class="panel-heading">Panel heading</div>
   <div class="panel-body">
-    <p>...</p>
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+          <input type="text" class="form-control" placeholder="Filter" ng-model="searchAffiliation">
+
+        </div>
+      </div>
+    </form>
   </div>
 
   <!-- Table -->
   <table class="table">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>City</th>
-        <th>State</th>
-        <th>Country</th>
+        <th>
+          <a href="/#/affiliation" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Name
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a href="/#/affiliation" ng-click="sortType = 'city'; sortReverse = !sortReverse">
+            City
+            <span ng-show="sortType == 'city' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'city' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a href="/#/affiliation" ng-click="sortType = 'state'; sortReverse = !sortReverse">
+            State
+            <span ng-show="sortType == 'state' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'state' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a href="/#/affiliation" ng-click="sortType = 'country'; sortReverse = !sortReverse">
+            Country
+            <span ng-show="sortType == 'country' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'country' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="a in affiliations">
+      <tr ng-repeat="a in affiliations | orderBy:sortType:sortReverse | filter:searchAffiliation">
         <td>{{a.name}}</td>
         <td>{{a.city}}</td>
         <td>{{a.state}}</td>
