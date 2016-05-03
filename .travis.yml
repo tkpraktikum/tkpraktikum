@@ -3,10 +3,10 @@ node_js:
   - "5"
 services:
   - postgresql
-before_install:
+before_scripts:
   - psql -c 'create database tk;' -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'root';" -U postgres
-  - npm i -g strongloop bower
+  - if [ -d /home/travis/.nvm/versions/node/v5.11.0/lib/strongloop@6.0.0 ]; then echo "strongloop already installed"; else npm i -g strongloop bower fi;
   - npm list -g
 addons:
   hosts:
@@ -15,5 +15,5 @@ notifications:
   email: false
 cache:
   directories:
-    - /usr/local/lib/node_modules
-    - /usr/local/lib/node
+    - /home/travis/.nvm/versions/node/v5.11.0/lib/bower@1.7.9
+    - /home/travis/.nvm/versions/node/v5.11.0/lib/strongloop@6.0.0
