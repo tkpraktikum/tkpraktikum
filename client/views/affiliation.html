@@ -1,0 +1,46 @@
+<h1>Affiliation List</h1>
+<hr>
+<!--<form name="tagForm" novalidate ng-submit="addTag()">
+  <div class="form-group"
+       ng-class="{'has-error': tagForm.name.$invalid
+        && tagForm.name.$dirty}">
+    <input type="text" class="form-control focus" name="name"
+           placeholder="Name" autocomplete="off" required
+           ng-model="newTag.name">
+    <span class="has-error control-label" ng-show="
+        tagForm.name.$invalid && tagForm.name.$dirty">
+      Name is required.
+    </span>
+  </div>
+  <button class="btn btn-default" ng-disabled="tagForm.$invalid">Add</button>
+</form>-->
+<hr>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Panel heading</div>
+  <div class="panel-body">
+    <p>...</p>
+  </div>
+
+  <!-- Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="a in affiliations">
+        <td>{{a.name}}</td>
+        <td>{{a.city}}</td>
+        <td>{{a.state}}</td>
+        <td>{{a.country}}</td>
+        <td><i class="glyphicon glyphicon-remove pull-right" ng-click="removeAffiliation(a)"></i></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

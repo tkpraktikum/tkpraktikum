@@ -7,9 +7,14 @@ angular
                                                             $urlRouterProvider) {
     $stateProvider
       .state('tag', {
-        url: '',
+        url: '/tag',
         templateUrl: 'views/tag.html',
         controller: 'TagController'
+      })
+      .state('affiliation', {
+        url: '/affiliation',
+        templateUrl: 'views/affiliation.html',
+        controller: 'AffiliationController'
       });
 
     $urlRouterProvider.otherwise('tag');
