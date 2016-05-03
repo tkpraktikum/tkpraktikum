@@ -5,6 +5,11 @@
 ### Prerequisite ###
 postgres database available on host: postgres, port: 5432, user: postgres, password: root, database: tk
 
+install strongloop and bower:
+```shell
+npm i -g strongloop bower
+```
+
 #### Docker (Optional) ####
 
 Using docker and docker-compose to setup database:
