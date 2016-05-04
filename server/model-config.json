@@ -13,6 +13,22 @@
       "./mixins"
     ]
   },
+  "AccessToken": {
+    "dataSource": "postgres",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "postgres",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "postgres",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "postgres",
+    "public": false
+  },
   "user": {
     "dataSource": "postgres",
     "public": false
@@ -30,10 +46,6 @@
     "public": true
   },
   "affiliation": {
-    "dataSource": "postgres",
-    "public": true
-  },
-  "role": {
     "dataSource": "postgres",
     "public": true
   },
