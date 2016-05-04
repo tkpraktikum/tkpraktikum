@@ -18,6 +18,17 @@ angular
     }
     getAffiliations();
 
+    $scope.createAffiliation = function() {
+      Affiliation
+        .create($scope.newAffiliation)
+        .$promise
+        .then(function () {
+          $scope.newAffiliation = {};
+          $('.focus').focus();
+          getAffiliations()
+        });
+    };
+
     $scope.removeAffiliation = function(item) {
       Affiliation
         .deleteById(item)
