@@ -36,9 +36,10 @@ npm run-script initDb
 npm install
 ```
 
-## Create providers.json ##
+## Create providers.local.json (optional) ##
 
-- Create a `providers.json` in the root directory
+- will override all values of `providers.json`
+- Create a `providers.local.json` in the root directory
 - Register an appt at facebook and github and replace the `clientID` and
    the `clientSecret` with the appropiate values
 

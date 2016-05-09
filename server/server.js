@@ -30,10 +30,14 @@ var flash = require('express-flash');
 // attempt to build the providers/passport config
 var config = {};
 try {
-  config = require('../providers.json');
+  config = require('../providers.local.json');
 } catch (err) {
-  logger.silly(err);
-  process.exit(1); // fatal
+  try {
+    config = require('../providers.json');
+  } catch (err) {
+    logger.error(err);
+    process.exit(1); // fatal
+  }
 }
 
 // -- Add your pre-processing middleware here --

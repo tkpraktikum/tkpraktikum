@@ -71,5 +71,5 @@ coverage
 node_modules
 npm-debug.log
 
-providers.json
+providers.local.json
 db.json
