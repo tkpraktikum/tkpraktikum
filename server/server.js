@@ -1,6 +1,6 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-var routes = require('./routes/Uauth');
+var routes = require('./routes/auth');
 var app = module.exports = loopback();
 var logger = require('./logger');
 
