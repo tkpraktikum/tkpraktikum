@@ -1,1 +1,1 @@
-module.exports.signup = require('./auth');
+module.exports.auth = require('./auth');
