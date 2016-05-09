@@ -1,6 +1,6 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-var routes = require('./routes/auth');
+var routes = require('./routes/routes');
 var app = module.exports = loopback();
 var logger = require('./logger');
 
@@ -77,7 +77,7 @@ for (var s in config) {
 }
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 
-app.use('/auth', routes.signup);
+app.use('/auth', routes.auth);
 
 app.use(function(req, res, next) {
   var result = {
