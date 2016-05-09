@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LoopBack Angular example</title>
+  <title>TK Conference</title>
 
   <!-- Bootstrap -->
   <link href="vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -35,11 +35,16 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li  ui-sref-active="active"><a ui-sref="tag">Tags</a></li>
-        <li  ui-sref-active="active"><a ui-sref="affiliation">Affiliations</a></li>
+        <li ui-sref-active="active" ng-show="!!loggedIn" ng-cloak><a ui-sref="app.private.tag">Tags</a></li>
+        <li ui-sref-active="active" ng-show="!!loggedIn " ng-cloak><a ui-sref="app.private.affiliation">Affiliations</a></li>
+        <li ui-sref-active="active" ng-show="!!loggedIn && checkRole('author')" ng-cloak><a ui-sref="app.private.submission.list">Submissions</a></li>
+        <li ui-sref-active="active" ng-show="!!loggedIn" ng-cloak><a ui-sref="app.private.account">Account</a></li>
+        <li ui-sref-active="active" ng-show="!!loggedIn && checkRole('chair')" ng-cloak><a ui-sref="app.private.chair">Chair</a></li>
+        <li ui-sref-active="active" ng-show="!loggedIn" ng-cloak><a ui-sref="app.public.login">Login</a></li>
+        <li ui-sref-active="active" ng-show="!loggedIn" ng-cloak><a ui-sref="app.public.signup">Signup</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Logout</a></li>
+        <li><a href="/auth/logout" ng-show="!!loggedIn"  ng-cloak>Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -49,14 +54,24 @@
   <div ui-view></div>
 </div>
 
+<div id="fb-root"></div>
 <script src="vendor/jquery/dist/jquery.js"></script>
 <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
 <script src="vendor/angular/angular.js"></script>
 <script src="vendor/angular-resource/angular-resource.js"></script>
 <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/angular-ui-router.stateHelper/statehelper.js"></script>
+<script src="vendor/ui-router.login/dist/ui-router.login.js"></script>
+<script src="vendor/angular-cookie/angular-cookie.js"></script>
 <script src="js/services/lb-services.js"></script>
 <script src="js/app.js"></script>
 <script src="js/controllers/tag.js"></script>
 <script src="js/controllers/affiliation.js"></script>
+<script src="js/controllers/signup.js"></script>
+<script src="js/controllers/login.js"></script>
+<script src="js/controllers/account.js"></script>
+<script src="js/controllers/submissions.js"></script>
+<script src="js/controllers/chair.js"></script>
+
 </body>
 </html>

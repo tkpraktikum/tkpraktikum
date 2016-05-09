@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var logger = require('./../server/logger');
 
 module.exports = function(app, ds, callback) {
   var tags = [
@@ -28,15 +29,16 @@ module.exports = function(app, ds, callback) {
     }
   ];
 
-  var cb = _.after(tags.length, function() {
-    callback();
+  var cb = _.after(tags.length, function(err) {
+    callback(err);
   });
 
   _.each(tags, function(tag) {
     app.models.Tag.create(tag, function(err, model) {
-      if (err) throw err;
-      console.log('Created: ' + JSON.stringify(model));
-      cb();
+      if (!err) {
+        logger.info('Created: ' + JSON.stringify(model));
+      }
+      cb(err);
     });
   });
 };
