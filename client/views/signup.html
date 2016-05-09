@@ -1,0 +1,33 @@
+<h1>Signup Form</h1>
+<form name="newUserForm" novalidate action="/auth/signup" method="post">
+  <div class="row">
+    <div class="col-lg-12">
+      <span class="error" ng-show="newUserForm.email.$error.email">Email is invalid</span>
+    </div>
+  </div>
+  <!-- TODO improve: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
+  <div class="row">
+    <div class="col-lg-6 form-group">
+      <label for="username">Username</label>
+      <input type="text" autocomplete="off" class="form-control" id="username" placeholder="Username" name="username" required ng-model="newUser.username">
+    </div>
+    <div class="col-lg-6 form-group" ng-class="{ 'has-error': newUserForm.email.$invalid && newUserForm.email.$dirty }">
+      <label for="email">E-Mail</label>
+      <input type="email" autocomplete="off"
+             class="form-control" placeholder="E-Mail" id="email" name="email" required ng-model="newUser.email">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 form-group">
+      <label for="password">Password</label>
+      <input type="password" autocomplete="off" class="form-control" placeholder="Password" id="password" name="password" required ng-model="newUser.password">
+    </div>
+    <div class="col-lg-6 form-group">
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1">
+      <button class="btn btn-default" ng-disabled="newUserForm.$invalid">Sign Up</button>
+    </div>
+  </div>
+</form>

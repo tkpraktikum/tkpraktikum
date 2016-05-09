@@ -13,7 +13,7 @@
     },
     "abstract": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "file": {
       "type": "buffer"
@@ -35,7 +35,9 @@
     "authors": {
       "type": "hasMany",
       "model": "user",
-      "foreignKey": "userId"
+      "through": "authorship",
+      "keyThrough": "submissionId",
+      "foreignKey": "submissionId"
     },
     "reviewers": {
       "type": "hasMany",
@@ -49,7 +51,7 @@
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

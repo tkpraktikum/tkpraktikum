@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var logger = require('./../server/logger');
 
 module.exports = function(app, ds, callback) {
   var affiliations = [
@@ -28,15 +29,16 @@ module.exports = function(app, ds, callback) {
     }
   ];
 
-  var cb = _.after(affiliations.length, function() {
-    callback();
+  var cb = _.after(affiliations.length, function(err) {
+    callback(err);
   });
 
   _.each(affiliations, function(affiliation) {
     app.models.Affiliation.create(affiliation, function(err, model) {
-      if (err) throw err;
-      console.log('Created: ' + JSON.stringify(model));
-      cb();
+      if (!err) {
+        logger.info('Created: ' + JSON.stringify(model));
+      }
+      cb(err);
     });
   });
 };

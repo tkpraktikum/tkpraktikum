@@ -1,11 +1,16 @@
 {
-  "postgres": {
+  "_postgres": {
     "host": "postgres",
     "port": null,
     "database": "tk",
     "password": "root",
-    "name": "postgres",
+    "name": "_postgres",
     "user": "postgres",
     "connector": "postgresql"
+  },
+  "postgres": {
+    "name": "postgres",
+    "connector": "memory",
+    "file": "db.json"
   }
 }

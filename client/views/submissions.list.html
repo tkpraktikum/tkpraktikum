@@ -1,0 +1,49 @@
+<!-- Default panel contents -->
+<div class="panel panel-default">
+<div class="panel-heading">Panel heading</div>
+<div class="panel-body">
+  <form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Filter" ng-model="searchSubmissions">
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Table -->
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>
+        <a ui-sref="submission.list" ng-click="sortType = 'title'; sortReverse = !sortReverse">
+          Title
+          <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>
+        <a ui-sref="submission.list" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+          Status
+          <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>
+        Authors
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="s in submissions | orderBy:sortType:sortReverse | filter:searchSubmissions">
+      <td>{{s.title}}</td>
+      <td>{{s.status}}</td>
+      <td><span ng-repeat="a in s.authors"><span ng-hide="$first">, </span>{{a.username}}</span></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+

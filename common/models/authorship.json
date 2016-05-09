@@ -1,0 +1,24 @@
+{
+  "name": "authorship",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "submission": {
+      "type": "belongsTo",
+      "model": "submission",
+      "foreignKey": "submissionId"
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": "authorId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

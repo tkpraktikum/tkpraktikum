@@ -3,6 +3,8 @@
 ## Setup ##
 
 ### Prerequisite ###
+**For convenience reasons the postgres database is deactivated at the moment and a in-memory file is used (`db.json`)**
+
 postgres database available on host: postgres, port: 5432, user: postgres, password: root, database: tk
 
 install strongloop and bower:
@@ -30,7 +32,55 @@ On Linux add to hosts:
 ### Install ###
 
 ```shell
+npm run-script initDb
 npm install
+```
+
+## Create providers.json ##
+
+- Create a `providers.json` in the root directory
+- Register an appt at facebook and github and replace the `clientID` and
+   the `clientSecret` with the appropiate values
+
+```json
+{
+  "local": {
+    "provider": "local",
+    "module": "passport-local",
+    "usernameField": "username",
+    "passwordField": "password",
+    "authPath": "/auth/local",
+    "successRedirect": "/#/submission",
+    "failureRedirect": "/#/login",
+    "failureFlash": true
+  },
+  "facebook-login": {
+    "provider": "facebook",
+    "module": "passport-facebook",
+    "clientID": "***",
+    "clientSecret": "****",
+    "callbackURL": "/auth/facebook/callback",
+    "authPath": "/auth/facebook",
+    "callbackPath": "/auth/facebook/callback",
+    "successRedirect": "/#/account",
+    "failureRedirect": "/#/login",
+    "scope": ["email"],
+    "failureFlash": true
+  },
+  "github-login": {
+    "provider": "github",
+    "module": "passport-github",
+    "clientID": "***",
+    "clientSecret": "***",
+    "callbackURL": "/auth/github/callback",
+    "authPath": "/auth/github",
+    "callbackPath": "/auth/github/callback",
+    "successRedirect": "/#/account",
+    "failureRedirect": "/#/login",
+    "scope": ["user"],
+    "failureFlash": true
+  }
+}
 ```
 
 ## Run ##
