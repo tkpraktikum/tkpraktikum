@@ -32,8 +32,8 @@ On Linux add to hosts:
 ### Install ###
 
 ```shell
-npm run-script initDb
 npm install
+npm run-script initDb
 ```
 
 ## Create providers.local.json (optional) ##
@@ -97,5 +97,10 @@ docker-compose -f docker-compose.yml -f docker-compose-run.yml up -d
 Open in browser (OSX and Windows): [http://192.168.99.100:3000](http://192.168.99.100:3000)
 
 Open in browser (Linux): [http://localhost:3000](http://localhost:3000)
+
+### Login ##
+- user:chair password:chair
+- create new users by social login (**check your providers.json**) or local 
+
 ## ER diagram ##
 ![ER diagram](https://rawgit.com/tarekauel/tkpraktikum/master/doc/ER.svg)
