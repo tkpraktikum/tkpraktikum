@@ -1,44 +1,69 @@
 var _ = require('underscore');
+var async = require('async');
 var logger = require('./../../server/logger');
 
 // see https://docs.strongloop.com/display/public/LB/Accessing+related+models
 module.exports = function(User) {
 
-  var getFlagUpdater = function(name) {
-    return function(status, cb) {
-      var userId = this.toJSON().id;
-      var app = User.app;
-      var Role = app.models.Role;
-      var RoleMapping = app.models.RoleMapping;
-      Role.findOne({where: {name: name}}, function (err, role) {
-        if (err) {
-          cb(err, status);
-        } else {
-          if (status) {
-            role.principals.create({
-              principalType: RoleMapping.USER,
-              principalId: userId
-            }, function (err, principal) {
-              if (!err) {
-                logger.info('Created :', principal);
-              }
-              cb(err, status);
-            });
-          } else {
-            RoleMapping.destroyAll({and: [{roleId: role.id}, { principalId: userId}]}, function(err, info) {
-              if(err) {
-                logger.error(err);
-              }
-              cb(err, false);
-            });
-          }
-        }
+  User.prototype.removeRole = function(role, callback) {
+    var RoleMapping = User.app.models.RoleMapping;
+    RoleMapping.destroyAll({and: [{roleId: role.id}, { principalId: this.id}]}, function(err, info) {
+      if(err) {
+        logger.error(err);
+      }
+      logger.info('Removed ' + info.count + ' items');
+      callback(err);
+    });
+  };
+
+  User.prototype.addRole = function(role, callback) {
+    var RoleMapping = User.app.models.RoleMapping;
+    role.principals.create({principalType: RoleMapping.USER, principalId: this.id}, function (err, principal) {
+      if (!err) {
+        logger.info('Created :', principal);
+      }
+      callback(err);
+    });
+  };
+
+  User.prototype.getRoles = function(callback) {
+    this
+      .roles({id: this.id})
+      .then(function (roles) {
+        callback(null, roles);
+      }, function (err) {
+        logger.error(err);
+        callback(err);
       });
+  };
+
+  User.prototype.getAllAuthors = function(submission, callback) {
+    submission.authors({id: submission.id})
+      .then(function (authors) {
+        callback(null, authors);
+      }, function(err) {
+        logger.error(err);
+        callback(err);
+      });
+  };
+
+  var createFlagUpdater = function(name) {
+    return function(status, cb) {
+      var role = User.app.models.Role[name];
+      if (status) {
+        this.addRole(role, function(err) {
+          cb(err, status);
+        })
+      } else {
+        this.removeRole(role, function(err) {
+          cb(err, status);
+        })
+      }
     };
   };
 
-  User.prototype.author = getFlagUpdater('author');
-  User.prototype.reviewer = getFlagUpdater('reviewer');
+  User.prototype.author = createFlagUpdater('AUTHOR');
+  User.prototype.reviewer = createFlagUpdater('REVIEWER');
 
   User.remoteMethod(
     'author',
@@ -85,41 +110,43 @@ module.exports = function(User) {
     });
 
     _.each(ctx.result, function(user) {
-      user.roles({id: user.id}).then(function (res) {
+      user.getRoles(function(err, roles) {
         user = user.toJSON();
-        user.roles = res.map(function(e) { return e.toJSON().name; });
+        user.roles = roles.map(function(r) {return r.name;});
         result.push(user);
         cb();
-      });
+      })
     });
   });
 
-  User.afterRemote('prototype.__get__submissions', function( ctx, instance, next) {
+  User.afterRemote('prototype.__get__submissions', function(ctx, instance, next) {
     // enrich response with user information
     var result = [];
-    var cb = _.after(ctx.result.length, function() {
+
+    var callback = _.after(ctx.result.length, function(err) {
+      if (err) {
+        logger.error(err);
+      }
       ctx.result = result;
-      logger.info(JSON.stringify(result));
       next();
     });
+
     _.each(ctx.result, function(submission) {
-      submission.authors({id: submission.id})
-        .then(function (res) {
-          var authors = [];
-          res.forEach(function(user) {
-            authors.push({
-              username: user.username,
-              id: user.id
-            });
-          });
-          submission = submission.toJSON();
-          submission.authors = authors;
-          result.push(submission);
-          cb();
-      }, function(error) {
-          logger.err(error);
-          cb();
+      submission.getAllAuthors(function(err, authors) {
+        if (err) {
+          return callback(err);
+        }
+        submission = submission.toJSON();
+        submission.authors = authors.map(function(a) {
+          return {
+            username: a.username,
+            email: a.email,
+            id: a.id
+          }
         });
+        result.push(submission);
+        callback();
+      })
     });
   });
 };

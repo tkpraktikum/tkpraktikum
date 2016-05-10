@@ -10,9 +10,9 @@
     "prestartdocker": "node bin/automigrate.js",
     "startdocker": "node .",
     "initDb": "node bin/initDatabase.js"
-
   },
   "dependencies": {
+    "async": "^2.0.0-rc.4",
     "body-parser": "^1.15.0",
     "compression": "^1.0.3",
     "connect-ensure-login": "^0.1.1",
