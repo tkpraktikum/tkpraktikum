@@ -1,9 +1,27 @@
 var winston = require('winston');
 
-//{ error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
+var twoDigit = '2-digit';
+var dateOptions = {
+  day: twoDigit,
+  month: twoDigit,
+  year: twoDigit,
+  hour: twoDigit,
+  minute: twoDigit,
+  second: twoDigit
+};
+
 var logger = new (winston.Logger)({
+
   transports: [
-    new (winston.transports.Console)({ level: 'debug', colorize: true })
+    new (winston.transports.Console)({
+      timestamp: function () {
+        return Date.now();
+      }, formatter: function (options) {
+        var dateTimeComponents = new Date().toLocaleTimeString('en-US', dateOptions).split(',');
+        return winston.config.colorize(options.level, options.level.toUpperCase()) + ' ' +
+          dateTimeComponents[0] + dateTimeComponents[1] + ': ' + options.message;
+      }, level: 'debug', colorize: true
+    })
   ]
 });
 
