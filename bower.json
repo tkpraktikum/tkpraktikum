@@ -22,7 +22,7 @@
     "angular-resource": "^1.5.5",
     "angular-ui-router": "^0.2.18",
     "bootstrap": "^3.3.6",
-    "ui-router.login": "^0.3.3",
+    "angular-permission": "~3.0.1",
     "angular-cookie": "^4.1.0"
   }
 }
