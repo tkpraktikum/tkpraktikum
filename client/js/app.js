@@ -2,11 +2,12 @@ angular
   .module('app', [
     'lbServices',
     'ui.router',
+    'permission',
+    'permission.ui',
     'ui.router.stateHelper',
-    'ui.router.login'
+    'ipCookie'
   ])
   .config(["stateHelperProvider", "$urlRouterProvider", function (stateHelperProvider, $urlRouterProvider) {
-
     stateHelperProvider
       .state({
         name: "app",
@@ -33,7 +34,9 @@ angular
           template: '<ui-view />',
           abstract: true,
           data: {
-            requireLogin: true
+            permissions: {
+              only: ['ADMIN']
+            }
           },
           children: [{
             name: 'tag',
@@ -74,16 +77,6 @@ angular
       });
     $urlRouterProvider.otherwise('tag');
   }])
-  .config(function ($loginProvider) {
-    $loginProvider
-      .setDefaultLoggedInState("app.private.account")
-      .setFallbackState("app.public.login")
-      .setAuthModule("$authentication")
-      .setAuthClearMethod("clearAuthKey")
-      .setAuthGetMethod("getAuthKey")
-      .setCookieName("__loginState");
-
-  })
   .factory("$authentication", ["$rootScope", 'ipCookie', function ($rootScope, ipCookie) {
 
     var cookieName = "statusLoggedIn";
@@ -109,13 +102,10 @@ angular
       },
 
       setAuthKey: function (key) {
-
         ipCookie(cookieName, key, {
           path: "/"
         });
-
       }
-
     };
   }]).factory('loginStatusWatcher', ["$authentication", function ($authentication) {
   return {
@@ -126,7 +116,25 @@ angular
   };
 }]).config(['$httpProvider', function ($httpProvider) {
   $httpProvider.interceptors.push('loginStatusWatcher');
-}]).run(function($rootScope, $http) {
+}]).run(function($rootScope, $http, $q, PermissionStore, RoleStore) {
+  PermissionStore.definePermission('hasValidSession', function () {
+    return $q(function (resolve, reject) {
+      $http({
+        method: 'GET',
+        url: '/auth/me'
+      }).then(function (rsp) {
+        if (rsp.data && rsp.data.id > 0) {
+          resolve();
+        } else {
+          reject();
+        }
+      }, function (err) {
+        reject();
+      });
+    });
+  });
+  RoleStore.defineRole('ADMIN', ['hasValidSession']);
+
   $rootScope.checkRole = function(role) {
     return $rootScope.userRoles && $rootScope.userRoles.indexOf(role) !== -1;
   };
