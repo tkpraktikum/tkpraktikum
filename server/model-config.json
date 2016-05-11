@@ -73,5 +73,13 @@
   "authorship": {
     "dataSource": "postgres",
     "public": true
+  },
+  "file": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "container": {
+    "dataSource": "storage",
+    "public": true
   }
 }

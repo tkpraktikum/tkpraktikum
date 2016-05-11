@@ -55,7 +55,14 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": [
-        "__get__roles",
+        "__get__roles"
+      ]
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authorOwner",
+      "permission": "ALLOW",
+      "property": [
         "__get__submissions",
         "__findById__submissions",
         "__count__submissions",
