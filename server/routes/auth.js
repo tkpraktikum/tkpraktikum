@@ -66,9 +66,28 @@ router.get('/check', ensureLoggedIn('/#/signup'), function(req, res) {
 
 router.get('/logout', ensureLoggedIn('/#/signup'), function (req, res, next) {
   logger.info('user', req.user.username, 'is logged out');
-  req.logOut();
-  req.session.destroy(function (err) {
-    res.redirect('/#/tag'); //Inside a callback… bulletproof!
+  res.clearCookie('access_token');
+  res.clearCookie('userId');
+  req.user.getLatestAccessToken(function(err, token) {
+    if (err) {
+      logger.error(err);
+    }
+    if (token) {
+      token.destroy(function (err) {
+        if (err) {
+          logger.error(err);
+        }
+        req.logOut();
+        req.session.destroy(function (err) {
+          res.redirect('/#/tag'); //Inside a callback… bulletproof!
+        });
+      });
+    } else {
+      req.logOut();
+      req.session.destroy(function (err) {
+        res.redirect('/#/tag'); //Inside a callback… bulletproof!
+      });
+    }
   });
 });
 

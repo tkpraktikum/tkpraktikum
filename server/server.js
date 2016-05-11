@@ -76,7 +76,6 @@ passportConfigurator.setupModels({
 for (var s in config) {
   var c = config[s];
   c.session = c.session !== false;
-  //c.setAccessToken = true; // todo : doesn't solve the issue that local users miss access tokens
   passportConfigurator.configureProvider(s, c);
 }
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
@@ -93,16 +92,22 @@ app.use(function(req, res, next) {
   }
   res.cookie('statusLoggedIn', result.loggedIn, {path: '/', maxAge: 90000000, httpOnly: false});
   res.cookie('statusUserId', result.userId, {path: '/', maxAge: 90000000, httpOnly: false});
-  // todo for some reasons we need to correct the auth token
+  // for some reasons we need to correct the auth token, see https://github.com/strongloop/loopback-component-passport/issues/57
   if (result.loggedIn && (req.accessToken === null || req.accessToken.toJSON().userId !== result.userId)) {
-    // accessToken is not set for local users.. //TODO can we solve this somehwere else?
-    req.user.createAccessToken(3600, function(error, token) {
-      if(error) {
-        throw error;
-      } else {
-        req.accessToken = token;
-        next();
+    req.user.getLatestAccessToken(function(err, token) {
+      if (err) {
+        return logger.err(err);
       }
+      req.accessToken = token;
+      res.cookie('access_token', token.id, {
+        signed: req.signedCookies ? true : false,
+        maxAge: 1000 * token.ttl
+      });
+      res.cookie('userId', token.userId.toString(), {
+        signed: req.signedCookies ? true : false,
+        maxAge: 1000 * token.ttl
+      });
+      next();
     });
   } else {
     next();
