@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var logger = require('./../server/logger');
+var logger = require('winston');
 
 module.exports = function(app, ds, callback) {
   var tags = [
@@ -29,16 +29,10 @@ module.exports = function(app, ds, callback) {
     }
   ];
 
-  var cb = _.after(tags.length, function(err) {
+  app.models.Tag.create(tags, function(err) {
+    if (!err) {
+      logger.info('Created tags');  
+    }
     callback(err);
-  });
-
-  _.each(tags, function(tag) {
-    app.models.Tag.create(tag, function(err, model) {
-      if (!err) {
-        logger.info('Created: ' + JSON.stringify(model));
-      }
-      cb(err);
-    });
   });
 };

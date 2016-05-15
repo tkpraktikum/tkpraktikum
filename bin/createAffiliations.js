@@ -1,5 +1,4 @@
-var _ = require('underscore');
-var logger = require('./../server/logger');
+var logger = require('winston');
 
 module.exports = function(app, ds, callback) {
   var affiliations = [
@@ -29,16 +28,11 @@ module.exports = function(app, ds, callback) {
     }
   ];
 
-  var cb = _.after(affiliations.length, function(err) {
+  
+  app.models.Affiliation.create(affiliations, function(err) {
+    if (!err) {
+      logger.info('Created affiliations');  
+    }
     callback(err);
-  });
-
-  _.each(affiliations, function(affiliation) {
-    app.models.Affiliation.create(affiliation, function(err, model) {
-      if (!err) {
-        logger.info('Created: ' + JSON.stringify(model));
-      }
-      cb(err);
-    });
   });
 };

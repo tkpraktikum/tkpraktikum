@@ -1,43 +1,38 @@
-var _ = require('underscore');
-var logger = require('./../server/logger');
+var logger = require('winston');
 
 module.exports = function(app, ds, callback) {
-  var users = [
-    {
-      username: 'chair',
-      password: 'chair',
-      email: 'chair@chair.de'
-    }
-  ];
-
-  var cb = _.after(users.length, function(err) {
-    callback(err);
-  });
-
-  _.each(users, function(user) {
-    user.emailVerified = true;
-    app.models.user.create(user, function(err, model) {
-      if (err) {
-        cb(err);
-      } else {
-        logger.info('Created: ' + JSON.stringify(model));
-
-        app.models.Role.findOne({name: 'chair'}, function (err, role) {
-          if (err) {
-            cb(err);
-          } else {
-            role.principals.create({
-              principalType: app.models.RoleMapping.USER,
-              principalId: model.id
-            }, function (err, principal) {
-              if (!err) {
-                logger.info('Created :', principal);
-              }
-              cb(err);
-            });
-          }
-        });
+  
+  app.models.Role.find({}, function(err, roles) {
+    if(err) return callback(err);
+    var chair = roles.filter(function(r) {return r.name === 'chair'})[0];
+  
+    var users = [
+      {
+        username: 'chair',
+        password: 'chair',
+        email: 'chair@chair.de',
+        emailVerified: true
       }
+    ];
+    
+    var userRoles  = {
+        "chair@chair.de": chair
+      };
+
+    app.models.user.create(users, function(err, model) {
+        if(err) return callback(err);
+        var principals = model.map(function(u) {
+          return {
+            principalType: app.models.RoleMapping.USER,
+            principalId: u.id,
+            roleId: userRoles[u.email].id
+          };
+        });
+        app.models.RoleMapping.create(principals, function(err) {
+          if(err) return callback(err);
+          logger.info("created user role mapping");
+          callback(err);
+        });
+      });
     });
-  });
 };

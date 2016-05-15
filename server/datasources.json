@@ -1,13 +1,5 @@
 {
-  "_postgres": {
-    "host": "postgres",
-    "port": null,
-    "database": "tk",
-    "password": "root",
-    "name": "_postgres",
-    "user": "postgres",
-    "connector": "postgresql"
-  },
+  
   "postgres": {
     "name": "postgres",
     "connector": "memory",
@@ -17,7 +9,7 @@
     "name": "storage",
     "connector": "loopback-component-storage",
     "provider": "filesystem",
-    "root": "storage/",
+    "root": "./storage",
     "maxFileSize": "52428800"
   }
 }

@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var logger = require('./../logger');
+var logger = require('winston');
 
 module.exports = function(app, callback) {
   var Role = app.models.Role;

@@ -1,5 +1,4 @@
-var _ = require('underscore');
-var logger = require('./../server/logger');
+var logger = require('winston');
 
 module.exports = function(app, ds, callback) {
   var conferences = [
@@ -8,16 +7,10 @@ module.exports = function(app, ds, callback) {
     }
   ];
 
-  var cb = _.after(conferences.length, function(err) {
+  app.models.Conference.create(conferences, function(err) {
+  if (!err) {
+      logger.info('Created conferences');  
+    }
     callback(err);
-  });
-
-  _.each(conferences, function(conference) {
-    app.models.Conference.create(conference, function(err, model) {
-      if (!err) {
-        logger.info('Created: ' + JSON.stringify(model));
-      }
-      cb(err);
-    });
   });
 };
