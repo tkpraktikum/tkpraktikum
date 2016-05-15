@@ -44,6 +44,7 @@ npm run-script initDb
    the `clientSecret` with the appropiate values
 
 ```json
+
 {
   "local": {
     "provider": "local",
@@ -51,7 +52,7 @@ npm run-script initDb
     "usernameField": "username",
     "passwordField": "password",
     "authPath": "/auth/local",
-    "successRedirect": "/#/submission",
+    "successRedirect": "/#/account",
     "failureRedirect": "/#/login",
     "failureFlash": true
   },
@@ -59,7 +60,7 @@ npm run-script initDb
     "provider": "facebook",
     "module": "passport-facebook",
     "clientID": "***",
-    "clientSecret": "****",
+    "clientSecret": "***",
     "callbackURL": "/auth/facebook/callback",
     "authPath": "/auth/facebook",
     "callbackPath": "/auth/facebook/callback",
@@ -80,8 +81,65 @@ npm run-script initDb
     "failureRedirect": "/#/login",
     "scope": ["user"],
     "failureFlash": true
+  },
+  "google-login": {
+    "provider": "google",
+    "module": "passport-google-oauth",
+    "strategy": "OAuth2Strategy",
+    "clientID": "***",
+    "clientSecret": "***",
+    "callbackURL": "/auth/google/callback",
+    "authPath": "/auth/google",
+    "callbackPath": "/auth/google/callback",
+    "successRedirect": "/#/account",
+    "failureRedirect": "/#/login",
+    "scope": ["email", "profile"],
+    "failureFlash": true
+  },
+  "facebook-link": {
+    "provider": "facebook",
+    "module": "passport-facebook",
+    "clientID": "***",
+    "clientSecret": "***",
+    "callbackURL": "/link/facebook/callback",
+    "authPath": "/link/facebook",
+    "callbackPath": "/link/facebook/callback",
+    "successRedirect": "/#/account",
+    "failureRedirect": "/#/login",
+    "scope": ["email"],
+    "link": true,
+    "failureFlash": true
+  },
+  "google-link": {
+    "provider": "google",
+    "module": "passport-google-oauth",
+    "strategy": "OAuth2Strategy",
+    "clientID": "***",
+    "clientSecret": "***",
+    "callbackURL": "/link/google/callback",
+    "authPath": "/link/google",
+    "callbackPath": "/link/google/callback",
+    "successRedirect": "/#/account",
+    "failureRedirect": "/#/login",
+    "scope": ["email", "profile"],
+    "link": true,
+    "failureFlash": true
+  },
+  "github-link": {
+    "provider": "github",
+    "module": "passport-github",
+    "clientID": "***",
+    "clientSecret": "***",
+    "callbackURL": "/link/github/callback",
+    "authPath": "/link/github",
+    "callbackPath": "/link/github/callback",
+    "successRedirect": "/#/account",
+    "failureRedirect": "/#/login",
+    "scope": ["user"],
+    "failureFlash": true
   }
 }
+
 ```
 
 ## Run ##
@@ -100,7 +158,7 @@ Open in browser (Linux): [http://localhost:3000](http://localhost:3000)
 
 ### Login ##
 - user:chair password:chair
-- create new users by social login (**check your providers.json**) or local 
+- create new users by social login (**check your providers.json**) or local
 
 ## ER diagram ##
 ![ER diagram](https://rawgit.com/tarekauel/tkpraktikum/master/doc/ER.svg)
