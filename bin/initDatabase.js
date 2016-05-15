@@ -1,7 +1,14 @@
-require('events').EventEmitter.prototype._maxListeners = 100;
 var path = require('path');
-var _ = require('underscore');
+var async = require('async');
 var logger = require('./../server/logger');
+var fs = require('fs');
+
+try {
+  fs.unlinkSync('./db.json');
+  logger.info("removed db.json");
+} catch(err) {
+  logger.info("db.json does not exists");
+}
 
 var createTags = require('./createTags.js');
 var createConferences = require('./createConferences.js');
@@ -11,23 +18,20 @@ var createUser = require('./createUser.js');
 
 var app = require(path.resolve(__dirname, '../server/server'));
 var ds = app.datasources.Postgres;
+
 ds.automigrate(undefined, function(err) {
   if (err) throw err;
   logger.info('created database schema');
 
-  var createFunctions = [createTags, createAffiliations, createConferences, createRoles];
+  var createFunctions = [createTags, createAffiliations, createConferences, createRoles, createUser];
 
-  var cb = _.after(createFunctions.length, function() {
-    // once roles do exist, we can create the user
-    createUser(app, ds, function(err) {
-      ds.disconnect();
-      if (err) {
-        throw err;
-      }
-    });
+  createFunctions = createFunctions.map(function(fn) {
+    return function(callback) {
+      fn(app, ds, callback);
+    };
   });
 
-  _.each(createFunctions, function(fn) {
-    fn(app, ds, cb);
-  });
+  async.series(createFunctions, function(err) {
+    if (err) throw err;
+  })
 });
