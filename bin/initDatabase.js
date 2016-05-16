@@ -4,7 +4,7 @@ var logger = require('./../server/logger');
 var fs = require('fs');
 
 try {
-  fs.unlinkSync('./db.json');
+  fs.unlinkSync(process.env.DB_FILE || './db.json');
   logger.info("removed db.json");
 } catch(err) {
   logger.info("db.json does not exists");
