@@ -35,7 +35,8 @@ angular
           abstract: true,
           data: {
             permissions: {
-              only: ['ADMIN']
+              only: ['USER']
+              //redirectTo: 'login'
             }
           },
           children: [{
@@ -66,12 +67,16 @@ angular
                 templateUrl: 'views/submissions.list.html'
               }
             ]
-
           }, {
             name: 'chair',
             url: 'chair',
             templateUrl: 'views/chair.html',
-            controller: 'ChairController'
+            controller: 'ChairController',
+            data: {
+              permissions: {
+                only: ['CHAIR']
+              }
+            }
           }]
         }]
       });
@@ -117,27 +122,59 @@ angular
 }]).config(['$httpProvider', function ($httpProvider) {
   $httpProvider.interceptors.push('loginStatusWatcher');
 }]).run(function($rootScope, $http, $q, PermissionStore, RoleStore) {
-  PermissionStore.definePermission('hasValidSession', function () {
-    return $q(function (resolve, reject) {
-      $http({
-        method: 'GET',
-        url: '/auth/me'
-      }).then(function (rsp) {
-        if (rsp.data && rsp.data.id > 0) {
-          resolve();
-        } else {
-          reject();
-        }
-      }, function (err) {
-        reject();
-      });
+  PermissionStore.definePermission('hasValidSession', (function () {
+    var promise = $q(function (resolve, reject) {
+      $http({method: 'GET', url: '/auth/me'}).then(
+        function (rsp) { rsp.data && rsp.data.id > 0 ? resolve() : reject(); },
+        function (err) { reject(); }
+      );
     });
-  });
-  RoleStore.defineRole('ADMIN', ['hasValidSession']);
 
-  $rootScope.checkRole = function(role) {
-    return $rootScope.userRoles && $rootScope.userRoles.indexOf(role) !== -1;
-  };
+    $rootScope.$watch('loggedIn', function (loggedIn) {
+      // Unfortunately the angular promise API does not expose a status. So we
+      // need to rely on the internal implementation by accessing $$state.
+      // If the current promise is not resolved -> ignore state change.
+      if ([1,2].indexOf(promise.$$state.status) >= 0) {
+        promise = $q(function (resolve, reject) { loggedIn ? resolve() : reject() });
+      }
+    });
+
+    return function () {
+      return promise;
+    }
+  })());
+
+  var roleChecker = (function () {
+    var deferred = $q.defer(); // do not resolve until roles are ready
+
+    $rootScope.$watch('userRoles', function (userRoles) {
+      if (Object.prototype.toString.call(userRoles) === '[object Array]') {
+        // Promise was already resolved, create new promise
+        if ([1,2].indexOf(deferred.promise.$$state.status)) {
+          deferred = $q.defer();
+        }
+
+        // Resolve pending promise
+        deferred.resolve(userRoles);
+      }
+    });
+
+    return function (roleName, transitionProperties) {
+      return $q(function (resolve, reject) {
+        deferred.promise.then(
+          function (val) { val.indexOf(roleName.toLowerCase()) >= 0 ? resolve() : reject(); },
+          function (err) { reject(); }
+        );
+      });
+    }
+  })();
+
+  PermissionStore.defineManyPermissions(['chair', 'author', 'reviewer'], roleChecker);
+  RoleStore.defineRole('USER', ['hasValidSession']);
+  RoleStore.defineRole('CHAIR', ['hasValidSession', 'chair']);
+  RoleStore.defineRole('AUTHOR', ['hasValidSession', 'author']);
+  RoleStore.defineRole('REVIEWER', ['hasValidSession', 'reviewer']);
+
   $rootScope.$watch('userId', function (userId) {
     // get the roles of this user if the userId changes
     if (userId !== undefined && userId > 0) {
