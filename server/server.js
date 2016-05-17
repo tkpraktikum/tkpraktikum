@@ -2,6 +2,7 @@ var loopback = require('loopback');
 var boot = require('loopback-boot');
 var routes = require('./routes/routes');
 var app = module.exports = loopback();
+require('./datasources')(app);
 var logger = require('./logger');
 
 // Passport configurators..
@@ -30,10 +31,13 @@ var flash = require('express-flash');
 // attempt to build the providers/passport config
 var config = {};
 try {
-  config = require('../providers.local.json');
+  var providers = process.env.PROVIDERS_FILE || '../providers.local.json';
+  config = require(providers);
+  logger.info('using local providers file: %s', providers);
 } catch (err) {
   try {
     config = require('../providers.json');
+    logger.info('using default providers file');
   } catch (err) {
     logger.error(err);
     process.exit(1); // fatal
