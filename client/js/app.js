@@ -104,7 +104,6 @@ angular
 }]).config(['$httpProvider', function ($httpProvider) {
   $httpProvider.interceptors.push('loginStatusWatcher');
 }]).run(function($rootScope, $http, $q, PermissionStore, RoleStore) {
-  $rootScope.appReady = true;
   PermissionStore.definePermission('hasValidSession', (function () {
     var promise = $q(function (resolve, reject) {
       $http({method: 'GET', url: '/auth/me'}).then(
