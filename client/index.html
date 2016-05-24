@@ -35,13 +35,13 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.private.tag">Tags</a></li>
-        <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.private.affiliation">Affiliations</a></li>
-        <li ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.private.submission.list">Submissions</a></li>
-        <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.private.account">Account</a></li>
-        <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.private.chair">Chair</a></li>
-        <li ui-sref-active="active" permission permission-except="'hasValidSession'" ng-cloak><a ui-sref="app.public.login">Login</a></li>
-        <li ui-sref-active="active" permission permission-except="'hasValidSession'" ng-cloak><a ui-sref="app.public.signup">Signup</a></li>
+        <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.tag">Tags</a></li>
+        <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.affiliation">Affiliations</a></li>
+        <li ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.submission.list">Submissions</a></li>
+        <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.account">Account</a></li>
+        <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.chair">Chair</a></li>
+        <li ui-sref-active="active" permission permission-except="'hasValidSession'" ng-cloak><a ui-sref="app.login">Login</a></li>
+        <li ui-sref-active="active" permission permission-except="'hasValidSession'" ng-cloak><a ui-sref="app.signup">Signup</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/auth/logout" ng-show="!!loggedIn"  ng-cloak>Logout</a></li>
@@ -60,7 +60,6 @@
 <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="vendor/angular-permission/dist/angular-permission.js"></script>
 <script src="vendor/angular-permission/dist/angular-permission-ui.js"></script>
-<script src="vendor/angular-ui-router.stateHelper/statehelper.js"></script>
 <script src="vendor/angular-cookie/angular-cookie.js"></script>
 <script src="js/services/lb-services.js"></script>
 <script src="js/app.js"></script>
