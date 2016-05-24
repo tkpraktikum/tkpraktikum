@@ -7,80 +7,62 @@ angular
     'ui.router.stateHelper',
     'ipCookie'
   ])
-  .config(["stateHelperProvider", "$urlRouterProvider", function (stateHelperProvider, $urlRouterProvider) {
-    stateHelperProvider
-      .state({
-        name: "app",
+  .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.when('/', '/login');
+
+    // Configuration option reference:
+    // https://github.com/angular-ui/ui-router/wiki/Quick-Reference#stateconfig
+    $stateProvider
+      .state('app', {
+        url: '/',
         abstract: true,
-        url: "/",
-        template: '<ui-view />',
-        children: [{
-          name: "public",
-          template: '<ui-view />',
-          abstract: true,
-          children: [{
-            name: 'login',
-            url: 'login',
-            templateUrl: 'views/login.html',
-            controller: 'LoginController'
-          }, {
-            name: 'signup',
-            url: 'signup',
-            templateUrl: 'views/signup.html',
-            controller: 'SignupController'
-          }]
-        }, {
-          name: "private",
-          template: '<ui-view />',
-          abstract: true,
-          data: {
-            permissions: {
-              only: ['USER']
-              //redirectTo: 'login'
-            }
-          },
-          children: [{
-            name: 'tag',
-            url: 'tag',
-            templateUrl: 'views/tag.html',
-            controller: 'TagController'
-          }, {
-            name: 'affiliation',
-            url: 'affiliation',
-            templateUrl: 'views/affiliation.html',
-            controller: 'AffiliationController'
-          }, {
-            name: 'account',
-            url: 'account',
-            templateUrl: 'views/account.html',
-            controller: 'AccountController'
-          }, {
-            name: 'submission',
-            url: 'submission',
-            templateUrl: 'views/submissions.html',
-            controller: 'SubmissionController',
-            abstract: true,
-            children: [
-              {
-                name: 'list',
-                url: '',
-                templateUrl: 'views/submissions.list.html'
-              }
-            ]
-          }, {
-            name: 'chair',
-            url: 'chair',
-            templateUrl: 'views/chair.html',
-            controller: 'ChairController',
-            data: {
-              permissions: {
-                only: ['CHAIR']
-              }
-            }
-          }]
-        }]
+        template: '<ui-view/>'
+      })
+      .state('app.login', {
+        url: 'login',
+        templateUrl: 'views/login.html',
+        controller: 'LoginController'
+      })
+      .state('app.signup', {
+        url: 'signup',
+        templateUrl: 'views/signup.html',
+        controller: 'SignupController'
+      })
+
+      // User area
+      .state('app.protected', {
+        data: { permissions: { only: ['USER'], redirectTo: 'app.login' } }
+      })
+      .state('app.protected.tag', {
+        url: 'tag',
+        templateUrl: 'views/tag.html',
+        controller: 'TagController'
+      })
+      .state('app.protected.affiliation', {
+        url: 'affiliation',
+        templateUrl: 'views/affiliation.html',
+        controller: 'AffiliationController'
+      })
+      .state('app.protected.account', {
+        url: 'account',
+        templateUrl: 'views/account.html',
+        controller: 'AccountController'
+      })
+      .state('app.protected.submission', {
+        url: 'submission',
+        templateUrl: 'views/submissions.html',
+        controller: 'SubmissionController'
+      })
+      .state('app.protected.submission.list', {
+        templateUrl: 'views/submissions.list.html'
+      })
+      .state('app.protected.chair', {
+        url: 'chair',
+        templateUrl: 'views/chair.html',
+        controller: 'ChairController',
+        data: { permissions: { only: ['CHAIR'] }}
       });
-    $urlRouterProvider.otherwise('tag');
   }])
   .factory("$authentication", ["$rootScope", 'ipCookie', function ($rootScope, ipCookie) {
 
@@ -122,6 +104,7 @@ angular
 }]).config(['$httpProvider', function ($httpProvider) {
   $httpProvider.interceptors.push('loginStatusWatcher');
 }]).run(function($rootScope, $http, $q, PermissionStore, RoleStore) {
+  $rootScope.appReady = true;
   PermissionStore.definePermission('hasValidSession', (function () {
     var promise = $q(function (resolve, reject) {
       $http({method: 'GET', url: '/auth/me'}).then(
