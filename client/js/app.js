@@ -4,7 +4,6 @@ angular
     'ui.router',
     'permission',
     'permission.ui',
-    'ui.router.stateHelper',
     'ipCookie'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
