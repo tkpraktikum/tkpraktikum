@@ -16,12 +16,16 @@ angular
       .state('app', {
         url: '/',
         abstract: true,
-        template: '<ui-view/>'
+        templateUrl: 'views/layout.html',
       })
       .state('app.login', {
         url: 'login',
         templateUrl: 'views/login.html',
         controller: 'LoginController'
+      })
+      .state('app.logout', {
+        url: 'logout',
+        controller: 'LogoutController'
       })
       .state('app.signup', {
         url: 'signup',
@@ -31,6 +35,7 @@ angular
 
       // User area
       .state('app.protected', {
+        template: '<ui-view/>',
         data: { permissions: { only: ['USER'], redirectTo: 'app.login' } }
       })
       .state('app.protected.tag', {

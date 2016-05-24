@@ -6,7 +6,7 @@ angular
       AuthService
         .login($scope.user.name, $scope.user.password)
         .then(function (user) {
-          $state.go('app.private.account', {}, { reload: true });
+          $state.go('app.protected.account', {}, { reload: true });
         });
     }
   }])
@@ -16,7 +16,7 @@ angular
     AuthService
       .logout()
       .then(function () {
-        $state.go('app.public.login', {}, { reload: true });
+        $state.go('app.login', {}, { reload: true });
       });
   }])
   .controller('HeaderCtrl', [function () { }]);

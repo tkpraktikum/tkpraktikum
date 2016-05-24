@@ -23,7 +23,7 @@
         <li ui-sref-active="active" permission permission-except="'hasValidSession'" ng-cloak><a ui-sref="app.signup">Signup</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/auth/logout" ng-show="!!loggedIn"  ng-cloak>Logout</a></li>
+        <li ui-sref-active="active" permission permission-only="'hasValidSession'" ng-cloak><a ui-sref="app.logout">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
