@@ -2,7 +2,7 @@
 <a href="/auth/facebook" class="btn btn-primary">Login with Facebook</a>
 <a href="/auth/github" class="btn btn-primary">Login with GitHub</a>
 <a href="/auth/google" class="btn btn-primary">Login with Google</a>
-<form name="loginForm" novalidate action="/auth/local" method="post">
+<form name="loginForm" ng-submit="login()" novalidate>
   <div class="row">
     <div class="col-lg-12">
       <span class="error" ng-show="loginForm.email.$error.email">Email is invalid</span>
@@ -11,11 +11,11 @@
   <div class="row">
     <div class="col-lg-6 form-group">
       <label for="username">Username</label>
-      <input type="text" autocomplete="off" class="form-control" id="username" placeholder="Username" name="username" required ng-model="login.username">
+      <input type="text" autocomplete="off" class="form-control" id="username" placeholder="Username" name="username" required ng-model="user.name">
     </div>
     <div class="col-lg-6 form-group">
       <label for="password">Password</label>
-      <input type="password" autocomplete="off" class="form-control" placeholder="Password" id="password" name="password" required ng-model="login.password">
+      <input type="password" autocomplete="off" class="form-control" placeholder="Password" id="password" name="password" required ng-model="user.password">
     </div>
   </div>
   <div class="row">
