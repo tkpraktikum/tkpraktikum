@@ -114,12 +114,10 @@ angular
 }])
 .run(function($rootScope, $q, PermissionStore, RoleStore, AuthService) {
   PermissionStore.definePermission('hasValidSession', function () {
-    console.log("ASK FOR VALID SESSION");
     return AuthService.isAuthenticated();
   });
   PermissionStore.defineManyPermissions(['chair', 'author', 'reviewer'],
       function (roleName, transitionProperties) {
-    console.log("ASK FOR PERMISSION");
     return AuthService.hasRole(roleName);
   });
 
