@@ -114,6 +114,7 @@ angular
     login: login,
     logout: logout,
     hasRole: hasRole,
+    getUser: function () { return user; },
     isAuthenticated: isAuthenticated
   };
 }])
