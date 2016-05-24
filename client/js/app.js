@@ -3,8 +3,7 @@ angular
     'lbServices',
     'ui.router',
     'permission',
-    'permission.ui',
-    'ipCookie'
+    'permission.ui'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
