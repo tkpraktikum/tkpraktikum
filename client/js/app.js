@@ -21,13 +21,17 @@ angular
           children: [{
             name: 'login',
             url: 'login',
-            templateUrl: 'views/login.html',
+            templateUrl: 'views/account/login.html',
             controller: 'LoginController'
           }, {
             name: 'signup',
             url: 'signup',
-            templateUrl: 'views/signup.html',
+            templateUrl: 'views/account/signup.html',
             controller: 'SignupController'
+          }, {
+            name: 'about',
+            url: 'about',
+            templateUrl: 'views/common/about.html',
           }]
         }, {
           name: "private",
@@ -52,26 +56,97 @@ angular
           }, {
             name: 'account',
             url: 'account',
-            templateUrl: 'views/account.html',
+            templateUrl: 'views/account/account.html',
             controller: 'AccountController'
           }, {
             name: 'submission',
             url: 'submission',
-            templateUrl: 'views/submissions.html',
+            templateUrl: 'views/main/submissions.html',
             controller: 'SubmissionController',
             abstract: true,
             children: [
               {
-                name: 'list',
-                url: '',
-                templateUrl: 'views/submissions.list.html'
+                name: 'OwnSubmissions',
+                url: 'Create',
+                templateUrl: 'views/main/submissions.create.html',
+                data: {
+                  permissions: {
+                    only: ['AUTHOR', 'CHAIR']
+                  }
+                }
+              },
+              {
+                name: 'AllSubmissions',
+                url: 'List',
+                templateUrl: 'views/main/submissions.list.html',
+                data: {
+                  permissions: {
+                    only: ['CHAIR']
+                  }
+                }
+              }
+            ]
+          }, {
+            name: 'reviews',
+            url: 'reviews',
+            templateUrl: 'views/main/reviews.html',
+            controller: 'ReviewController',
+            abstract: true,
+            children: [
+              {
+                name: 'reviews',
+                url: 'List',
+                templateUrl: 'views/main/reviews.list.html',
+                data: {
+                  permissions: {
+                    only: ['CHAIR']
+                  }
+                }
+              }
+            ]
+          }, {
+            name: 'user',
+            url: 'user',
+            templateUrl: 'views/account/user.html',
+            controller: 'UserController',
+            abstract: true,
+            children: [
+              {
+                name: 'users',
+                url: 'List',
+                templateUrl: 'views/admin/users.list.html',
+                data: {
+                  permissions: {
+                    only: ['CHAIR']
+                  }
+                }
               }
             ]
           }, {
             name: 'chair',
             url: 'chair',
-            templateUrl: 'views/chair.html',
+            templateUrl: 'views/admin/chair.html',
             controller: 'ChairController',
+            data: {
+              permissions: {
+                only: ['CHAIR']
+              }
+            }
+          }, {
+            name: 'settings',
+            url: 'settings',
+            templateUrl: 'views/admin/settings.html',
+            controller: 'SettingsController',
+            data: {
+              permissions: {
+                only: ['CHAIR']
+              }
+            }
+          }, {
+            name: 'statistics',
+            url: 'statistics',
+            templateUrl: 'views/admin/statistics.html',
+            controller: 'StatisticsController',
             data: {
               permissions: {
                 only: ['CHAIR']
