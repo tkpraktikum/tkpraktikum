@@ -4,158 +4,114 @@ angular
     'ui.router',
     'permission',
     'permission.ui',
-    'ui.router.stateHelper',
     'ipCookie'
   ])
-  .config(["stateHelperProvider", "$urlRouterProvider", function (stateHelperProvider, $urlRouterProvider) {
-    stateHelperProvider
-      .state({
-        name: "app",
+  .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.when('/', '/login');
+
+    // Configuration option reference:
+    // https://github.com/angular-ui/ui-router/wiki/Quick-Reference#stateconfig
+    $stateProvider
+      .state('app', {
+        url: '/',
         abstract: true,
-        url: "/",
-        template: '<ui-view />',
-        children: [{
-          name: "public",
-          template: '<ui-view />',
-          abstract: true,
-          children: [{
-            name: 'login',
-            url: 'login',
-            templateUrl: 'views/account/login.html',
-            controller: 'LoginController'
-          }, {
-            name: 'signup',
-            url: 'signup',
-            templateUrl: 'views/account/signup.html',
-            controller: 'SignupController'
-          }, {
-            name: 'about',
-            url: 'about',
-            templateUrl: 'views/common/about.html',
-          }]
-        }, {
-          name: "private",
-          template: '<ui-view />',
-          abstract: true,
-          data: {
-            permissions: {
-              only: ['USER']
-              //redirectTo: 'login'
-            }
-          },
-          children: [{
-            name: 'tag',
-            url: 'tag',
-            templateUrl: 'views/tag.html',
-            controller: 'TagController'
-          }, {
-            name: 'affiliation',
-            url: 'affiliation',
-            templateUrl: 'views/affiliation.html',
-            controller: 'AffiliationController'
-          }, {
-            name: 'account',
-            url: 'account',
-            templateUrl: 'views/account/account.html',
-            controller: 'AccountController'
-          }, {
-            name: 'submission',
-            url: 'submission',
-            templateUrl: 'views/main/submissions.html',
-            controller: 'SubmissionController',
-            abstract: true,
-            children: [
-              {
-                name: 'OwnSubmissions',
-                url: 'Create',
-                templateUrl: 'views/main/submissions.create.html',
-                data: {
-                  permissions: {
-                    only: ['AUTHOR', 'CHAIR']
-                  }
-                }
-              },
-              {
-                name: 'AllSubmissions',
-                url: 'List',
-                templateUrl: 'views/main/submissions.list.html',
-                data: {
-                  permissions: {
-                    only: ['CHAIR']
-                  }
-                }
-              }
-            ]
-          }, {
-            name: 'reviews',
-            url: 'reviews',
-            templateUrl: 'views/main/reviews.html',
-            controller: 'ReviewController',
-            abstract: true,
-            children: [
-              {
-                name: 'reviews',
-                url: 'List',
-                templateUrl: 'views/main/reviews.list.html',
-                data: {
-                  permissions: {
-                    only: ['CHAIR']
-                  }
-                }
-              }
-            ]
-          }, {
-            name: 'user',
-            url: 'user',
-            templateUrl: 'views/account/user.html',
-            controller: 'UserController',
-            abstract: true,
-            children: [
-              {
-                name: 'users',
-                url: 'List',
-                templateUrl: 'views/admin/users.list.html',
-                data: {
-                  permissions: {
-                    only: ['CHAIR']
-                  }
-                }
-              }
-            ]
-          }, {
-            name: 'chair',
-            url: 'chair',
-            templateUrl: 'views/admin/chair.html',
-            controller: 'ChairController',
-            data: {
-              permissions: {
-                only: ['CHAIR']
-              }
-            }
-          }, {
-            name: 'settings',
-            url: 'settings',
-            templateUrl: 'views/admin/settings.html',
-            controller: 'SettingsController',
-            data: {
-              permissions: {
-                only: ['CHAIR']
-              }
-            }
-          }, {
-            name: 'statistics',
-            url: 'statistics',
-            templateUrl: 'views/admin/statistics.html',
-            controller: 'StatisticsController',
-            data: {
-              permissions: {
-                only: ['CHAIR']
-              }
-            }
-          }]
-        }]
+        template: '<ui-view/>'
+      })
+      .state('app.login', {
+        url: 'login',
+        templateUrl: 'views/account/login.html',
+        controller: 'LoginController'
+      })
+      .state('app.signup', {
+        url: 'signup',
+        templateUrl: 'views/account/signup.html',
+        controller: 'SignupController'
+      })
+      .state('app.about', {
+        url: 'about',
+        templateUrl: 'views/common/about.html',
+      })
+      .state('app.footer', {
+        url: 'footer',
+        templateUrl: 'views/common/footer.html',
+        controller: 'FooterController'
+      })
+
+      // User area
+      .state('app.protected', {
+        template: '<ui-view/>',
+        abstract: true,
+        data: { permissions: { only: ['USER'], redirectTo: 'app.login' } }
+      })
+      .state('app.header', {
+        url: 'header',
+        templateUrl: 'views/common/header.html',
+        controller: 'HeaderController'
+      })
+      .state('app.protected.tag', {
+        url: 'tag',
+        templateUrl: 'views/tag.html',
+        controller: 'TagController'
+      })
+      .state('app.protected.affiliation', {
+        url: 'affiliation',
+        templateUrl: 'views/affiliation.html',
+        controller: 'AffiliationController'
+      })
+      .state('app.protected.account', {
+        url: 'account',
+        templateUrl: 'views/account/account.html',
+        controller: 'AccountController'
+      })
+      .state('app.protected.submission', {
+        url: 'submission',
+        templateUrl: 'views/main/submissions.html',
+        controller: 'SubmissionController'
+      })
+      .state('app.protected.submission.create', {
+        templateUrl: 'views/main/submissions.create.html'
+      })
+      .state('app.protected.submission.list', {
+        templateUrl: 'views/main/submissions.list.html',
+        data: { permissions: { only: ['CHAIR', 'AUTHOR'] }}
+      })
+      .state('app.protected.review', {
+        url: 'review',
+        templateUrl: 'views/main/reviews.html',
+        controller: 'ReviewController'
+      })
+      .state('app.protected.review.list', {
+        templateUrl: 'views/main/reviews.list.html',
+        data: { permissions: { only: ['CHAIR', 'REVIEWER'] }}
+      })
+      .state('app.protected.user', {
+        url: 'user',
+        templateUrl: 'views/account/user.html',
+        controller: 'AccountController'
+      })
+      .state('app.protected.user.list', {
+        templateUrl: 'views/admin/users.list.html',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.settings', {
+        url: 'settings',
+        templateUrl: 'views/admin/settings.html',
+        controller: 'SettingsController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.statistics', {
+        url: 'statistics',
+        templateUrl: 'views/admin/statistics.html',
+        controller: 'StatisticsController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.chair', {
+        url: 'chair',
+        templateUrl: 'views/admin/chair.html',
+        controller: 'ChairController',
+        data: { permissions: { only: ['CHAIR'] }}
       });
-    $urlRouterProvider.otherwise('tag');
   }])
   .factory("$authentication", ["$rootScope", 'ipCookie', function ($rootScope, ipCookie) {
 
