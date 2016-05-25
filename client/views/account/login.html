@@ -1,0 +1,70 @@
+<div class="container" permission permission-except="'hasValidSession'">
+  <div class="col-lg-4 col-md-4 col-sm-8 col-lg-offset-4 col-md-offset-4 col-sm-offset-2">
+    <h2 class="text-center">Login</h2>
+    <!-- TODO improve: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
+    <!-- TODO improve: validation for regex in username and pw -->
+    <form name="loginForm" novalidate action="/auth/local" method="post">
+      <div class="form-group" ng-class="{ 'has-error': (loginForm.username.$dirty && loginForm.username.$error.required) || (loginForm.username.$invalid && !loginForm.username.$error.required) }">
+        <label class="control-label" for="username">Username</label>
+        <!-- TODO: regex username if needed (validation) -->
+        <!-- <input type="text" autocomplete="off" name="username" id="username" placeholder="Username" class="form-control validation" required ng-model="login.username" ng-pattern="/^[A-Za-z0-9_]{8,16}$/" /> -->
+        <input type="text" autocomplete="off" name="username" id="username" placeholder="Username" class="form-control validation" required ng-model="login.username" />
+        <!--<span ng-show="loginForm.username.$dirty && loginForm.username.$error.required" class="help-block">Username is required</span>-->
+        <div class="help-block">
+          <span ng-if="loginForm.username.$dirty && loginForm.username.$error.required">Username is required
+            </span>
+          <span ng-if="loginForm.username.$touched && loginForm.username.$invalid && !loginForm.username.$error.required">Username is invalid
+            </span>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{ 'has-error': (loginForm.password.$dirty && loginForm.password.$error.required) || (loginForm.password.$invalid && !loginForm.password.$error.required) }">
+        <label class="control-label" for="password">Password</label>
+        <!-- TODO: regex password if needed (validation) -->
+        <!-- <input type="password" autocomplete="off" name="password" id="password" placeholder="Password" class="form-control validation" required ng-model="login.password" ng-pattern="/^([A-Z])+([a-z])+([0-9])+([@!%?_])+[A-Za-z0-9@!%?_]*$/"/> -->
+        <input type="password" autocomplete="off" name="password" id="password" placeholder="Password" class="form-control validation" required ng-model="login.password" />
+        <div class="help-block">
+          <span ng-if="loginForm.password.$dirty && loginForm.password.$error.required">Password is required
+            </span>
+          <span ng-if="loginForm.password.$touched && loginForm.password.$invalid && !loginForm.password.$error.required">Password is invalid
+            </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12"><button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Login</button>
+          </div>
+        </div>
+        <br>
+        <div class="row text-center">
+          <div class="col-md-12 col-xs-12"><a href="#/signup" class="btn-link no-underline">Create new account</a>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="form-group">
+      <div class="row social-icons icon-circle icon-rotate">
+        <div class="col-md-12 text-center">
+          <div class="col-md-4 col-xs-4">
+            <a href="/auth/facebook" class="fa fa-facebook fa-3x" aria-hidden="true"></a>
+          </div>
+          <div class="col-md-4 col-xs-4">
+            <a href="/auth/github" class="fa fa-github fa-3x" aria-hidden="true"></a>
+          </div>
+          <div class="col-md-4 col-xs-4">
+            <a href="/auth/google" class="fa fa-google-plus fa-3x" aria-hidden="true"></a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="col-md-4 col-xs-4">Login with Facebook
+          </div>
+          <div class="col-md-4 col-xs-4">Login with Github
+          </div>
+          <div class="col-md-4 col-xs-4">Login with Google+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
