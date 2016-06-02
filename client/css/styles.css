@@ -26,6 +26,11 @@ body {
   display: block;
 }
 
+.centerContent {
+  float: none;
+  margin: 0 auto;
+}
+
 .validation.ng-dirty.ng-valid[required] {
   border-left: 5px solid #42A948; /* green */
 }

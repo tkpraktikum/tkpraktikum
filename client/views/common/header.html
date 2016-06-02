@@ -14,14 +14,14 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.submission.create">Submissions</a></li>
+        <li ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.submission">Submissions</a></li>
         <li ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak><a ui-sref="app.protected.review">Reviews</a></li>
         <li class="dropdown" ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.submission.list">List all Submissions</a></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.review.list">List all Reviews</a></li>
-            <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.user.list">List all Users</a></li>
+            <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.users">List all Users</a></li>
             <li role="separator" class="divider"></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.settings">Settings</a></li>
           </ul>
@@ -32,11 +32,11 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" ui-sref-active="active" permission permission-only="'USER'" ng-cloak>
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">NoName <span class="caret"></span></a>
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User X <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user">Edit Profile</a></li>
             <li role="separator" class="divider"></li>
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a href="/auth/logout" ng-show="!!loggedIn"  ng-cloak>Logout</a></li>
+            <li ui-sref-active="active" permission permission-only="'hasValidSession'" ng-cloak><a ui-sref="app.logout">Logout</a></li>
           </ul>
         </li>
       </ul>

@@ -3,65 +3,65 @@
     <h2 class="text-center">Register</h2>
     <!-- TODO improve: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
     <!-- TODO improve: validation for regex in email, username, university, pw and checkpw (comment the inputs out for regex validation -->
-    <form name="signupForm" novalidate action="/auth/local" method="post">
-      <div class="form-group" ng-class="{ 'has-error': (signupForm.email.$dirty && signupForm.email.$error.required) || (signupForm.email.$invalid && !signupForm.email.$error.required) }">
+    <form name="newUserForm" novalidate action="/auth/signup" method="post">
+      <div class="form-group" ng-class="{ 'has-error': (newUserForm.email.$dirty && newUserForm.email.$error.required) || (newUserForm.email.$invalid && !newUserForm.email.$error.required) }">
         <label class="control-label" for="email">E-Mail</label>
-        <!--<input type="email" autocomplete="off" name="email" id="email" placeholder="E-Mail" class="form-control validation" required ng-model="signup.email" ng-pattern="/^[A-Za-z0-9_-]*@{1}[A-Za-z0-9-]*[.]{1}[a-z]{2,3}$/"/>-->
-        <input type="email" autocomplete="off" name="email" id="email" placeholder="E-Mail" class="form-control validation" required ng-model="signup.email" />
-        <div class="help-block">
-          <span ng-if="signupForm.email.$dirty && signupForm.email.$error.required">E-Mail is required
+        <!--<input type="email" autocomplete="off" name="email" id="email" placeholder="E-Mail" class="form-control validation" required ng-model="newUser.email" ng-pattern="/^[A-Za-z0-9_-]*@{1}[A-Za-z0-9-]*[.]{1}[a-z]{2,3}$/"/>-->
+        <input type="email" autocomplete="off" name="email" id="email" placeholder="E-Mail" class="form-control validation" required ng-model="newUser.email" />
+        <!--<div class="help-block">
+          <span ng-if="newUserForm.email.$dirty && newUserForm.email.$error.required">E-Mail is required
             </span>
-          <span ng-if="signupForm.email.$touched && signupForm.email.$invalid && !signupForm.email.$error.required">E-Mail is invalid
+          <span ng-if="newUserForm.email.$touched && newUserForm.email.$invalid && !newUserForm.email.$error.required">E-Mail is invalid
             </span>
-        </div>
+        </div>-->
       </div>
-      <div class="form-group" ng-class="{ 'has-error': (signupForm.username.$dirty && signupForm.username.$error.required) || (signupForm.username.$invalid && !signupForm.username.$error.required) }">
+      <div class="form-group" ng-class="{ 'has-error': (newUserForm.username.$dirty && newUserForm.username.$error.required) || (newUserForm.username.$invalid && !newUserForm.username.$error.required) }">
         <label class="control-label" for="username">Username</label>
-        <!-- <input type="text" autocomplete="off" name="username" id="username" placeholder="Username" class="form-control validation" required ng-model="signup.username" ng-pattern="/^[A-Za-z0-9_]{8,16}$/" /> -->
-        <input type="text" autocomplete="off" name="username" id="username" placeholder="Username" class="form-control validation" required ng-model="signup.username" />
-        <div class="help-block">
-          <span ng-if="signupForm.username.$dirty && signupForm.username.$error.required">Username is required
+        <!-- <input type="text" autocomplete="off" name="username" id="username" placeholder="Username" class="form-control validation" required ng-model="newUser.username" ng-pattern="/^[A-Za-z0-9_]{8,16}$/" /> -->
+        <input type="text" autocomplete="off" name="username" id="username" placeholder="Username" class="form-control validation" required ng-model="newUser.username" />
+        <!--<div class="help-block">
+          <span ng-if="newUserForm.username.$dirty && newUserForm.username.$error.required">Username is required
             </span>
-          <span ng-if="signupForm.username.$touched && signupForm.username.$invalid && !signupForm.username.$error.required">Username is invalid
+          <span ng-if="newUserForm.username.$touched && newUserForm.username.$invalid && !newUserForm.username.$error.required">Username is invalid
             </span>
-        </div>
+        </div>-->
       </div>
-      <div class="form-group" ng-class="{ 'has-error': (signupForm.university.$dirty && signupForm.university.$error.required) || (signupForm.university.$invalid && !signupForm.university.$error.required) }">
+      <div class="form-group" ng-class="{ 'has-error': (newUserForm.university.$dirty && newUserForm.university.$error.required) || (newUserForm.university.$invalid && !newUserForm.university.$error.required) }">
         <label class="control-label" for="university">University</label>
-        <!-- <input type="text" autocomplete="off" name="university" id="university" placeholder="University" class="form-control validation" required ng-model="signup.university" ng-pattern="/^[A-Za-z\u00c4\u00e4\u00d6\u00f6\u00dc\u00fc\u00df\s]{8,}[1-9]?$/" /> -->
-        <input type="text" autocomplete="off" name="university" id="university" placeholder="University" class="form-control validation" required ng-model="signup.university" />
-        <div class="help-block">
-          <span ng-if="signupForm.university.$dirty && signupForm.university.$error.required">University is required
+        <!-- <input type="text" autocomplete="off" name="university" id="university" placeholder="University" class="form-control validation" required ng-model="newUser.university" ng-pattern="/^[A-Za-z\u00c4\u00e4\u00d6\u00f6\u00dc\u00fc\u00df\s]{8,}[1-9]?$/" /> -->
+        <input type="text" autocomplete="off" name="university" id="university" placeholder="University" class="form-control validation" required ng-model="newUser.university" />
+        <!--<div class="help-block">
+          <span ng-if="newUserForm.university.$dirty && newUserForm.university.$error.required">University is required
             </span>
-          <span ng-if="signupForm.university.$touched && signupForm.university.$invalid && !signupForm.university.$error.required">University is invalid
+          <span ng-if="newUserForm.university.$touched && newUserForm.university.$invalid && !newUserForm.university.$error.required">University is invalid
             </span>
-        </div>
+        </div>-->
       </div>
-      <div class="form-group" ng-class="{ 'has-error': (signupForm.password.$dirty && signupForm.password.$error.required) || (signupForm.password.$invalid && !signupForm.password.$error.required) }">
+      <div class="form-group" ng-class="{ 'has-error': (newUserForm.password.$dirty && newUserForm.password.$error.required) || (newUserForm.password.$invalid && !newUserForm.password.$error.required) }">
         <label class="control-label" for="password">Password</label>
-        <!-- <input type="password" autocomplete="off" name="password" id="password" placeholder="Password" class="form-control validation" required ng-model="signup.password" ng-pattern="/^([A-Z])+([a-z])+([0-9])+([@!%?_])+[A-Za-z0-9@!%?_]*$/"/> -->
-        <input type="password" autocomplete="off" name="password" id="password" placeholder="Password" class="form-control validation" required ng-model="signup.password" />
-        <div class="help-block">
-          <span ng-if="signupForm.password.$dirty && signupForm.password.$error.required">Password is required
+        <!-- <input type="password" autocomplete="off" name="password" id="password" placeholder="Password" class="form-control validation" required ng-model="newUser.password" ng-pattern="/^([A-Z])+([a-z])+([0-9])+([@!%?_])+[A-Za-z0-9@!%?_]*$/"/> -->
+        <input type="password" autocomplete="off" name="password" id="password" placeholder="Password" class="form-control validation" required ng-model="newUser.password" />
+        <!--<div class="help-block">
+          <span ng-if="newUserForm.password.$dirty && newUserForm.password.$error.required">Password is required
             </span>
-          <span ng-if="signupForm.password.$touched && signupForm.password.$invalid && !signupForm.password.$error.required">Password is invalid
+          <span ng-if="newUserForm.password.$touched && newUserForm.password.$invalid && !newUserForm.password.$error.required">Password is invalid
             </span>
-        </div>
+        </div>-->
       </div>
-      <div class="form-group" ng-class="{ 'has-error': (signupForm.checkPassword.$dirty && signupForm.checkPassword.$error.required) || (signupForm.checkPassword.$invalid && !signupForm.checkPassword.$error.required) }">
+      <div class="form-group" ng-class="{ 'has-error': (newUserForm.checkPassword.$dirty && newUserForm.checkPassword.$error.required) || (newUserForm.checkPassword.$invalid && !newUserForm.checkPassword.$error.required) }">
         <label class="control-label" for="checkPassword">Confirm Password</label>
-        <!-- <input type="password" autocomplete="off" name="checkPassword" id="checkPassword" placeholder="Confirm Password" class="form-control validation" required ng-model="signup.checkpPassword" ng-pattern="/^([A-Z])+([a-z])+([0-9])+([@!%?_])+[A-Za-z0-9@!%?_]*$/"/> -->
-        <input type="password" autocomplete="off" name="checkPassword" id="checkPassword" placeholder="Confirm Password" class="form-control validation" required ng-model="signup.checkPassword" />
-        <div class="help-block">
-          <span ng-if="signupForm.checkPassword.$dirty && signupForm.checkPassword.$error.required">Password is required
+        <!-- <input type="password" autocomplete="off" name="checkPassword" id="checkPassword" placeholder="Confirm Password" class="form-control validation" required ng-model="newUser.checkpPassword" ng-pattern="/^([A-Z])+([a-z])+([0-9])+([@!%?_])+[A-Za-z0-9@!%?_]*$/"/> -->
+        <input type="password" autocomplete="off" name="checkPassword" id="checkPassword" placeholder="Confirm Password" class="form-control validation" required ng-model="newUser.checkPassword" />
+        <!--<div class="help-block">
+          <span ng-if="newUserForm.checkPassword.$dirty && newUserForm.checkPassword.$error.required">Password is required
             </span>
-          <span ng-if="signupForm.checkPassword.$touched && signupForm.checkPassword.$invalid && !signupForm.checkPassword.$error.required">Password is invalid
+          <span ng-if="newUserForm.checkPassword.$touched && newUserForm.checkPassword.$invalid && !newUserForm.checkPassword.$error.required">Password is invalid
             </span>
-        </div>
+        </div>-->
       </div>
       <div class="form-group">
         <div class="row text-center">
-          <div class="col-md-12 col-sm-12 col-xs-12"><button type="submit" ng-disabled="signupForm.$invalid" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Submit</button>
+          <div class="col-md-12 col-sm-12 col-xs-12"><button class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Submit</button>
           </div>
         </div>
       </div>

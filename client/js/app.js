@@ -19,7 +19,7 @@ angular
       })
       .state('app.login', {
         url: 'login',
-        templateUrl: 'views/login.html',
+        templateUrl: 'views/account/login.html',
         controller: 'LoginController'
       })
       .state('app.logout', {
@@ -28,8 +28,22 @@ angular
       })
       .state('app.signup', {
         url: 'signup',
-        templateUrl: 'views/signup.html',
+        templateUrl: 'views/account/signup.html',
         controller: 'SignupController'
+      })
+      .state('app.header', {
+        url: 'header',
+        templateUrl: 'views/common/header.html',
+        controller: 'HeaderController'
+      })
+      .state('app.footer', {
+        url: 'footer',
+        templateUrl: 'views/common/footer.html',
+        controller: 'FooterController'
+      })
+      .state('app.about', {
+        url: 'about',
+        templateUrl: 'views/common/about.html',
       })
 
       // User area
@@ -49,23 +63,69 @@ angular
       })
       .state('app.protected.account', {
         url: 'account',
-        templateUrl: 'views/account.html',
+        templateUrl: 'views/account/account.html',
         controller: 'AccountController'
       })
+      .state('app.protected.user', {
+        url: 'profile',
+        templateUrl: 'views/account/user.html',
+        controller: 'UserController',
+        data: { permissions: { only: ['USER'] }}
+      })
+
       .state('app.protected.submission', {
         url: 'submission',
-        templateUrl: 'views/submissions.html',
-        controller: 'SubmissionController'
+        templateUrl: 'views/main/submissions.html',
+        controller: 'SubmissionController',
+        data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.submission.list', {
-        templateUrl: 'views/submissions.list.html'
+        templateUrl: 'views/main/submissions.list.html',
+        data: { permissions: { only: ['AUTHOR', 'CHAIR'] }}
+      })
+      .state('app.protected.submission.create', {
+        templateUrl: 'views/main/submissions.create.html',
+        data: { permissions: { only: ['AUTHOR'] }}
+      })
+      .state('app.protected.review', {
+        url: 'review',
+        templateUrl: 'views/main/reviews.html',
+        controller: 'ReviewController',
+        data: { permissions: { only: ['REVIEWER'] }}
+      })
+      .state('app.protected.review.list', {
+        templateUrl: 'views/main/reviews.list.html',
+        data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
+      })
+      .state('app.protected.review.create', {
+        templateUrl: 'views/main/reviews.create.html',
+        data: { permissions: { only: ['REVIEWER'] }}
       })
       .state('app.protected.chair', {
         url: 'chair',
-        templateUrl: 'views/chair.html',
+        templateUrl: 'views/admin/chair.html',
         controller: 'ChairController',
         data: { permissions: { only: ['CHAIR'] }}
-      });
+      })
+      .state('app.protected.settings', {
+        url: 'settings',
+        templateUrl: 'views/admin/settings.html',
+        controller: 'SettingsController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.statistics', {
+        url: 'statistics',
+        templateUrl: 'views/admin/statistics.html',
+        controller: 'StatisticsController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.users', {
+        url: 'users',
+        templateUrl: 'views/account/users.list.html',
+        controller: 'UserController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+
   }])
 .factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
   var user,
