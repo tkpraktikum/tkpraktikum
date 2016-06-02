@@ -1,20 +1,19 @@
-<h1>Submission</h1>
+<h1>Create Submission</h1>
 <hr>
 <h3>Number of submissions: <span ng-bind="count"></span> </h3>
-<form name="newSubmissionForm" novalidate ng-submit="createSubmission()">
+<form name="newReviewForm" novalidate ng-submit="createReview()">
   <!-- TODO improve: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
   <div class="row">
     <div class="col-lg-6 form-group">
       <label for="title">Title</label>
-      <input type="text" autocomplete="off" class="form-control" id="title" placeholder="Title" name="title" required ng-model="newSubmission.title">
+      <input type="text" autocomplete="off" class="form-control" id="title" placeholder="Title" name="title" required ng-model="newReview.title">
     </div>
   </div>
   <div class="row">
     <div class="col-lg-1">
-      <button class="btn btn-default" ng-disabled="newSubmissionForm.$invalid">Create</button>
+      <button class="btn btn-default" ng-disabled="newReviewForm.$invalid">Create</button>
     </div>
   </div>
 </form>
 <hr>
-<div ui-view></div>
 

@@ -6,4 +6,7 @@ angular
     AuthService.getUser().then(function (userData) {
       $scope.user = userData;
     });
+  }])
+  .controller('UserController', ['$scope', '$state', function($scope, $state) {
+
   }]);

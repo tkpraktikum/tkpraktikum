@@ -1,5 +1,6 @@
 body {
-  padding-top:50px
+  padding-top:50px;
+  padding-bottom: 50px;
 }
 .glyphicon-remove:hover {
   cursor:pointer
@@ -11,4 +12,29 @@ body {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
+}
+
+.navbar-link.no-underline {
+  text-decoration: none;
+}
+
+.form-group .help-block {
+  display: none;
+}
+
+.form-group.has-error .help-block {
+  display: block;
+}
+
+.centerContent {
+  float: none;
+  margin: 0 auto;
+}
+
+.validation.ng-dirty.ng-valid[required] {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.validation.ng-dirty.ng-invalid {
+  border-left: 5px solid #a94442; /* red */
 }
