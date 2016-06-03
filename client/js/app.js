@@ -15,7 +15,19 @@ angular
       .state('app', {
         url: '/',
         abstract: true,
-        templateUrl: 'views/layout.html',
+        views: {
+          '': {
+            templateUrl: 'views/layout.html',
+          },
+          'header@app': {
+            templateUrl: 'views/common/header.html',
+            controller: 'HeaderController'
+          },
+          'footer@app': {
+            templateUrl: 'views/common/footer.html',
+            controller: 'FooterController'
+          }
+        }
       })
       .state('app.login', {
         url: 'login',
@@ -31,16 +43,6 @@ angular
         templateUrl: 'views/account/signup.html',
         controller: 'SignupController'
       })
-      .state('app.header', {
-        url: 'header',
-        templateUrl: 'views/common/header.html',
-        controller: 'HeaderController'
-      })
-      .state('app.footer', {
-        url: 'footer',
-        templateUrl: 'views/common/footer.html',
-        controller: 'FooterController'
-      })
       .state('app.about', {
         url: 'about',
         templateUrl: 'views/common/about.html',
@@ -48,7 +50,7 @@ angular
 
       // User area
       .state('app.protected', {
-        template: '<ui-view/>',
+        template: '<div ui-view></div>',
         data: { permissions: { only: ['USER'], redirectTo: 'app.login' } }
       })
       .state('app.protected.tag', {
@@ -72,7 +74,6 @@ angular
         controller: 'UserController',
         data: { permissions: { only: ['USER'] }}
       })
-
       .state('app.protected.submission', {
         url: 'submission',
         templateUrl: 'views/main/submissions.html',
