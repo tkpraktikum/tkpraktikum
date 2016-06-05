@@ -44,6 +44,11 @@
       "model": "user",
       "foreignKey": "reviewId",
       "through": "review"
+    },
+    "conference": {
+      "type": "belongsTo",
+      "model": "conference",
+      "foreignKey": "conferenceId"
     }
   },
   "acls": [
