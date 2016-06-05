@@ -30,7 +30,7 @@
     "dataSource": "postgres",
     "public": false
   },
-  "RoleMapping": {
+  "rolemapping": {
     "dataSource": "postgres",
     "public": false
   },

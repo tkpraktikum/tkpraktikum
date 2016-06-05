@@ -38,7 +38,7 @@
     "roles": {
        "type": "hasMany",
        "model": "Role",
-       "through": "RoleMapping",
+       "through": "rolemapping",
        "foreignKey": "principalId"
     },
     "submissions": {
