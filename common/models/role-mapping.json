@@ -1,6 +1,6 @@
 {
-  "name": "rolemapping",
-  "plural": "rolemappings",
+  "name": "roleMapping",
+  "plural": "roleMappings",
   "base": "RoleMapping",  
   "properties": {    
   },
