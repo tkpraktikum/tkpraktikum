@@ -3,7 +3,7 @@ module.exports = function enableAuthentication(app) {
   app.enableAuth();
 
   var Role = app.models.Role;
-  var RoleMapping = app.models.RoleMapping;
+  var RoleMapping = app.models.roleMapping;
 
   Role.registerResolver('$authorOwner', function(role, context, callback) {
     if (!context || !context.model || !context.modelId) {

@@ -23,12 +23,12 @@ module.exports = function(app, ds, callback) {
         if(err) return callback(err);
         var principals = model.map(function(u) {
           return {
-            principalType: app.models.RoleMapping.USER,
+            principalType: app.models.roleMapping.USER,
             principalId: u.id,
             roleId: userRoles[u.email].id
           };
         });
-        app.models.RoleMapping.create(principals, function(err) {
+        app.models.roleMapping.create(principals, function(err) {
           if(err) return callback(err);
           logger.info("created user role mapping");
           callback(err);
