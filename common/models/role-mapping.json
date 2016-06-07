@@ -1,6 +1,6 @@
 {
   "name": "rolemapping",
-  "plural": "submissions",
+  "plural": "rolemappings",
   "base": "RoleMapping",  
   "properties": {    
   },

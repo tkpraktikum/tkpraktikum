@@ -24,7 +24,7 @@ module.exports = function(User) {
   };
 
   User.prototype.removeRole = function(role, callback) {
-    var RoleMapping = User.app.models.RoleMapping;
+    var RoleMapping = User.app.models.rolemapping;
     RoleMapping.destroyAll({and: [{roleId: role.id}, { principalId: this.id}]}, function(err, info) {
       if(err) {
         logger.error(err);
@@ -35,7 +35,7 @@ module.exports = function(User) {
   };
 
   User.prototype.addRole = function(role, callback) {
-    var RoleMapping = User.app.models.RoleMapping;
+    var RoleMapping = User.app.models.rolemapping;
     role.principals.create({principalType: RoleMapping.USER, principalId: this.id}, function (err, principal) {
       if (!err) {
         logger.info('Created :', principal);
