@@ -1,1 +1,183 @@
-<h1>User</h1>
+<div class="col-lg-offset-2 col-md-offset-1 col-sm-offset-2">
+  <div class="col-lg-10 col-md-10 col-sm-10">
+    <h1 class="text-center">Edit Profile</h1>
+    <hr>
+  </div>
+
+  <form name="changeProfileForm" ng-submit="changeProfile()" novalidate>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="username">Username</label>
+        <input type="text" autocomplete="off" name="username" id="username" placeholder="Username"
+               class="form-control validation" required ng-model="user.username"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="email">E-Mail</label>
+        <input type="email" autocomplete="off" name="email" id="email" placeholder="E-Mail"
+               class="form-control validation" required ng-model="user.email"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="affiliationDropdown">Affiliation</label>
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle btn-group btn-group-justified modifiedDropdownButton"
+                  type="button"
+                  id="affiliationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            -- Affliliation --
+            <span class="pull-right">
+              <span class="caret"></span>
+            </span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="affiliationDropdown">
+            <li><a ng-repeat="a in affiliations | orderBy:sortType:sortReverse | filter:searchAffiliation" id={{a.id}}
+                   href="">
+              {{a.name}}
+            </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="forename">Forename</label>
+        <input type="text" autocomplete="off" name="forename" id="forename" placeholder="Forename"
+               class="form-control validation" required ng-model="user.forename"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="surname">Surname</label>
+        <input type="text" autocomplete="off" name="surname" id="surname" placeholder="Surname"
+               class="form-control validation" required ng-model="user.surname"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="title">Title</label>
+        <input type="text" autocomplete="off" name="title" id="title" placeholder="Title"
+               class="form-control validation" required ng-model="user.title"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="profession">Profession</label>
+        <input type="text" autocomplete="off" name="profession" id="profession" placeholder="Profession"
+               class="form-control validation" required ng-model="user.profession"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="city">City</label>
+        <input type="text" autocomplete="off" name="city" id="city" placeholder="City"
+               class="form-control validation" required ng-model="user.city"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="country">Country</label>
+        <input type="text" autocomplete="off" name="country" id="country" placeholder="Country"
+               class="form-control validation" required ng-model="user.country"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="state">State</label>
+        <input type="text" autocomplete="off" name="state" id="state" placeholder="State"
+               class="form-control validation" required ng-model="user.state"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <label class="control-label" for="zip">ZIP/PLZ</label>
+        <input type="text" autocomplete="off" name="zip" id="zip" placeholder="ZIP/PLZ"
+               class="form-control validation" required ng-model="user.zip"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <button class="btn btn-primary col-lg-2 col-sm-4 col-xs-12 pull-right">Apply Settings</button>
+      </div>
+    </div>
+    <div class="row"></div>
+  </form>
+  <div class="col-lg-10 col-md-10 col-sm-10">
+    <hr>
+    <h3 class="text-center">Change Password</h3>
+    <hr>
+  </div>
+  <form ng-submit="changePassword()" novalidate>
+    <div class="form-group">
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <label class="control-label" for="currentPassword">Current Password</label>
+        <input type="password" autocomplete="off" name="currentPassword" id="currentPassword"
+               placeholder="Current Password"
+               class="form-control validation" required ng-model="user.currentPassword"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <label class="control-label" for="newPassword">New Password</label>
+        <input type="password" autocomplete="off" name="newPassword" id="newPassword"
+               placeholder="New Password"
+               class="form-control validation" required ng-model="user.newPassword"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <label class="control-label" for="confirmNewPassword">Confirm New Password</label>
+        <input type="password" autocomplete="off" name="confirmNewPassword" id="confirmNewPassword"
+               placeholder="Confirm New Password"
+               class="form-control validation" required ng-model="user.confirmNewPassword"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <button class="btn btn-primary col-lg-2 col-sm-4 col-xs-12 pull-right">Change</button>
+      </div>
+    </div>
+    <br/>
+  </form>
+  <div class="col-lg-10 col-md-10 col-sm-10">
+    <hr>
+    <h3 class="text-center">Delete Profile</h3>
+    <hr>
+  </div>
+  <form ng-submit="deleteProfile()" novalidate>
+    <div class="form-group">
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <label class="control-label" for="password">Password</label>
+        <input type="password" autocomplete="off" name="password" id="password" placeholder="Password"
+               class="form-control validation" required ng-model="user.password"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <label class="control-label" for="confirmPassword">Confirm Password</label>
+        <input type="password" autocomplete="off" name="confirmPassword" id="confirmPassword"
+               placeholder="Confirm Password"
+               class="form-control validation" required ng-model="user.confirmPassword"/>
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <button class="btn btn-primary col-lg-2 col-sm-4 col-xs-12 pull-right">Delete</button>
+      </div>
+    </div>
+    <br/>
+  </form>
+</div>
