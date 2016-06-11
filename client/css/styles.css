@@ -1,29 +1,26 @@
 body {
-  padding-top:50px;
+  padding-top: 50px;
   padding-bottom: 50px;
 }
-.glyphicon-remove:hover {
-  cursor:pointer
+
+@media (min-width: 1200px) {
+
+  .verticalLine {
+    border-right: thin solid #EEE;
+  }
+
 }
 
-.ng-hide.ng-hide-animate{
+.glyphicon-remove:hover {
+  cursor: pointer;
+}
+
+.ng-hide.ng-hide-animate {
   display: none !important;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
-}
-
-.navbar-link.no-underline {
-  text-decoration: none;
-}
-
-.form-group .help-block {
-  display: none;
-}
-
-.form-group.has-error .help-block {
-  display: block;
 }
 
 .centerContent {
@@ -37,4 +34,24 @@ body {
 
 .validation.ng-dirty.ng-invalid {
   border-left: 5px solid #a94442; /* red */
+}
+
+.paddingTop {
+  padding-top: 50px;
+}
+
+.paddingBottom {
+  padding-bottom: 50px;
+}
+
+.modifiedDropDownButton.btn {
+  width: 90%;
+}
+
+.modifiedDropDownCaretButton.btn {
+  width: 10%;
+}
+
+.modifiedDropDownList {
+  width: 100%;
 }

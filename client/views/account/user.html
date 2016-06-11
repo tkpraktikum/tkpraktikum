@@ -1,1 +1,155 @@
-<h1>User</h1>
+<div class="col-lg-10 col-lg-offset-1">
+  <h1 class="text-center">Edit Profile</h1>
+  <hr>
+  <div class="col-lg-6 verticalLine">
+    <div class="form-group">
+      <h3 class="text-center">Personalize Profile</h3>
+      <div class="visible-lg">
+        <hr>
+      </div>
+    </div>
+    <form name="changeProfileForm" ng-submit="changeProfile()" novalidate>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.title.$dirty && changeProfileForm.title.$invalid) || (changeProfileForm.title.$invalid && !changeProfileForm.title.$error.required) }">
+        <label class="control-label" for="title">Title</label>
+        <input type="text" autocomplete="off" name="title" id="title" placeholder="Title"
+               class="form-control validation" required ng-model="changeUserProfile.title"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.firstname.$dirty && changeProfileForm.firstname.$invalid) || (changeProfileForm.firstname.$invalid && !changeProfileForm.firstname.$error.required) }">
+        <label class="control-label" for="firstname">Firstname</label>
+        <input type="text" autocomplete="off" name="firstname" id="firstname" placeholder="Firstname"
+               class="form-control validation" required ng-model="changeUserProfile.firstname"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.lastname.$dirty && changeProfileForm.lastname.$invalid) || (changeProfileForm.lastname.$invalid && !changeProfileForm.lastname.$error.required) }">
+        <label class="control-label" for="lastname">Lastname</label>
+        <input type="text" autocomplete="off" name="lastname" id="lastname" placeholder="Lastname"
+               class="form-control validation" required ng-model="changeUserProfile.lastname"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.affiliation.$invalid && selectedItem == null) }">
+        <label class="control-label" for="affiliationDropDown">Affiliation</label>
+        <div class="dropdown">
+          <div class="btn-group btn-group-justified">
+            <button class="btn btn-default modifiedDropDownButton" type="button" aria-disabled="true" required
+                    ng-model="changeUserProfile.affiliation">
+              <span ng-show="!selectedItem">-- Affiliation --</span>
+              <span ng-show="selectedItem" class="text">{{selectedItem}}</span>
+            </button>
+            <button class="btn btn-primary dropdown-toggle modifiedDropDownCaretButton" type="button"
+                    id="affiliationDropDown" ng-click="changeCaret = !changeCaret" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+              <span ng-show="!changeCaret" class="fa fa-caret-right"></span>
+              <span ng-show="changeCaret" class="fa fa-caret-down"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right modifiedDropDownList" aria-labelledby="affiliationDropDown">
+              <li ng-repeat="a in affiliations | orderBy:sortType:sortReverse | filter:searchAffiliation" id={{a.id}}>
+                <a ng-click="dropDownItemSelected(a)" href="">{{a.name}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.profession.$dirty && changeProfileForm.profession.$invalid) || (changeProfileForm.profession.$invalid && !changeProfileForm.profession.$error.required) }">
+        <label class="control-label" for="profession">Profession</label>
+        <input type="text" autocomplete="off" name="profession" id="profession" placeholder="Profession"
+               class="form-control validation" required ng-model="changeUserProfile.profession"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.zip.$dirty && changeProfileForm.zip.$invalid) || (changeProfileForm.zip.$invalid && !changeProfileForm.zip.$error.required) }">
+        <label class="control-label" for="zip">ZIP</label>
+        <input type="text" autocomplete="off" name="zip" id="zip" placeholder="ZIP"
+               class="form-control validation" required ng-model="changeUserProfile.zip"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.city.$dirty && changeProfileForm.city.$invalid) || (changeProfileForm.city.$invalid && !changeProfileForm.city.$error.required) }">
+        <label class="control-label" for="city">City</label>
+        <input type="text" autocomplete="off" name="city" id="city" placeholder="City"
+               class="form-control validation" required ng-model="changeUserProfile.city"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.state.$dirty && changeProfileForm.state.$invalid) || (changeProfileForm.state.$invalid && !changeProfileForm.state.$error.required) }">
+        <label class="control-label" for="state">State</label>
+        <input type="text" autocomplete="off" name="state" id="state" placeholder="State"
+               class="form-control validation" required ng-model="changeUserProfile.state"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeProfileForm.country.$dirty && changeProfileForm.country.$invalid) || (changeProfileForm.country.$invalid && !changeProfileForm.country.$error.required) }">
+        <label class="control-label" for="country">Country</label>
+        <input type="text" autocomplete="off" name="country" id="country" placeholder="Country"
+               class="form-control validation" required ng-model="changeUserProfile.country"/>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">Apply</button>
+        <div class="row"></div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="form-group">
+      <div class="hidden-lg">
+        <hr>
+      </div>
+      <h3 class="text-center">Change Password</h3>
+      <div class="visible-lg">
+        <hr>
+      </div>
+    </div>
+    <form name="changeUserPasswordForm" ng-submit="changePassword()" novalidate>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeUserPasswordForm.currentPassword.$dirty && changeUserPasswordForm.currentPassword.$invalid) || (changeUserPasswordForm.currentPassword.$invalid && !changeUserPasswordForm.currentPassword.$error.required) }">
+        <label class="control-label" for="currentPassword">Current Password</label>
+        <input type="password" autocomplete="off" name="currentPassword" id="currentPassword"
+               placeholder="Current Password"
+               class="form-control validation" required ng-model="changeUserPassword.currentPassword"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeUserPasswordForm.newPassword.$dirty && changeUserPasswordForm.newPassword.$invalid) || (changeUserPasswordForm.newPassword.$invalid && !changeUserPasswordForm.newPassword.$error.required) }">
+        <label class="control-label" for="newPassword">New Password</label>
+        <input type="password" autocomplete="off" name="newPassword" id="newPassword"
+               placeholder="New Password"
+               class="form-control validation" required ng-model="changeUserPassword.newPassword"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (changeUserPasswordForm.confirmNewPassword.$dirty && changeUserPasswordForm.confirmNewPassword.$invalid) || (changeUserPasswordForm.confirmNewPassword.$invalid && !changeUserPasswordForm.confirmNewPassword.$error.required) }">
+        <label class="control-label" for="confirmNewPassword">Confirm New Password</label>
+        <input type="password" autocomplete="off" name="confirmNewPassword" id="confirmNewPassword"
+               placeholder="Confirm New Password"
+               class="form-control validation" required ng-model="changeUserPassword.confirmNewPassword"
+               check-password="changeUserPassword.newPassword"/>
+        <div class="row"></div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">Change</button>
+        <div class="row"></div>
+      </div>
+    </form>
+    <div class="form-group">
+      <hr>
+      <h3 class="text-center">Delete Profile</h3>
+    </div>
+    <form name="deleteUserProfileForm" ng-submit="deleteProfile()" novalidate>
+      <div class="form-group"
+           ng-class="{ 'has-error': (deleteUserProfileForm.password.$dirty && deleteUserProfileForm.password.$invalid) || (deleteUserProfileForm.password.$invalid && !deleteUserProfileForm.password.$error.required) }">
+        <label class="control-label" for="password">Password</label>
+        <input type="password" autocomplete="off" name="password" id="password" placeholder="Password"
+               class="form-control validation" required ng-model="deleteUserProfile.password"/>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': (deleteUserProfileForm.confirmPassword.$dirty && deleteUserProfileForm.confirmPassword.$invalid) || (deleteUserProfileForm.confirmPassword.$invalid && !deleteUserProfileForm.confirmPassword.$error.required) }">
+        <label class="control-label" for="confirmPassword">Confirm Password</label>
+        <input type="password" autocomplete="off" name="confirmPassword" id="confirmPassword"
+               placeholder="Confirm Password"
+               class="form-control validation" check-password="deleteUserProfile.password" required
+               ng-model="deleteUserProfile.confirmPassword"/>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-danger col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">Delete</button>
+      </div>
+    </form>
+  </div>
+</div>

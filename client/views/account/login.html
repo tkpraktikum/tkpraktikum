@@ -1,15 +1,18 @@
 <div permission permission-except="'hasValidSession'">
   <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 centerContent">
-    <h2 class="text-center">Login</h2>
+    <h1 class="text-center">Login</h1>
+    <br/>
     <!-- TODO improve: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
     <!-- TODO improve: validation for regex in username and pw -->
     <form name="loginForm" ng-submit="login()" novalidate>
       <!--<div class="form-group" ng-class="{ 'has-error': (loginForm.username.$dirty && loginForm.username.$error.required) || (loginForm.username.$invalid && !loginForm.username.$error.required) }">-->
-      <div class="form-group">
+      <div class="form-group"
+           ng-class="{ 'has-error': (loginForm.username.$dirty && loginForm.username.$error.required) || (loginForm.username.$invalid && !loginForm.username.$error.required) }">
         <label class="control-label" for="username">Username</label>
         <!-- TODO: regex username if needed (validation) -->
         <!-- <input type="text" autocomplete="off" name="username" id="username" placeholder="Username" class="form-control validation" required ng-model="login.username" ng-pattern="/^[A-Za-z0-9_]{8,16}$/" /> -->
-        <input type="text" autocomplete="off" name="username" id="username" placeholder="Username" class="form-control validation" required ng-model="user.name" />
+        <input type="text" autocomplete="off" name="username" id="username" placeholder="Username"
+               class="form-control validation" required ng-model="user.username"/>
         <!--<span ng-show="loginForm.username.$dirty && loginForm.username.$error.required" class="help-block">Username is required</span>-->
         <div class="help-block">
           <!--<span ng-if="loginForm.username.$dirty && loginForm.$invalid">Username is required
@@ -18,11 +21,13 @@
             </span>-->
         </div>
       </div>
-      <div class="form-group" ng-class="{ 'has-error': (loginForm.password.$dirty && loginForm.password.$error.required) || (loginForm.password.$invalid && !loginForm.password.$error.required) }">
+      <div class="form-group"
+           ng-class="{ 'has-error': (loginForm.password.$dirty && loginForm.password.$error.required) || (loginForm.password.$invalid && !loginForm.password.$error.required) }">
         <label class="control-label" for="password">Password</label>
         <!-- TODO: regex password if needed (validation) -->
         <!-- <input type="password" autocomplete="off" name="password" id="password" placeholder="Password" class="form-control validation" required ng-model="login.password" ng-pattern="/^([A-Z])+([a-z])+([0-9])+([@!%?_])+[A-Za-z0-9@!%?_]*$/"/> -->
-        <input type="password" autocomplete="off" name="password" id="password" placeholder="Password" class="form-control validation" required ng-model="user.password" />
+        <input type="password" autocomplete="off" name="password" id="password" placeholder="Password"
+               class="form-control validation" required ng-model="user.password"/>
         <div class="help-block">
           <!--<span ng-if="loginForm.password.$dirty && loginForm.password.$error.required">Password is required
             </span>
@@ -40,7 +45,7 @@
         </div>
       </div>
     </form>
-  <br/>
+    <br/>
     <div class="form-group text-center">
       <div class="centerContent social-icons icon-circle">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -67,3 +72,4 @@
       </div>
     </div>
   </div>
+</div>
