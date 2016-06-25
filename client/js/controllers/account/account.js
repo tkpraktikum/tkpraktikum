@@ -56,4 +56,23 @@ angular
       console.log(JSON.stringify($scope.deleteUserProfile));
     };
 
+  }])
+  .controller('UserListController', ['$scope', 'User', function ($scope, User) {
+
+    $scope.users = [];
+    $scope.roles = {};
+    $scope.searchUser   = '';
+    $scope.sortReverse  = false;
+
+    function getUsers() {
+      User
+        .find()
+        .$promise
+        .then(function (results) {
+            $scope.users = results;
+        });
+    }
+
+    getUsers();
+
   }]);

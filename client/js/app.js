@@ -123,7 +123,7 @@ angular
       .state('app.protected.users', {
         url: 'users',
         templateUrl: 'views/account/users.list.html',
-        controller: 'UserController',
+        controller: 'UserListController',
         data: { permissions: { only: ['CHAIR'] }}
       })
 
