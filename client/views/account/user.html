@@ -4,9 +4,8 @@
   <div class="col-lg-6 verticalLine">
     <div class="form-group">
       <h3 class="text-center">Personalize Profile</h3>
-      <div class="visible-lg">
-        <hr>
-      </div>
+      <hr class="visible-lg">
+      </hr>
     </div>
     <form name="changeProfileForm" ng-submit="changeProfile()" novalidate>
       <div class="form-group"
@@ -32,18 +31,18 @@
         <label class="control-label" for="affiliationDropDown">Affiliation</label>
         <div class="dropdown">
           <div class="btn-group btn-group-justified">
-            <button class="btn btn-default modifiedDropDownButton" type="button" aria-disabled="true" required
+            <button class="btn btn-default modified-dropdown-button" type="button" aria-disabled="true" required
                     ng-model="changeUserProfile.affiliation">
               <span ng-show="!selectedItem">-- Affiliation --</span>
               <span ng-show="selectedItem" class="text">{{selectedItem}}</span>
             </button>
-            <button class="btn btn-primary dropdown-toggle modifiedDropDownCaretButton" type="button"
+            <button class="btn btn-primary dropdown-toggle modified-dropdown-caretbutton" type="button"
                     id="affiliationDropDown" ng-click="changeCaret = !changeCaret" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="true">
               <span ng-show="!changeCaret" class="fa fa-caret-right"></span>
               <span ng-show="changeCaret" class="fa fa-caret-down"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-right modifiedDropDownList" aria-labelledby="affiliationDropDown">
+            <ul class="dropdown-menu dropdown-menu-right fullwidth-dropdown-list" aria-labelledby="affiliationDropDown">
               <li ng-repeat="a in affiliations | orderBy:sortType:sortReverse | filter:searchAffiliation" id={{a.id}}>
                 <a ng-click="dropDownItemSelected(a)" href="">{{a.name}}
                 </a>
@@ -95,9 +94,8 @@
         <hr>
       </div>
       <h3 class="text-center">Change Password</h3>
-      <div class="visible-lg">
-        <hr>
-      </div>
+      <hr class="visible-lg">
+      </hr>
     </div>
     <form name="changeUserPasswordForm" ng-submit="changePassword()" novalidate>
       <div class="form-group"

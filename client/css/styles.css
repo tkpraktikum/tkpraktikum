@@ -36,22 +36,14 @@ body {
   border-left: 5px solid #a94442; /* red */
 }
 
-.paddingTop {
-  padding-top: 50px;
-}
-
-.paddingBottom {
-  padding-bottom: 50px;
-}
-
-.modifiedDropDownButton.btn {
+.modified-dropdown-button.btn {
   width: 90%;
 }
 
-.modifiedDropDownCaretButton.btn {
+.modified-dropdown-caretbutton.btn {
   width: 10%;
 }
 
-.modifiedDropDownList {
+.fullwidth-dropdown-list {
   width: 100%;
 }
