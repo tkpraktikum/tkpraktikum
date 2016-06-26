@@ -18,14 +18,6 @@ body {
   text-decoration: none;
 }
 
-.form-group .help-block {
-  display: none;
-}
-
-.form-group.has-error .help-block {
-  display: block;
-}
-
 .centerContent {
   float: none;
   margin: 0 auto;

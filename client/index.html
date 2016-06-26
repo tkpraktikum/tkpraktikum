@@ -9,6 +9,8 @@
   <!-- Bootstrap -->
   <link href="vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="vendor/angular-ui-select/dist/select.css">
+  <link rel="stylesheet" href="vendor/dropzone/dist/dropzone.css">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/social.css" rel="stylesheet">
 
@@ -23,11 +25,14 @@
 
 <div ui-view></div>
 
+<script src="vendor/dropzone/dist/dropzone.js"></script>
 <script src="vendor/jquery/dist/jquery.js"></script>
 <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
 <script src="vendor/angular/angular.js"></script>
 <script src="vendor/angular-resource/angular-resource.js"></script>
+<script src="vendor/angular-sanitize/angular-sanitize.js"></script>
 <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/angular-ui-select/dist/select.js"></script>
 <script src="vendor/angular-permission/dist/angular-permission.js"></script>
 <script src="vendor/angular-permission/dist/angular-permission-ui.js"></script>
 <script src="js/services/lb-services.js"></script>
@@ -38,12 +43,17 @@
 <script src="js/controllers/account/auth.js"></script>
 <script src="js/controllers/account/signup.js"></script>
 <script src="js/controllers/main/submissions.js"></script>
+<script src="js/controllers/main/submission.create.js"></script>
 <script src="js/controllers/main/reviews.js"></script>
 <script src="js/controllers/admin/chair.js"></script>
 <script src="js/controllers/admin/settings.js"></script>
 <script src="js/controllers/admin/statistics.js"></script>
 <script src="js/controllers/common/footer.js"></script>
 <script src="js/controllers/common/header.js"></script>
+
+<script>
+  Dropzone.autoDiscover = false;
+</script>
 
 
 </body>

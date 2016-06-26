@@ -2,6 +2,7 @@ var CONTAINERS_URL = '/api/containers/';
 module.exports = function (File) {
 
   File.upload = function (ctx, options, mcb) {
+    console.log("FILE UPLOAD CALLED");
     if (!options) options = {};
     ctx.req.params.container = 'common';
     File.app.models.container.upload(ctx.req, ctx.result, options, function (err, fileObj) {
@@ -39,5 +40,9 @@ module.exports = function (File) {
       http: {verb: 'post'}
     }
   );
+
+  File.beforeRemote('upload', function (ctx, a, b) {
+    console.log("BEFORE REMOTE", ctx, a, b);
+  });
 
 };
