@@ -12,7 +12,7 @@ angular
   .controller('UserController', ['$scope', 'AuthService', 'Affiliation', function ($scope, AuthService, Affiliation) {
 
     $scope.user = {};
-    $scope.affiliations = Affiliation.find();
+    $scope.affiliations = [];
     $scope.changeUserProfile = {};
     $scope.changeUserPassword = {};
     $scope.deleteUserProfile = {};
@@ -21,6 +21,10 @@ angular
 
     AuthService.getUser().then(function (userData) {
       $scope.user = userData;
+    });
+
+    Affiliation.find().$promise.then(function (affiliations) {
+      $scope.affiliations = affiliations;
     });
 
     $scope.dropDownItemSelected = function (selection) {
@@ -47,8 +51,12 @@ angular
   }])
   .controller('UserListController', ['$scope', 'User', function ($scope, User) {
 
-    $scope.users = User.find();
+    $scope.users = [];
     $scope.searchUser   = '';
     $scope.sortReverse  = false;
+
+    User.find().$promise.then(function (users) {
+      $scope.users = users;
+    });
 
   }]);
