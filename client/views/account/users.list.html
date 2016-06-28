@@ -72,19 +72,16 @@
         <td>{{u.username}}</td>
         <td>{{u.email}}</td>
         <td>
-          <label for="chairCheckbox{{u.id}}">
-            <input type="checkbox" name="chairCheckbox{{u.id}}" id="chairCheckbox{{u.id}}" ng-checked="u.isChair" ng-model="u.isChair">
-          </label>
+          <span class="fa fa-check" ng-if="u.isChair"></span>
+          <span class="fa fa-remove" ng-if="!u.isChair"></span>
         </td>
         <td>
-          <label for="authorCheckbox{{u.id}}">
-            <input type="checkbox" name="authorCheckbox{{u.id}}" id="authorCheckbox{{u.id}}" ng-checked="u.isAuthor" ng-model="u.isAuthor">
-          </label>
+          <span class="fa fa-check" ng-if="u.isAuthor"></span>
+          <span class="fa fa-remove" ng-if="!u.isAuthor"></span>
         </td>
         <td>
-          <label for="reviewerCheckbox{{u.id}}">
-            <input type="checkbox" name="reviewerCheckbox{{u.id}}" id="reviewerCheckbox{{u.id}}" ng-checked="u.isReviewer" ng-model="u.isReviewer">
-          </label>
+          <span class="fa fa-check" ng-if="u.isReviewer"></span>
+          <span class="fa fa-remove" ng-if="!u.isReviewer"></span>
         </td>
       </tr>
       </tbody>
