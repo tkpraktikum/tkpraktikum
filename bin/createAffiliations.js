@@ -5,13 +5,13 @@ module.exports = function(app, ds, callback) {
     {
       name: 'TU Darmstadt',
       city: 'Darmstadt',
-      state: 'Hesse',
+      state: 'Hessen',
       country: 'Germany'
     },
     {
       name: 'HS Darmstadt',
       city: 'Darmstadt',
-      state: 'Hesse',
+      state: 'Hessen',
       country: 'Germany'
     },
     {
@@ -28,10 +28,10 @@ module.exports = function(app, ds, callback) {
     }
   ];
 
-  
+
   app.models.Affiliation.create(affiliations, function(err) {
     if (!err) {
-      logger.info('Created affiliations');  
+      logger.info('Created affiliations');
     }
     callback(err);
   });

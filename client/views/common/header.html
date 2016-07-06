@@ -32,7 +32,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" ui-sref-active="active" permission permission-only="'USER'" ng-cloak>
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User X <span class="caret"></span></a>
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span ng-bind="user.username"></span> <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user">Edit Profile</a></li>
             <li role="separator" class="divider"></li>
