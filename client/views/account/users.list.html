@@ -1,1 +1,90 @@
 <h1>User List</h1>
+<hr>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">User Information and Roles</div>
+  <div class="panel-body">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+          <input type="text" class="form-control" placeholder="Filter (ID, Name, E-Mail)" ng-model="searchUser">
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>
+          <a ui-sref="id" ng-click="sortType = 'id'; sortReverse = !sortReverse">
+            ID
+            <span ng-show="sortType == 'id' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a ui-sref="username" ng-click="sortType = 'username'; sortReverse = !sortReverse">
+            Name
+            <span ng-show="sortType == 'username' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'username' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a ui-sref="email" ng-click="sortType = 'email'; sortReverse = !sortReverse">
+            E-Mail
+            <span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a ui-sref="isChair" ng-click="sortType = 'isChair'; sortReverse = !sortReverse">
+            Chair
+            <span ng-show="sortType == 'isChair' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'isChair' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a ui-sref="isAuthor" ng-click="sortType = 'isAuthor'; sortReverse = !sortReverse">
+            Author
+            <span ng-show="sortType == 'isAuthor' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'isAuthor' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a ui-sref="isReviewer" ng-click="sortType = 'isReviewer'; sortReverse = !sortReverse">
+            Reviewer
+            <span ng-show="sortType == 'isReviewer' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'isReviewer' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="u in users | orderBy:'id' | orderBy:sortType:sortReverse | filter:searchUser">
+        <td>{{u.id}}</td>
+        <td>{{u.username}}</td>
+        <td>{{u.email}}</td>
+        <td>
+          <span class="fa fa-check" ng-if="u.isChair"></span>
+          <span class="fa fa-remove" ng-if="!u.isChair"></span>
+        </td>
+        <td>
+          <span class="fa fa-check" ng-if="u.isAuthor"></span>
+          <span class="fa fa-remove" ng-if="!u.isAuthor"></span>
+        </td>
+        <td>
+          <span class="fa fa-check" ng-if="u.isReviewer"></span>
+          <span class="fa fa-remove" ng-if="!u.isReviewer"></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
