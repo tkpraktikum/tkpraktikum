@@ -47,3 +47,9 @@ body {
 .fullwidth-dropdown-list {
   width: 100%;
 }
+
+.dropzone {
+  background-color: #F8F8F8;
+  border: 5px dashed #ddd;
+  text-align: center;
+}
