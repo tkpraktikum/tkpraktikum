@@ -44,15 +44,8 @@ module.exports = function(User) {
     });
   };
 
-  User.prototype.getRoles = function(callback) {
-    this
-      .roles({id: this.id})
-      .then(function (roles) {
-        callback(null, roles);
-      }, function (err) {
-        logger.error(err);
-        callback(err);
-      });
+  User.prototype.getRoles = function() {
+    return this.roles({id: this.id});
   };
 
   User.prototype.getAllAuthors = function(submission, callback) {
@@ -107,35 +100,52 @@ module.exports = function(User) {
     }
   );
 
-  User.afterRemote('find', function(ctx, instance, next) {
+  /*User.afterRemote('find', function(ctx, instance, next) {
     var result = [];
 
-    var cb = _.after(ctx.result.length, function(err) {
-      if(err) {
-        logger.error(err);
+    var loop = true;
+    _.forEach(ctx.result, function(m) {
+      if (m.constructor.name === 'Object') {
+        loop = false;
+        console.log('Loop')
       }
-      ctx.result = result.map(function(user) {
-        return {
-          username: user.username,
-          email: user.email,
-          id: user.id,
-          isAuthor: user.roles.indexOf('author') !== -1,
-          isReviewer: user.roles.indexOf('reviewer') !== -1,
-          isChair: user.roles.indexOf('chair') !== -1
-        };
-      });
-      next();
     });
 
-    _.each(ctx.result, function(user) {
-      user.getRoles(function(err, roles) {
-        user = user.toJSON();
-        user.roles = roles.map(function(r) {return r.name;});
-        result.push(user);
-        cb();
-      })
-    });
-  });
+    if (!loop) {
+      next();
+    } else {
+      var cb = _.after(ctx.result.length, function (err) {
+        if (err) {
+          logger.error(err);
+        }
+        ctx.result = result.map(function (user) {
+          return {
+            username: user.username,
+            email: user.email,
+            id: user.id,
+            isAuthor: user.roles.indexOf('author') !== -1,
+            isReviewer: user.roles.indexOf('reviewer') !== -1,
+            isChair: user.roles.indexOf('chair') !== -1
+          };
+        });
+        console.log(ctx.result);
+        next();
+      });
+
+      _.each(ctx.result, function (user) {
+        user.getRoles().then(function (roles) {
+          var newUser = user.toJSON();
+          newUser.roles = roles.map(function (r) {
+            return r.toJSON().name;
+          });
+          result.push(newUser);
+          cb();
+        }).catch(function (err) {
+          console.log(err);
+        });
+      });
+    }
+  });*/
 
   User.afterRemote('prototype.__get__submissions', function(ctx, instance, next) {
     // enrich response with user information
