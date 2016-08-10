@@ -54,9 +54,8 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": [
-        "__get__roles"
-      ]
+      "property": "*",
+      "accessType": "*"
     },
     {
       "principalType": "ROLE",

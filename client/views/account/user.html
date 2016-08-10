@@ -26,7 +26,7 @@
                class="form-control validation" required ng-model="changeUserProfile.lastname"/>
       </div>
       <div class="form-group"
-           ng-class="{ 'has-error': (changeProfileForm.affiliation.$invalid && selectedItem == null) }">
+           ng-class="{ 'has-error': (changeProfileForm.affiliation.$invalid && changeProfileForm.affiliation.$dirty && selectedItem == null) }">
         <label class="control-label" for="affiliationDropDown">Affiliation</label>
         <div class="dropdown">
           <div class="btn-group btn-group-justified">
@@ -49,6 +49,8 @@
             </ul>
           </div>
         </div>
+        <input type="text" autocomplete="off" name="affiliation" id="affiliation" placeholder="Affiliation"
+               class="form-control hidden" required ng-model="changeUserProfile.affiliation" readonly/>
       </div>
       <div class="form-group"
            ng-class="{ 'has-error': (changeProfileForm.profession.$dirty && changeProfileForm.profession.$invalid) || (changeProfileForm.profession.$invalid && !changeProfileForm.profession.$error.required) }">
