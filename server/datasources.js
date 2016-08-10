@@ -1,4 +1,4 @@
-var logger = require('winston');
+var logger = require('./logger');
 
 module.exports = function(app) {
   app.dataSource('postgres', {
@@ -7,13 +7,13 @@ module.exports = function(app) {
   });
 
   logger.info('initialized database datasource');
-  
+
   app.dataSource('storage', {
     "connector": require('loopback-component-storage'),
     "provider": "filesystem",
     "root": "./storage",
     "maxFileSize": "52428800"
   });
-  
+
   logger.info('initialized storage datasource');
 };
