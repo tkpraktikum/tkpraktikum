@@ -1,6 +1,6 @@
 module.exports = function enableAuthentication(app) {
   // enable authentication
-  app.enableAuth();
+  //app.enableAuth();
 
   var Role = app.models.Role;
   var RoleMapping = app.models.roleMapping;

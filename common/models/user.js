@@ -100,18 +100,10 @@ module.exports = function(User) {
     }
   );
 
-  /*User.afterRemote('find', function(ctx, instance, next) {
+  User.afterRemote('find', function(ctx, instance, next) {
     var result = [];
-
-    var loop = true;
-    _.forEach(ctx.result, function(m) {
-      if (m.constructor.name === 'Object') {
-        loop = false;
-        console.log('Loop')
-      }
-    });
-
-    if (!loop) {
+    if (ctx.alreadyProcess) {
+      // method is is called again with result
       next();
     } else {
       var cb = _.after(ctx.result.length, function (err) {
@@ -128,7 +120,7 @@ module.exports = function(User) {
             isChair: user.roles.indexOf('chair') !== -1
           };
         });
-        console.log(ctx.result);
+        ctx.alreadyProcess = true;
         next();
       });
 
@@ -145,7 +137,7 @@ module.exports = function(User) {
         });
       });
     }
-  });*/
+  });
 
   User.afterRemote('prototype.__get__submissions', function(ctx, instance, next) {
     // enrich response with user information

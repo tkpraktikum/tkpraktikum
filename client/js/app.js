@@ -76,29 +76,35 @@ angular
       })
       .state('app.protected.submission', {
         url: 'submission',
+        abstract: true,
         templateUrl: 'views/main/submissions.html',
         controller: 'SubmissionController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.submission.list', {
+        url: '/list',
         templateUrl: 'views/main/submissions.list.html',
         data: { permissions: { only: ['AUTHOR', 'CHAIR'] }}
       })
       .state('app.protected.submission.create', {
+        url: '/create',
         templateUrl: 'views/main/submissions.create.html',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.review', {
+        abstract: true,
         url: 'review',
         templateUrl: 'views/main/reviews.html',
         controller: 'ReviewController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
       .state('app.protected.review.list', {
+        url: '/list',
         templateUrl: 'views/main/reviews.list.html',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
       .state('app.protected.review.create', {
+        url: '/create',
         templateUrl: 'views/main/reviews.create.html',
         data: { permissions: { only: ['REVIEWER'] }}
       })
