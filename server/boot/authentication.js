@@ -6,14 +6,13 @@ module.exports = function enableAuthentication(app) {
   var RoleMapping = app.models.roleMapping;
 
   Role.registerResolver('$authorOwner', function(role, context, callback) {
-    if (!context || !context.model || !context.modelId) {
+    if (!context || !context.model) {
       process.nextTick(function() {
         if (callback) callback(null, false);
       });
       return;
     }
     var modelClass = context.model;
-    var modelId = context.modelId;
     var userId = context.getUserId();
 
     Role.isOwner(modelClass, modelId, userId, function(err, owner) {

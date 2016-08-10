@@ -106,7 +106,7 @@ module.exports = function(User) {
       // method is is called again with result
       next();
     } else {
-      var cb = _.after(ctx.result.length, function (err) {
+      var cb = _.after(instance.length, function (err) {
         if (err) {
           logger.error(err);
         }
@@ -124,7 +124,7 @@ module.exports = function(User) {
         next();
       });
 
-      _.each(ctx.result, function (user) {
+      _.each(instance, function (user) {
         user.getRoles().then(function (roles) {
           var newUser = user.toJSON();
           newUser.roles = roles.map(function (r) {

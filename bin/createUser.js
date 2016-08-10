@@ -14,11 +14,18 @@ module.exports = function(app, ds, callback) {
         password: 'chair',
         email: 'chair@chair.de',
         emailVerified: true
+      },
+      {
+        username: 'author',
+        password: 'author',
+        email: 'author@author.de',
+        emailVerified: true
       }
     ];
 
     var userRoles  = {
-        "chair@chair.de": [chair, author]
+        "chair@chair.de": [chair, author],
+        "author@author.de": [author]
       };
 
     app.models.user.create(users, function(err, model) {
