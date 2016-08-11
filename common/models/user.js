@@ -36,9 +36,15 @@ module.exports = function(User) {
 
   User.prototype.addRole = function(role, callback) {
     var RoleMapping = User.app.models.roleMapping;
-    role.principals.create({principalType: RoleMapping.USER, principalId: this.id}, function (err, principal) {
+
+    var principals = [{
+      principalType: User.app.models.roleMapping.USER,
+      principalId: this.id,
+      roleId: role.id
+    }];
+    RoleMapping.create(principals, function(err) {
       if (!err) {
-        logger.info('Created :', principal);
+        logger.info('Created :', principals);
       }
       callback(err);
     });
