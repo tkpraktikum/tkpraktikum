@@ -22,10 +22,29 @@
     },
     "statusReview": {
       "type": "number"
+    },
+    "sharedSecret": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "attendees": {
+      "type": "hasMany",
+      "model": "user",
+      "through": "attendance",
+      "keyThrough": "conferenceId",
+      "foreignKey": "conferenceId"
+    },
+    "chairs": {
+      "type": "hasMany",
+      "model": "user",
+      "through": "chairman",
+      "keyThrough": "conferenceId",
+      "foreignKey": "conferenceId"
+    }
+  },
   "acls": [
     {
       "accessType": "*",

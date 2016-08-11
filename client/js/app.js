@@ -53,16 +53,6 @@ angular
         template: '<div ui-view></div>',
         data: { permissions: { only: ['USER'], redirectTo: 'app.login' } }
       })
-      .state('app.protected.tag', {
-        url: 'tag',
-        templateUrl: 'views/tag.html',
-        controller: 'TagController'
-      })
-      .state('app.protected.affiliation', {
-        url: 'affiliation',
-        templateUrl: 'views/affiliation.html',
-        controller: 'AffiliationController'
-      })
       .state('app.protected.account', {
         url: 'account',
         templateUrl: 'views/account/account.html',
@@ -74,59 +64,80 @@ angular
         controller: 'UserController',
         data: { permissions: { only: ['USER'] }}
       })
-      .state('app.protected.submission', {
+      .state('app.protected.conferenceManagement', {
+        url: 'conference/management',
+        templateUrl: 'views/account/conferenceManagement.html',
+        controller: 'ConferenceManagementController',
+        data: { permissions: { only: ['USER'] }}
+      })
+      .state('app.protected.conference', {
+        url: ':conferenceId/',
+        template: '<div ui-view></div>',
+        abstract: true
+      })
+      .state('app.protected.conference.tag', {
+        url: 'tag',
+        templateUrl: 'views/tag.html',
+        controller: 'TagController'
+      })
+      .state('app.protected.conference.affiliation', {
+        url: 'affiliation',
+        templateUrl: 'views/affiliation.html',
+        controller: 'AffiliationController'
+      })
+      .state('app.protected.conference.submission', {
         url: 'submission',
         abstract: true,
         templateUrl: 'views/main/submissions.html',
         controller: 'SubmissionController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
-      .state('app.protected.submission.list', {
+      .state('app.protected.conference.submission.list', {
         url: '/list',
         templateUrl: 'views/main/submissions.list.html',
         data: { permissions: { only: ['AUTHOR', 'CHAIR'] }}
       })
-      .state('app.protected.submission.create', {
+      .state('app.protected.conference.submission.create', {
         url: '/create',
         templateUrl: 'views/main/submissions.create.html',
         data: { permissions: { only: ['AUTHOR'] }}
       })
-      .state('app.protected.review', {
+      .state('app.protected.conference.review', {
         abstract: true,
         url: 'review',
         templateUrl: 'views/main/reviews.html',
         controller: 'ReviewController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
-      .state('app.protected.review.list', {
+      .state('app.protected.conference.review.list', {
         url: '/list',
         templateUrl: 'views/main/reviews.list.html',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
-      .state('app.protected.review.create', {
+      .state('app.protected.conference.review.create', {
         url: '/create',
         templateUrl: 'views/main/reviews.create.html',
         data: { permissions: { only: ['REVIEWER'] }}
       })
-      .state('app.protected.chair', {
+      .state('app.protected.conference.chair', {
         url: 'chair',
         templateUrl: 'views/admin/chair.html',
         controller: 'ChairController',
         data: { permissions: { only: ['CHAIR'] }}
       })
-      .state('app.protected.settings', {
+      .state('app.protected.conference.settings', {
         url: 'settings',
         templateUrl: 'views/admin/settings.html',
         controller: 'SettingsController',
         data: { permissions: { only: ['CHAIR'] }}
       })
-      .state('app.protected.statistics', {
+      .state('app.protected.conference.statistics', {
         url: 'statistics',
         templateUrl: 'views/admin/statistics.html',
         controller: 'StatisticsController',
         data: { permissions: { only: ['CHAIR'] }}
       })
-      .state('app.protected.users', {
+      .state('app.protected.conference.users', {
         url: 'users',
         templateUrl: 'views/account/users.list.html',
         controller: 'UserListController',
@@ -134,8 +145,9 @@ angular
       })
 
   }])
-.factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
+.factory('AuthService', ['$q', 'LoopBackAuth', 'User', '$stateParams', function ($q, LoopBackAuth, User, $stateParams) {
   var user,
+    rolesCache = {},
     login = function (username, password, rememberMe) {
       return user = User.login({
           username: username,
@@ -153,23 +165,26 @@ angular
       });
     },
     hasRole = function (role) {
-      return user.then(
-        function (user) { return user.roles.indexOf(role) !== -1 },
-        function () { return false; }
-      );
+      return rolesCache[role].then(function(c) { return c.indexOf($stateParams.conferenceId) !== -1; });
     },
     isAuthenticated = User.isAuthenticated.bind(User),
     rejectedPromise = function () {
       return $q.defer(function (resolve, reject) { reject(); }).promise;
     },
     retrieveUserWithRoles = function (userId) {
-      return User.findById({id: userId, filter: {include: 'roles'}})
-        .$promise.then(function (response) {
-          response.roles = response.roles.map(function (element) {
-            return element.name;
-          });
-          return response;
-        });
+      rolesCache.attendee = User.attendee({id: userId}).$promise.then(function(conferences) {
+         return conferences.map(function(c) { return c.id});
+      });
+      rolesCache.chair = User.chair({id: userId}).$promise.then(function(conferences) {
+        return conferences.map(function(c) { return c.id});
+      });
+      rolesCache.reviewer = User.reviewer({id: userId}).$promise.then(function(conferences) {
+         return conferences.map(function(c) { return c.id});
+      });
+      rolesCache.author = User.author({id: userId}).$promise.then(function(conferences) {
+         return conferences.map(function(c) { return c.id});
+      });
+      return User.findById({id: userId}).$promise;
     };
 
   user = isAuthenticated() ?

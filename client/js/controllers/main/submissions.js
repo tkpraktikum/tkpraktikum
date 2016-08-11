@@ -1,7 +1,7 @@
 angular
   .module('app')
-  .controller('SubmissionController', ['$scope', 'AuthService', '$state', 'User', function($scope, AuthService,
-                                                                    $state, User) {
+  .controller('SubmissionController', ['$scope', 'AuthService', '$state', '$stateParams', 'User', function($scope, AuthService,
+                                                                    $state, $stateParams, User) {
 
     // sort by https://scotch.io/tutorials/sort-and-filter-a-table-using-angular
     $scope.sortType     = 'name'; // set the default sort type
@@ -17,22 +17,16 @@ angular
 
     function getSubmissions() {
       User
-        .submissions
-        .count({id: $scope.user.id})
+        .submissions({id: $scope.user.id, filter: { where: {conferenceId: $stateParams.conferenceId}}})
         .$promise
         .then(function(result) {
-          $scope.count = result.count;
-        });
-      User
-        .submissions({id: $scope.user.id})
-        .$promise
-        .then(function(result) {
-          console.log(JSON.stringify(result));
           $scope.submissions = result;
+          $scope.count = result.length;
         });
     }
 
     $scope.createSubmission = function() {
+      $scope.newSubmission.conferenceId = $stateParams.conferenceId;
       User
         .submissions
         .create({id: $scope.user.id}, $scope.newSubmission)

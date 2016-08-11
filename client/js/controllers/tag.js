@@ -1,7 +1,7 @@
 angular
   .module('app')
-  .controller('TagController', ['$scope', '$state', 'Tag', function($scope,
-                                                                      $state, Tag) {
+  .controller('TagController', ['$scope', '$state', '$stateParams', 'Tag', function($scope,
+                                                                      $state, $stateParams, Tag) {
     $scope.tags = [];
     function getTags() {
       Tag

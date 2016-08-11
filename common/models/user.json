@@ -47,6 +47,39 @@
       "foreignKey": "authorId",
       "keyThrough": "authorId",
       "through": "authorship"
+    },
+    "reviewer": {
+      "type": "hasMany",
+      "model": "conference",
+      "foreignKey": "reviewerId",
+      "keyThrough": "reviewerId",
+      "through": "reviewer"
+    },
+    "author": {
+      "type": "hasMany",
+      "model": "conference",
+      "foreignKey": "authorId",
+      "keyThrough": "authorId",
+      "through": "author"
+    },
+    "attendee": {
+      "type": "hasMany",
+      "model": "conference",
+      "foreignKey": "attendeeId",
+      "keyThrough": "attendeeId",
+      "through": "attendance"
+    },
+    "chair": {
+      "type": "hasMany",
+      "model": "conference",
+      "foreignKey": "chairId",
+      "keyThrough": "chairId",
+      "through": "chairman"
+    },
+    "defaultConference": {
+      "type": "belongsTo",
+      "model": "conference",
+      "foreignKey": "defaultConference"
     }
   },
   "acls": [

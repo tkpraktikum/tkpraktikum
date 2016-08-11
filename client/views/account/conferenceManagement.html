@@ -1,0 +1,82 @@
+<h2>Conference Management</h2>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Join</h3>
+    <form name="joinConferenceForm" novalidate ng-submit="joinConference()">
+      <div class="row">
+        <div class="form-group">
+          <label for="title">Name</label>
+          <input type="text" autocomplete="off" class="form-control" id="titleJoin" placeholder="Name" name="name" required ng-model="conference.name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="title">Shared Secret</label>
+          <input type="text" autocomplete="off" class="form-control" id="sharedSecretJoin" placeholder="Shared Secret" name="name" required ng-model="conference.sharedSecret">
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn btn-default">Join</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-6">
+    <h3>Create</h3>
+    <form name="newConferenceForm" novalidate ng-submit="createConference()">
+      <div class="row">
+        <div class="form-group">
+          <label for="title">Name</label>
+          <input type="text" autocomplete="off" class="form-control" id="title" placeholder="Name" name="name" required ng-model="newConference.name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="title">Shared Secret</label>
+          <input type="text" autocomplete="off" class="form-control" id="sharedSecret" placeholder="Shared Secret" name="name" required ng-model="newConference.sharedSecret">
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn btn-default">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>
+            Name
+          </th>
+          <th>
+            Attendee
+          </th>
+          <th>
+            Author
+          </th>
+          <th>
+            Reviewer
+          </th>
+          <th>
+            Chair
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="c in conferences">
+          <td>{{c.name}}</td>
+          <td>{{c.attendee}}</td>
+          <td>{{c.author}}</td>
+          <td>{{c.reviewer}}</td>
+          <td>{{c.chair}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

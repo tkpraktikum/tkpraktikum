@@ -1,6 +1,7 @@
 angular
   .module('app')
-  .controller('ChairController', ['$scope', '$state', '$http' , 'User', function($scope, $state, $http, User) {
+  .controller('ChairController', ['$scope', '$state', '$stateParams', '$http' , 'User', 'Conference',
+      function($scope, $state, $stateParams, $http, User, Conference) {
 
     // sort by https://scotch.io/tutorials/sort-and-filter-a-table-using-angular
     $scope.sortType     = 'name'; // set the default sort type
@@ -9,8 +10,8 @@ angular
     $scope.users = [];
 
     function getUsers() {
-      User
-        .find()
+      Conference
+        .attendees({id: $stateParams.conferenceId})
         .$promise
         .then(function(results) {
           $scope.users = results;
