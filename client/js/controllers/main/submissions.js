@@ -1,6 +1,6 @@
 angular
   .module('app')
-  .controller('SubmissionController', ['$scope', '$state', 'User', function($scope,
+  .controller('SubmissionController', ['$scope', 'AuthService', '$state', 'User', function($scope, AuthService,
                                                                     $state, User) {
 
     // sort by https://scotch.io/tutorials/sort-and-filter-a-table-using-angular
@@ -10,28 +10,32 @@ angular
     $scope.submissions = [];
     $scope.newSubmission = {};
 
+    AuthService.getUser().then(function (userData) {
+      $scope.user = userData;
+      getSubmissions();
+    });
+
     function getSubmissions() {
       User
         .submissions
-        .count({id: $scope.userId})
+        .count({id: $scope.user.id})
         .$promise
         .then(function(result) {
           $scope.count = result.count;
         });
       User
-        .submissions({id: $scope.userId})
+        .submissions({id: $scope.user.id})
         .$promise
         .then(function(result) {
           console.log(JSON.stringify(result));
           $scope.submissions = result;
         });
     }
-    getSubmissions();
 
     $scope.createSubmission = function() {
       User
         .submissions
-        .create({id: $scope.userId}, $scope.newSubmission)
+        .create({id: $scope.user.id}, $scope.newSubmission)
         .$promise
         .then(function () {
           $scope.newSubmission = {};

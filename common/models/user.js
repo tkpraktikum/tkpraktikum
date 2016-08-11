@@ -36,23 +36,22 @@ module.exports = function(User) {
 
   User.prototype.addRole = function(role, callback) {
     var RoleMapping = User.app.models.roleMapping;
-    role.principals.create({principalType: RoleMapping.USER, principalId: this.id}, function (err, principal) {
+
+    var principals = [{
+      principalType: User.app.models.roleMapping.USER,
+      principalId: this.id,
+      roleId: role.id
+    }];
+    RoleMapping.create(principals, function(err) {
       if (!err) {
-        logger.info('Created :', principal);
+        logger.info('Created :', principals);
       }
       callback(err);
     });
   };
 
-  User.prototype.getRoles = function(callback) {
-    this
-      .roles({id: this.id})
-      .then(function (roles) {
-        callback(null, roles);
-      }, function (err) {
-        logger.error(err);
-        callback(err);
-      });
+  User.prototype.getRoles = function() {
+    return this.roles({id: this.id});
   };
 
   User.prototype.getAllAuthors = function(submission, callback) {
@@ -108,13 +107,17 @@ module.exports = function(User) {
   );
 
   User.afterRemote('find', function(ctx, instance, next) {
+    if (ctx.processed) {
+      return next();
+    }
+    ctx.processed = true;
     var result = [];
 
-    var cb = _.after(ctx.result.length, function(err) {
-      if(err) {
+    var cb = _.after(instance.length, function (err) {
+      if (err) {
         logger.error(err);
       }
-      ctx.result = result.map(function(user) {
+      ctx.result = result.map(function (user) {
         return {
           username: user.username,
           email: user.email,
@@ -127,17 +130,25 @@ module.exports = function(User) {
       next();
     });
 
-    _.each(ctx.result, function(user) {
-      user.getRoles(function(err, roles) {
-        user = user.toJSON();
-        user.roles = roles.map(function(r) {return r.name;});
-        result.push(user);
+    _.each(instance, function (user) {
+      user.getRoles().then(function (roles) {
+        var newUser = user.toJSON();
+        newUser.roles = roles.map(function (r) {
+          return r.toJSON().name;
+        });
+        result.push(newUser);
         cb();
-      })
+      }).catch(function (err) {
+        console.log(err);
+      });
     });
   });
 
   User.afterRemote('prototype.__get__submissions', function(ctx, instance, next) {
+    if (ctx.processed) {
+      return next();
+    }
+    ctx.processed = true;
     // enrich response with user information
     var result = [];
 
