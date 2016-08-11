@@ -107,45 +107,48 @@ module.exports = function(User) {
   );
 
   User.afterRemote('find', function(ctx, instance, next) {
-    var result = [];
-    if (ctx.alreadyProcess) {
-      // method is is called again with result
-      next();
-    } else {
-      var cb = _.after(instance.length, function (err) {
-        if (err) {
-          logger.error(err);
-        }
-        ctx.result = result.map(function (user) {
-          return {
-            username: user.username,
-            email: user.email,
-            id: user.id,
-            isAuthor: user.roles.indexOf('author') !== -1,
-            isReviewer: user.roles.indexOf('reviewer') !== -1,
-            isChair: user.roles.indexOf('chair') !== -1
-          };
-        });
-        ctx.alreadyProcess = true;
-        next();
-      });
-
-      _.each(instance, function (user) {
-        user.getRoles().then(function (roles) {
-          var newUser = user.toJSON();
-          newUser.roles = roles.map(function (r) {
-            return r.toJSON().name;
-          });
-          result.push(newUser);
-          cb();
-        }).catch(function (err) {
-          console.log(err);
-        });
-      });
+    if (ctx.processed) {
+      return next();
     }
+    ctx.processed = true;
+    var result = [];
+
+    var cb = _.after(instance.length, function (err) {
+      if (err) {
+        logger.error(err);
+      }
+      ctx.result = result.map(function (user) {
+        return {
+          username: user.username,
+          email: user.email,
+          id: user.id,
+          isAuthor: user.roles.indexOf('author') !== -1,
+          isReviewer: user.roles.indexOf('reviewer') !== -1,
+          isChair: user.roles.indexOf('chair') !== -1
+        };
+      });
+      next();
+    });
+
+    _.each(instance, function (user) {
+      user.getRoles().then(function (roles) {
+        var newUser = user.toJSON();
+        newUser.roles = roles.map(function (r) {
+          return r.toJSON().name;
+        });
+        result.push(newUser);
+        cb();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    });
   });
 
   User.afterRemote('prototype.__get__submissions', function(ctx, instance, next) {
+    if (ctx.processed) {
+      return next();
+    }
+    ctx.processed = true;
     // enrich response with user information
     var result = [];
 

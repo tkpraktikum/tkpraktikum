@@ -14,6 +14,10 @@ module.exports = function(Submission) {
   };
 
   Submission.afterRemote('find', function(ctx, instance, next) {
+    if (ctx.processed) {
+      return next();
+    }
+    ctx.processed = true;
     var userId = (ctx.req.accessToken) ? ctx.req.accessToken.userId : -1;
     var loadAuthorsFns = instance.map(function(s) {
       return function(callback) {
