@@ -43,6 +43,20 @@
       "through": "chairman",
       "keyThrough": "conferenceId",
       "foreignKey": "conferenceId"
+    },
+    "reviewer": {
+      "type": "hasMany",
+      "model": "user",
+      "through": "reviewer",
+      "keyThrough": "conferenceId",
+      "foreignKey": "conferenceId"
+    },
+    "authors": {
+      "type": "hasMany",
+      "model": "user",
+      "through": "author",
+      "keyThrough": "conferenceId",
+      "foreignKey": "conferenceId"
     }
   },
   "acls": [

@@ -17,21 +17,20 @@ angular
         abstract: true,
         views: {
           '': {
-            templateUrl: 'views/layout.html',
+            templateUrl: 'views/layout.html'
           },
           'header@app': {
-            templateUrl: 'views/common/header.html',
+            templateUrl: 'views/header.html',
             controller: 'HeaderController'
           },
           'footer@app': {
-            templateUrl: 'views/common/footer.html',
-            controller: 'FooterController'
+            templateUrl: 'views/footer.html'
           }
         }
       })
       .state('app.login', {
         url: 'login',
-        templateUrl: 'views/account/login.html',
+        templateUrl: 'views/user/login.html',
         controller: 'LoginController'
       })
       .state('app.logout', {
@@ -40,12 +39,12 @@ angular
       })
       .state('app.signup', {
         url: 'signup',
-        templateUrl: 'views/account/signup.html',
+        templateUrl: 'views/user/signup.html',
         controller: 'SignupController'
       })
       .state('app.about', {
         url: 'about',
-        templateUrl: 'views/common/about.html',
+        templateUrl: 'views/about.html',
       })
 
       // User area
@@ -53,100 +52,109 @@ angular
         template: '<div ui-view></div>',
         data: { permissions: { only: ['USER'], redirectTo: 'app.login' } }
       })
-      .state('app.protected.account', {
+      .state('app.protected.home', {
         url: 'account',
-        templateUrl: 'views/account/account.html',
-        controller: 'AccountController'
+        templateUrl: 'views/user/home.html',
+        controller: 'HomeController'
       })
       .state('app.protected.user', {
-        url: 'profile',
-        templateUrl: 'views/account/user.html',
-        controller: 'UserController',
+        url: 'user',
+        abstract: true,
+        template: '<div ui-view></div>',
         data: { permissions: { only: ['USER'] }}
       })
-      .state('app.protected.conferenceManagement', {
-        url: 'conference/management',
-        templateUrl: 'views/account/conferenceManagement.html',
-        controller: 'ConferenceManagementController',
+      .state('app.protected.user.profile', {
+        url: '/profile',
+        templateUrl: 'views/user/user.html',
+        controller: 'ProfileController',
+        data: { permissions: { only: ['USER'] }}
+      })
+      .state('app.protected.user.conference', {
+        url: '/conference',
+        abstract: true,
+        template: '<div ui-view></div>',
+        data: { permissions: { only: ['USER'] }}
+      })
+      .state('app.protected.user.conference.join', {
+        url: '/join',
+        templateUrl: 'views/user/joinConference.html',
+        controller: 'JoinConferenceController',
+        data: { permissions: { only: ['USER'] }}
+      })
+      .state('app.protected.user.conference.create', {
+        url: '/join',
+        templateUrl: 'views/user/createConference.html',
+        controller: 'CreateConferenceController',
+        data: { permissions: { only: ['USER'] }}
+      })
+      .state('app.protected.user.conference.my', {
+        url: '/my',
+        templateUrl: 'views/user/myConferences.html',
+        controller: 'MyConferencesController',
         data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.conference', {
-        url: ':conferenceId/',
+        url: 'conference/:conferenceId/',
         template: '<div ui-view></div>',
         abstract: true,
         controller: 'ConferenceController'
       })
       .state('app.protected.conference.tag', {
         url: 'tag',
-        templateUrl: 'views/tag.html',
+        templateUrl: 'views/chair/tag.html',
         controller: 'TagController'
       })
       .state('app.protected.conference.affiliation', {
         url: 'affiliation',
-        templateUrl: 'views/affiliation.html',
+        templateUrl: 'views/chair/affiliation.html',
         controller: 'AffiliationController'
       })
       .state('app.protected.conference.submission', {
         url: 'submission',
         abstract: true,
-        templateUrl: 'views/main/submissions.html',
+        templateUrl: 'views/author/submissions.html',
         controller: 'SubmissionController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.list', {
         url: '/list',
-        templateUrl: 'views/main/submissions.list.html',
+        templateUrl: 'views/author/submissions.list.html',
         data: { permissions: { only: ['AUTHOR', 'CHAIR'] }}
       })
       .state('app.protected.conference.submission.create', {
         url: '/create',
-        templateUrl: 'views/main/submissions.create.html',
+        templateUrl: 'views/author/submissions.create.html',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.review', {
         abstract: true,
         url: 'review',
-        templateUrl: 'views/main/reviews.html',
+        templateUrl: 'views/reviewer/reviews.html',
         controller: 'ReviewController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
       .state('app.protected.conference.review.list', {
         url: '/list',
-        templateUrl: 'views/main/reviews.list.html',
+        templateUrl: 'views/reviewer/reviews.list.html',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
       .state('app.protected.conference.review.create', {
         url: '/create',
-        templateUrl: 'views/main/reviews.create.html',
+        templateUrl: 'views/reviewer/reviews.create.html',
         data: { permissions: { only: ['REVIEWER'] }}
       })
-      .state('app.protected.conference.chair', {
-        url: 'chair',
-        templateUrl: 'views/admin/chair.html',
-        controller: 'ChairController',
-        data: { permissions: { only: ['CHAIR'] }}
-      })
-      .state('app.protected.conference.settings', {
-        url: 'settings',
-        templateUrl: 'views/admin/settings.html',
-        controller: 'SettingsController',
-        data: { permissions: { only: ['CHAIR'] }}
-      })
-      .state('app.protected.conference.statistics', {
-        url: 'statistics',
-        templateUrl: 'views/admin/statistics.html',
-        controller: 'StatisticsController',
-        data: { permissions: { only: ['CHAIR'] }}
-      })
       .state('app.protected.conference.users', {
-        url: 'users',
-        templateUrl: 'views/account/users.list.html',
-        controller: 'UserListController',
+        url: 'usermanagement',
+        templateUrl: 'views/chair/userManagement.html',
+        controller: 'ChairUserManagementController',
         data: { permissions: { only: ['CHAIR'] }}
       })
-
   }])
-.factory('AuthService', ['$q', 'LoopBackAuth', 'User', '$stateParams', function ($q, LoopBackAuth, User, $stateParams) {
+.factory('AuthService', ['$q', '$rootScope', 'LoopBackAuth', 'User', '$stateParams',
+    function ($q, $rootScope, LoopBackAuth, User, $stateParams) {
+
+  $rootScope.currentConferenceId = window.localStorage.getItem('currentConference');
+
   var user,
     rolesCache = {},
     login = function (username, password, rememberMe) {
@@ -155,6 +163,8 @@ angular
           password: password,
           rememberMe: rememberMe || false
         }).$promise.then(function (response) {
+          window.localStorage.setItem('currentConference', response.user.defaultConferenceId);
+          $rootScope.currentConferenceId = response.user.defaultConferenceId;
           return retrieveUserWithRoles(response.user.id);
         });
     },
@@ -162,11 +172,22 @@ angular
       return User.logout().$promise.then(function () {
         // LoopBackAuth.clearUser();
         // LoopBackAuth.clearStorage();
+        window.localStorage.removeItem('currentConference');
         user = rejectedPromise();
       });
     },
     hasRole = function (role) {
-      return rolesCache[role].then(function(c) { return c.indexOf($stateParams.conferenceId) !== -1; });
+      if (rolesCache[role]) {
+        return rolesCache[role].then(function (c) {
+          if(c.indexOf(parseInt(window.localStorage.getItem('currentConference'), 10)) !== -1) {
+            return $q.resolve();
+          } else {
+            return $q.reject();
+          }
+        });
+      } else {
+        return $q.resolve(false);
+      }
     },
     isAuthenticated = User.isAuthenticated.bind(User),
     rejectedPromise = function () {
@@ -190,13 +211,14 @@ angular
 
   user = isAuthenticated() ?
     retrieveUserWithRoles(LoopBackAuth.currentUserId) :
-    rejectedPromise();
+    $q.reject();
 
   return {
     login: login,
     logout: logout,
     hasRole: hasRole,
     getUser: function () { return user; },
+    getUserId: function() { return user.then(function (user) { return user.id; })},
     isAuthenticated: isAuthenticated
   };
 }])

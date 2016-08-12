@@ -23,7 +23,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="u in users | orderBy:sortType:sortReverse | filter:searchUser">
+    <tr ng-repeat="u in userList | orderBy:sortType:sortReverse | filter:searchUser">
       <td>{{u.username}}</td>
       <td>{{u.email}}</td>
       <td>
@@ -37,8 +37,8 @@
         </div>
       </td>
       <td>
-        <div class="checkbox disabled" style="text-align: center">
-          <label><input type="checkbox" ng-model="u.isChair" disabled /></label>
+        <div class="checkbox form-group" style="text-align: center">
+          <label><input type="checkbox" ng-model="u.isChair" ng-change="changeChair(u)" ng-disabled="u.isMe"/></label>
         </div>
       </td>
     </tr>

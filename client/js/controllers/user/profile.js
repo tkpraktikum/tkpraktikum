@@ -1,15 +1,6 @@
 angular
   .module('app')
-  .controller('AccountController', ['$scope', 'AuthService', function ($scope, AuthService) {
-
-    $scope.user = {};
-
-    AuthService.getUser().then(function (userData) {
-      $scope.user = userData;
-    });
-
-  }])
-  .controller('UserController', ['$scope', 'AuthService', 'Affiliation', 'User', function ($scope, AuthService, Affiliation, User) {
+  .controller('ProfileController', ['$scope', 'AuthService', 'Affiliation', 'User', function ($scope, AuthService, Affiliation, User) {
 
     var attributes = ['title', 'firstname', 'lastname', 'profession', 'affiliation', 'zip', 'city', 'state', 'country'];
     $scope.user = {};
@@ -28,7 +19,6 @@ angular
           $scope.selectedItem = userData[p] || null;
         }
       });
-      console.log($scope.changeUserProfile);
     });
 
     Affiliation.find().$promise.then(function (affiliations) {
@@ -73,16 +63,5 @@ angular
       }
     };
 
-  }])
-  .controller('UserListController', ['$scope', 'User', function ($scope, User) {
-
-    $scope.users = [];
-    $scope.searchUser   = '';
-    $scope.sortReverse  = false;
-
-    User.find().$promise.then(function (users) {
-      $scope.users = users;
-      console.log(users);
-    });
-
   }]);
+
