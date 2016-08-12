@@ -43,14 +43,18 @@ angular
               .link({id: $scope.user.id, fk: res[0].id},
                 {attendeeId: $scope.user.id, conferenceId: res[0].id})
               .$promise.then(function() {
-                console.log('Success');
+                getConferences();
             })
           }
         })
     };
 
+    $scope.setDefault = function(conference) {
+      User.prototype$updateAttributes({id: $scope.user.id}, {defaultConferenceId: conference.id});
+    };
+
     var getConferences = function() {
-      Conference.find().$promise.then(function(conferences) {
+      User.attendee({id: $scope.user.id}).$promise.then(function(conferences) {
         $scope.conferences = conferences;
       });
     };

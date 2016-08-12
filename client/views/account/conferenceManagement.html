@@ -64,6 +64,7 @@
           <th>
             Chair
           </th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -73,6 +74,7 @@
           <td>{{c.author}}</td>
           <td>{{c.reviewer}}</td>
           <td>{{c.chair}}</td>
+          <td><button class="btn btn-default" ng-click="setDefault(c)">Set as Default</button></td>
         </tr>
         </tbody>
       </table>

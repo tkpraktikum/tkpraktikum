@@ -78,8 +78,7 @@
     },
     "defaultConference": {
       "type": "belongsTo",
-      "model": "conference",
-      "foreignKey": "defaultConference"
+      "model": "conference"
     }
   },
   "acls": [

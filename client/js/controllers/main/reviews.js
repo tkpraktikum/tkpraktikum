@@ -1,7 +1,7 @@
 angular
   .module('app')
-  .controller('ReviewController', ['$scope', '$state', 'Review', 'AuthService', 'User', function($scope,
-                                                                         $state, Review, AuthService, User) {
+  .controller('ReviewController', ['$scope', '$state', 'Review', 'AuthService', 'User', '$stateParams', function($scope,
+                                                                         $state, Review, AuthService, User, $stateParams) {
 
     // sort by https://scotch.io/tutorials/sort-and-filter-a-table-using-angular
     $scope.sortType     = 'name'; // set the default sort type
@@ -17,18 +17,12 @@ angular
 
     function getReviews() {
       User
-        .reviews
-        .count({id: $scope.user.id})
-        .$promise
-        .then(function(result) {
-          $scope.count = result.count;
-        });
-      User
-        .reviews({id: $scope.user.id})
+        .reviewer({id: $scope.user.id, filter: { where: {conferenceId: $stateParams.conferenceId}}})
         .$promise
         .then(function(result) {
           console.log(JSON.stringify(result));
           $scope.reviews = result;
+          $scope.count = result.length;
         });
     }
 

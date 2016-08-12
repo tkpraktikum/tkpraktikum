@@ -73,7 +73,8 @@ angular
       .state('app.protected.conference', {
         url: ':conferenceId/',
         template: '<div ui-view></div>',
-        abstract: true
+        abstract: true,
+        controller: 'ConferenceController'
       })
       .state('app.protected.conference.tag', {
         url: 'tag',
