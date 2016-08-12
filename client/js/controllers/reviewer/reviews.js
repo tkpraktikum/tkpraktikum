@@ -10,32 +10,30 @@ angular
     $scope.reviews = [];
     $scope.newReview = {};
 
-    AuthService.getUser().then(function (userData) {
-      $scope.user = userData;
-      getReviews();
-    });
-
     function getReviews() {
-      User
-        .reviewer({id: $scope.user.id, filter: { where: {conferenceId: $stateParams.conferenceId}}})
-        .$promise
-        .then(function(result) {
-          console.log(JSON.stringify(result));
-          $scope.reviews = result;
-          $scope.count = result.length;
-        });
+      AuthService.getUserId.then(function(userId) {
+        User
+          .reviewer({id: userId, filter: {where: {conferenceId: $stateParams.conferenceId}}})
+          .$promise
+          .then(function (result) {
+            $scope.reviews = result;
+            $scope.count = result.length;
+          });
+      });
     }
 
     $scope.createReview = function() {
-      User
-        .reviews
-        .create({id: $scope.user.id}, $scope.newReview)
-        .$promise
-        .then(function () {
-          $scope.newReview = {};
-          $('.focus').focus();
-          getReviews()
-        });
+      AuthService.getUserId.then(function(userId) {
+        User
+          .reviews
+          .create({id: userId}, $scope.newReview)
+          .$promise
+          .then(function () {
+            $scope.newReview = {};
+            $('.focus').focus();
+            getReviews()
+          });
+      });
     };
 
     $scope.removeReview = function(item) {

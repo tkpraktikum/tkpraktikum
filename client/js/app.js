@@ -217,8 +217,8 @@ angular
     login: login,
     logout: logout,
     hasRole: hasRole,
-    getUser: function () { return user; },
-    getUserId: function() { return user.then(function (user) { return user.id; })},
+    getUser: user,
+    getUserId: user.then(function (user) { return user.id; }),
     isAuthenticated: isAuthenticated
   };
 }])

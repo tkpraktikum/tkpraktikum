@@ -10,32 +10,31 @@ angular
     $scope.submissions = [];
     $scope.newSubmission = {};
 
-    AuthService.getUser().then(function (userData) {
-      $scope.user = userData;
-      getSubmissions();
-    });
-
     function getSubmissions() {
-      User
-        .submissions({id: $scope.user.id, filter: { where: {conferenceId: $stateParams.conferenceId}}})
-        .$promise
-        .then(function(result) {
-          $scope.submissions = result;
-          $scope.count = result.length;
-        });
+      AuthService.getUserId.then(function(userId) {
+        User
+          .submissions({id: userId, filter: { where: {conferenceId: $stateParams.conferenceId}}})
+          .$promise
+          .then(function(result) {
+            $scope.submissions = result;
+            $scope.count = result.length;
+          });
+      });
     }
 
     $scope.createSubmission = function() {
-      $scope.newSubmission.conferenceId = $stateParams.conferenceId;
-      User
-        .submissions
-        .create({id: $scope.user.id}, $scope.newSubmission)
-        .$promise
-        .then(function () {
-          $scope.newSubmission = {};
-          $('.focus').focus();
-          getSubmissions()
-        });
+      AuthService.getUserId.then(function(userId) {
+        $scope.newSubmission.conferenceId = $stateParams.conferenceId;
+        User
+          .submissions
+          .create({id: userId}, $scope.newSubmission)
+          .$promise
+          .then(function () {
+            $scope.newSubmission = {};
+            $('.focus').focus();
+            getSubmissions()
+          });
+      });
     };
 
     $scope.removeSubmission = function(item) {

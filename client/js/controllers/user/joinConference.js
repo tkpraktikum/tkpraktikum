@@ -5,7 +5,7 @@ angular
 
       $scope.conference = {};
 
-      $scope.userId = AuthService.getUserId();
+      $scope.userId = AuthService.getUserId;
 
       $scope.join = function() {
         $scope.userId.then(function(userId) {

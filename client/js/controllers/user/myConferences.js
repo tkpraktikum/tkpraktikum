@@ -3,7 +3,7 @@ angular
   .controller('MyConferencesController', ['$q', '$scope', '$state', '$http' , 'AuthService', 'User', 'Conference',
     function($q, $scope, $state, $http, AuthService, User, Conference) {
 
-      $scope.user = AuthService.getUser();
+      $scope.user = AuthService.getUser;
       $scope.conferenceList = [];
 
       var getConferences = function() {
