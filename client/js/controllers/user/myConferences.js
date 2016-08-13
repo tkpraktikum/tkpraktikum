@@ -4,7 +4,7 @@ angular
     function($q, $scope, $state, $http, AuthService, User, Conference) {
 
       $scope.user = AuthService.getUser;
-      $scope.conferenceList = [];
+      $scope.conferenceRows = [];
 
       var getConferences = function() {
         var toIdList = function(userList) {
@@ -20,13 +20,17 @@ angular
             User.author({id: userId}).$promise.then(toIdList),
             User.reviewer({id: userId}).$promise.then(toIdList)
           ]).then(function(conferenceLists) {
-            $scope.conferenceList = conferenceLists[0].map(function (conference) {
+            var conferences = conferenceLists[0].map(function (conference) {
               conference.isChair = conferenceLists[1].indexOf(conference.id) !== -1;
               conference.isAuthor = conferenceLists[2].indexOf(conference.id) !== -1;
               conference.isReviewer = conferenceLists[3].indexOf(conference.id) !== -1;
               conference.isDefault = conference.id == user.defaultConferenceId;
               return conference;
             });
+            $scope.conferenceRows = [];
+            for(var i=0; i < Math.ceil(conferences.length / 3); i++) {
+              $scope.conferenceRows.push(conferences.slice(i*3, (i+1)*3));
+            }
           });
         });
       };

@@ -1,43 +1,27 @@
 <div class="col-md-10 centerContent">
-  <h1 class="text-center">Your Conferences</h1>
-  <br/>
-  <!-- Table -->
-  <div class="row">
-    <div class="table-responsive">
-      <table class="table table-hover table-striped">
-        <thead>
-        <tr>
-          <th></th>
-          <th>Attendee</th>
-          <th>Author</th>
-          <th>Reviewer</th>
-          <th>Chair</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="c in conferenceList">
-          <th scope="row">{{c.name}}</th>
-          <td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
-          <td>
-            <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="c.isAuthor"></span>
-            <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-show="!c.isAuthor"></span>
-          </td>
-          <td>
-            <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="c.isReviewer"></span>
-            <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-show="!c.isReviewer"></span>
-          </td>
-          <td>
-            <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="c.isChair"></span>
-            <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-show="!c.isChair"></span>
-          </td>
-          <td>
-            <button class="btn btn-default" ng-click="setDefault(c)" ng-show="!c.isDefault">Set as Default</button>
-            <button class="btn btn-primary" ng-show="c.isDefault">Default <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+  <h1 class="text-center page-title">Your Conferences</h1>
+  <div class="row" ng-repeat="row in conferenceRows">
+    <div class="col-md-4" ng-repeat="c in row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><span class="highlight">{{c.name}}</span> <span ng-show="c.isDefault" class="conference-title-default">Default</span></h3>
+        </div>
+        <div class="panel-body">
+          <b>You are:
+            <span ng-show="c.isChair">Chair, </span>
+            <span ng-show="c.isAuthor">Author, </span>
+            <span ng-show="c.isReviewer">Reviewer, </span>
+            Attendee</b>
+          <p>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+          Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+          erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+          </p>
+          <p ng-show="!c.isDefault"><a>Set Default</a></p>
+          <p ng-show="c.isAuthor"><a>Submissions</a></p>
+          <p ng-show="c.isChair"><a>Manage Users</a></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
