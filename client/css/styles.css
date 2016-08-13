@@ -39,6 +39,10 @@ a, a:link, a:visited {
   background: #FFFFFF;
 }
 
+textarea {
+  resize: none;
+}
+
 .navbar-nav > li {
   font-size: 1.75rem;
 }
@@ -76,6 +80,22 @@ a, a:link, a:visited {
 .conference-title-default {
   font-weight: normal;
   font-size: 1rem;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.btn {
+  padding: 15px 24px;
+  font-size: 2rem;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #BE0000;
+  line-height: 1.5;
 }
 
 @media (min-width: 1200px) {

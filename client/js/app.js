@@ -82,7 +82,7 @@ angular
         data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.user.conference.create', {
-        url: '/join',
+        url: '/create',
         templateUrl: 'views/user/createConference.html',
         controller: 'CreateConferenceController',
         data: { permissions: { only: ['USER'] }}
