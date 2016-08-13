@@ -1,0 +1,111 @@
+h1, h2, strong, b {
+  color: #333
+}
+
+.highlight {
+  color: #cc0000;
+}
+
+a:hover, a:active, a:focus {
+  color: #333;
+  cursor: pointer;
+}
+
+a, a:link, a:visited {
+  color: #cc0000;
+}
+
+.navbar-nav > li > a, .navbar-nav > li > a:visited {
+  color: #333;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+  color: #cc0000;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus, .navbar-nav > li > a:active {
+  color: #cc0000;
+  background: #FFFFFF;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  background: #FFFFFF;
+}
+
+.navbar-nav > li {
+  font-size: 1.75rem;
+}
+
+.navbar-fixed-top {
+  height: 80px;
+  background: #FFF;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.navbar-fixed-top > .container-fluid {
+  margin-top: 15px;
+}
+
+.navbar {
+  -webkit-box-shadow: 0px 3px 5px rgba(100, 100, 100, 0.24);
+  -moz-box-shadow:    0px 3px 5px rgba(100, 100, 100, 0.24);
+  box-shadow:         0px 3px 5px rgba(100, 100, 100, 0.24);
+}
+
+.navbar-brand {
+  font-size: 2.5rem;
+}
+
+.page-title {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.content {
+  padding-top: 80px;
+}
+
+.conference-title-default {
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+.panel {
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 4px;
+}
+
+.panel-default > .panel-heading {
+  background: #ffffff;
+  border: none;
+}
+
+.panel-body {
+  line-height: 1.75;
+}
+
+.panel-title {
+  font-size: 20px;
+  margin-top: 7px;
+}
+
+.panel-body {
+  padding-top: 7px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.btn {
+  padding: 15px 24px;
+  font-size: 2rem;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #BE0000;
+  line-height: 1.5;
+}
