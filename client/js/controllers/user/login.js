@@ -6,7 +6,7 @@ angular
         AuthService
           .login($scope.user.username, $scope.user.password)
           .then(function (user) {
-            $state.go('app.protected.account', {}, {reload: true});
+            $state.go('app.protected.home', {}, {reload: true});
           });
       }
     }])
