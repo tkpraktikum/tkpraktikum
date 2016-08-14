@@ -1,10 +1,5 @@
 angular
   .module('app')
-  .controller('ConferenceController', ['$stateParams', '$scope', '$rootScope', function($stateParams, $scope, $rootScope) {
-    $rootScope.conferenceId = $stateParams.conferenceId;
-    $scope.stateParams = $stateParams;
-
-    $scope.$watchCollection('stateParams', function(){
-      $rootScope.currentConferenceId = $stateParams.conferenceId;
-    });
+  .controller('ConferenceController', ['$stateParams', '$scope', 'AuthService', function($stateParams, $scope, AuthService) {
+    AuthService.setCurrentConferenceId($stateParams.conferenceId);
   }]);

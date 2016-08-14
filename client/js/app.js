@@ -150,21 +150,16 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
   }])
-.factory('AuthService', ['$q', '$rootScope', 'LoopBackAuth', 'User', '$stateParams',
-    function ($q, $rootScope, LoopBackAuth, User, $stateParams) {
-
-  $rootScope.currentConferenceId = window.localStorage.getItem('currentConference');
+.factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
 
   var user,
-    rolesCache = {},
+    currentConferenceId = null,
     login = function (username, password, rememberMe) {
       return user = User.login({
           username: username,
           password: password,
           rememberMe: rememberMe || false
         }).$promise.then(function (response) {
-          window.localStorage.setItem('currentConference', response.user.defaultConferenceId);
-          $rootScope.currentConferenceId = response.user.defaultConferenceId;
           return retrieveUserWithRoles(response.user.id);
         });
     },
@@ -172,41 +167,50 @@ angular
       return User.logout().$promise.then(function () {
         // LoopBackAuth.clearUser();
         // LoopBackAuth.clearStorage();
-        window.localStorage.removeItem('currentConference');
-        user = rejectedPromise();
+        currentConferenceId = null;
+        user = $q.reject();
       });
     },
     hasRole = function (role) {
-      if (rolesCache[role]) {
-        return rolesCache[role].then(function (c) {
-          if(c.indexOf(parseInt(window.localStorage.getItem('currentConference'), 10)) !== -1) {
-            return $q.resolve();
-          } else {
-            return $q.reject();
+      return user.then(
+        function (user) {
+          if (user[role]) {
+            for (idx in user[role]) {
+              if (user[role][idx].id === currentConferenceId) return $q.resolve();
+            }
           }
-        });
-      } else {
-        return $q.resolve(false);
-      }
+
+          return $q.reject();
+        },
+        function () { return $q.reject(); }
+      );
     },
     isAuthenticated = User.isAuthenticated.bind(User),
-    rejectedPromise = function () {
-      return $q.defer(function (resolve, reject) { reject(); }).promise;
-    },
     retrieveUserWithRoles = function (userId) {
-      rolesCache.attendee = User.attendee({id: userId}).$promise.then(function(conferences) {
-         return conferences.map(function(c) { return c.id});
+      var user = User.findById({
+          id: userId,
+          filter: {
+            include: ['reviewer', 'author', 'attendee', 'chair'].map(function (role) {
+              return { relation: role, scope: { fields: ['id'] }};
+            })
+          }
+        }).$promise;
+
+      user.then(function (model) {
+        setCurrentConferenceId(model.defaultConferenceId);
       });
-      rolesCache.chair = User.chair({id: userId}).$promise.then(function(conferences) {
-        return conferences.map(function(c) { return c.id});
-      });
-      rolesCache.reviewer = User.reviewer({id: userId}).$promise.then(function(conferences) {
-         return conferences.map(function(c) { return c.id});
-      });
-      rolesCache.author = User.author({id: userId}).$promise.then(function(conferences) {
-         return conferences.map(function(c) { return c.id});
-      });
-      return User.findById({id: userId}).$promise;
+
+      return user;
+    },
+    getCurrentConferenceId = function () {
+      return currentConferenceId;
+    },
+    setCurrentConferenceId = function (conferenceId) {
+      if (conferenceId) {
+        currentConferenceId = parseInt(conferenceId, 10);
+      } else {
+        currentConferenceId = null;
+      }
     };
 
   user = isAuthenticated() ?
@@ -219,14 +223,16 @@ angular
     hasRole: hasRole,
     getUser: function () { return user; },
     getUserId: function () { return user.then(function (user) { return user.id; }); },
-    isAuthenticated: isAuthenticated
+    isAuthenticated: isAuthenticated,
+    getCurrentConferenceId: getCurrentConferenceId,
+    setCurrentConferenceId: setCurrentConferenceId
   };
 }])
 .run(function($rootScope, $q, PermissionStore, RoleStore, AuthService) {
   PermissionStore.definePermission('hasValidSession', function () {
     return AuthService.isAuthenticated();
   });
-  PermissionStore.defineManyPermissions(['chair', 'author', 'reviewer'],
+  PermissionStore.defineManyPermissions(['chair', 'author', 'reviewer', 'attendee'],
       function (roleName, transitionProperties) {
     return AuthService.hasRole(roleName);
   });
@@ -235,4 +241,5 @@ angular
   RoleStore.defineRole('CHAIR', ['hasValidSession', 'chair']);
   RoleStore.defineRole('AUTHOR', ['hasValidSession', 'author']);
   RoleStore.defineRole('REVIEWER', ['hasValidSession', 'reviewer']);
+  RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
 });
