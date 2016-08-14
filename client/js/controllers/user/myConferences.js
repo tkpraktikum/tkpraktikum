@@ -3,7 +3,6 @@ angular
   .controller('MyConferencesController', ['$q', '$scope', '$state', '$http' , 'AuthService', 'User', 'Conference',
     function($q, $scope, $state, $http, AuthService, User, Conference) {
 
-      $scope.user = AuthService.getUser;
       $scope.conferenceList = [];
 
       var getConferences = function() {
@@ -12,7 +11,7 @@ angular
             return user.id;
           });
         };
-        $scope.user.then(function(user) {
+        AuthService.getUser.then(function(user) {
           var userId = user.id;
           $q.all([
             User.attendee({id: userId}).$promise,
@@ -33,7 +32,7 @@ angular
       getConferences();
 
       $scope.setDefault = function(conference) {
-        $scope.user.then(function(user) {
+        AuthService.getUser.then(function(user) {
           User.prototype$updateAttributes({id: user.id}, {defaultConferenceId: conference.id});
         });
       };

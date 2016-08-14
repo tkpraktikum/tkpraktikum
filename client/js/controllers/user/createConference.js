@@ -4,10 +4,9 @@ angular
     function($scope, $state, $http, AuthService, User, Conference) {
 
       $scope.conference = {};
-      $scope.userId = AuthService.getUserId;
 
       $scope.create = function() {
-        $scope.userId.then(function(userId) {
+        AuthService.getUserId.then(function(userId) {
           User
             .chair
             .create({id: userId}, $scope.conference)
