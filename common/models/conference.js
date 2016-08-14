@@ -1,4 +1,5 @@
 module.exports = function(Conference) {
+  Conference.validatesUniquenessOf('name');
 
   Conference.afterRemote('find', function(ctx, instances, next) {
     if (ctx.processed) {
