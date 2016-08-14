@@ -1,7 +1,7 @@
 <div class="col-md-10 centerContent">
   <h1 class="text-center page-title">Your Conferences</h1>
-  <div class="row" ng-repeat="row in conferenceRows">
-    <div class="col-md-4" ng-repeat="c in row">
+  <div class="card-columns"> <!--ng-repeat="row in conferenceRows"-->
+    <div class="col-xs-12" ng-repeat="c in conferences">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title"><span class="highlight">{{c.name}}</span> <span ng-show="c.isDefault" class="conference-title-default">Default</span></h3>
@@ -12,11 +12,7 @@
             <span ng-show="c.isAuthor">Author, </span>
             <span ng-show="c.isReviewer">Reviewer, </span>
             Attendee</b>
-          <p>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-          Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-          erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-          </p>
+          <p>{{c.description}}</p>
           <div ng-show="!c.isDefault"><a>Set Default</a></div>
           <div ng-show="c.isAuthor"><a>Submissions</a></div>
           <div ng-show="c.isChair"><a>Manage Users</a></div>

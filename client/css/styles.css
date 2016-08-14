@@ -5,6 +5,10 @@ html, body {
   line-height: 1.5;
 }
 
+.content {
+  padding-top: 80px;
+}
+
 textarea {
   resize: none;
 }
@@ -52,4 +56,18 @@ textarea {
 
 .fullwidth-dropdown-list {
   width: 100%;
+}
+
+.card-columns {
+  column-count: 1;
+}
+
+.card-columns > div {
+  break-inside: avoid-column;
+}
+
+@media (min-width: 992px) {
+  .card-columns {
+    column-count: 3;
+  }
 }
