@@ -34,28 +34,28 @@
       "type": "hasMany",
       "model": "user",
       "through": "attendance",
-      "keyThrough": "conferenceId",
+      "keyThrough": "attendeeId",
       "foreignKey": "conferenceId"
     },
     "chairs": {
       "type": "hasMany",
       "model": "user",
       "through": "chairman",
-      "keyThrough": "conferenceId",
+      "keyThrough": "chairId",
       "foreignKey": "conferenceId"
     },
     "reviewer": {
       "type": "hasMany",
       "model": "user",
       "through": "reviewer",
-      "keyThrough": "conferenceId",
+      "keyThrough": "reviewerId",
       "foreignKey": "conferenceId"
     },
     "authors": {
       "type": "hasMany",
       "model": "user",
       "through": "author",
-      "keyThrough": "conferenceId",
+      "keyThrough": "authorId",
       "foreignKey": "conferenceId"
     }
   },

@@ -11,7 +11,7 @@ angular
     $scope.newReview = {};
 
     function getReviews() {
-      AuthService.getUserId.then(function(userId) {
+      AuthService.getUserId().then(function(userId) {
         User
           .reviewer({id: userId, filter: {where: {conferenceId: $stateParams.conferenceId}}})
           .$promise
@@ -23,7 +23,7 @@ angular
     }
 
     $scope.createReview = function() {
-      AuthService.getUserId.then(function(userId) {
+      AuthService.getUserId().then(function(userId) {
         User
           .reviews
           .create({id: userId}, $scope.newReview)

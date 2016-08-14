@@ -6,7 +6,7 @@ angular
       $scope.conference = {};
 
       $scope.create = function() {
-        AuthService.getUserId.then(function(userId) {
+        AuthService.getUserId().then(function(userId) {
           User
             .chair
             .create({id: userId}, $scope.conference)

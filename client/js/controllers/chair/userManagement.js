@@ -16,7 +16,7 @@ angular
               return user.id;
             });
           };
-          AuthService.getUserId.then(function(userId) {
+          AuthService.getUserId().then(function(userId) {
             $q.all(
               [
                 Conference.attendees({id: $stateParams.conferenceId}).$promise,
@@ -78,7 +78,7 @@ angular
         };
 
         $scope.changeChair = function(user) {
-          AuthService.getUserId.then(function(userId) {
+          AuthService.getUserId().then(function(userId) {
             if (user.id == userId) {
               return;
             }
