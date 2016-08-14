@@ -13,9 +13,10 @@ module.exports = function(app, ds, callback) {
   ];
 
   app.models.Conference.create(conferences, function(err) {
-  if (!err) {
+    if (!err) {
       logger.info('Created conferences');
     }
+
     callback(err);
   });
 };
