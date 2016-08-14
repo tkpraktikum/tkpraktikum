@@ -11,7 +11,7 @@ angular
     $scope.selectedItem = null;
     $scope.changeCaret = false;
 
-    AuthService.getUser.then(function (userData) {
+    AuthService.getUser().then(function (userData) {
       $scope.user = userData;
       attributes.map(function(p) {
         $scope.changeUserProfile[p] = userData[p] || '';

@@ -4,7 +4,7 @@ angular
 
     $scope.user = {};
 
-    AuthService.getUser.then(function (userData) {
+    AuthService.getUser().then(function (userData) {
       $scope.user = userData;
     });
 

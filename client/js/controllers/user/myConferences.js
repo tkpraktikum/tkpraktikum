@@ -11,7 +11,7 @@ angular
             return user.id;
           });
         };
-        AuthService.getUser.then(function(user) {
+        AuthService.getUser().then(function(user) {
           var userId = user.id;
           $q.all([
             User.attendee({id: userId}).$promise,
@@ -32,7 +32,7 @@ angular
       getConferences();
 
       $scope.setDefault = function(conference) {
-        AuthService.getUser.then(function(user) {
+        AuthService.getUser().then(function(user) {
           User.prototype$updateAttributes({id: user.id}, {defaultConferenceId: conference.id});
         });
       };

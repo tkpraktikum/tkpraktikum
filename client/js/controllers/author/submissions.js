@@ -11,7 +11,7 @@ angular
     $scope.newSubmission = {};
 
     function getSubmissions() {
-      AuthService.getUserId.then(function(userId) {
+      AuthService.getUserId().then(function(userId) {
         User
           .submissions({id: userId, filter: { where: {conferenceId: $stateParams.conferenceId}}})
           .$promise
@@ -23,7 +23,7 @@ angular
     }
 
     $scope.createSubmission = function() {
-      AuthService.getUserId.then(function(userId) {
+      AuthService.getUserId().then(function(userId) {
         $scope.newSubmission.conferenceId = $stateParams.conferenceId;
         User
           .submissions
