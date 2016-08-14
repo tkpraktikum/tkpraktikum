@@ -14,7 +14,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-      <li class="dropdown" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak>
+        <li class="dropdown" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Submissions <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.submission.create">Create</a></li>
@@ -22,10 +22,7 @@
           </ul>
         </li>
 
-
-
-
-        <li ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak><a ui-sref="app.protected.review">Reviews</a></li>
+        <li ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak><a ui-sref="app.protected.review.list">Reviews</a></li>
         <li class="dropdown" ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
