@@ -42,7 +42,7 @@ angular
             User
               .author
               .link({id: user.id, fk: $stateParams.conferenceId},
-                {attendeeId: user.id, conferenceId: $stateParams.conferenceId})
+                {conferenceId: $stateParams.conferenceId})
               .$promise.then(function () {
                 getUsers();
             });
@@ -50,7 +50,7 @@ angular
             User
               .author
               .unlink({id: user.id, fk: $stateParams.conferenceId},
-                {attendeeId: user.id, conferenceId: $stateParams.conferenceId})
+                {conferenceId: $stateParams.conferenceId})
               .$promise.then(function () {
                 getUsers();
             })
@@ -62,7 +62,7 @@ angular
             User
               .reviewer
               .link({id: user.id, fk: $stateParams.conferenceId},
-                {attendeeId: user.id, conferenceId: $stateParams.conferenceId})
+                {conferenceId: $stateParams.conferenceId})
               .$promise.then(function () {
               getUsers();
             });
@@ -70,7 +70,7 @@ angular
             User
               .reviewer
               .unlink({id: user.id, fk: $stateParams.conferenceId},
-                {attendeeId: user.id, conferenceId: $stateParams.conferenceId})
+                {conferenceId: $stateParams.conferenceId})
               .$promise.then(function () {
               getUsers();
             })
@@ -86,7 +86,7 @@ angular
               User
                 .chair
                 .link({id: user.id, fk: $stateParams.conferenceId},
-                  {attendeeId: user.id, conferenceId: $stateParams.conferenceId})
+                  {conferenceId: $stateParams.conferenceId})
                 .$promise.then(function () {
                 getUsers();
               });
@@ -94,7 +94,7 @@ angular
               User
                 .chair
                 .unlink({id: user.id, fk: $stateParams.conferenceId},
-                  {attendeeId: user.id, conferenceId: $stateParams.conferenceId})
+                  {conferenceId: $stateParams.conferenceId})
                 .$promise.then(function () {
                 getUsers();
               })
