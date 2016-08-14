@@ -67,31 +67,26 @@ angular
         url: '/profile',
         templateUrl: 'views/user/user.html',
         controller: 'ProfileController',
-        data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.user.conference', {
         url: '/conference',
         abstract: true,
         template: '<div ui-view></div>',
-        data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.user.conference.join', {
         url: '/join',
         templateUrl: 'views/user/joinConference.html',
         controller: 'JoinConferenceController',
-        data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.user.conference.create', {
         url: '/create',
         templateUrl: 'views/user/createConference.html',
         controller: 'CreateConferenceController',
-        data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.user.conference.my', {
         url: '/my',
         templateUrl: 'views/user/myConferences.html',
         controller: 'MyConferencesController',
-        data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.conference', {
         url: 'conference/:conferenceId/',
