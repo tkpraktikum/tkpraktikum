@@ -1,7 +1,7 @@
 var CONTAINERS_URL = '/api/containers/';
 module.exports = function (File) {
 
-  File.upload = function (ctx, options, mcb) {
+  File.upload = function (ctx, options, cb) {
     console.log("FILE UPLOAD CALLED");
     if (!options) options = {};
     ctx.req.params.container = 'common';
@@ -41,8 +41,9 @@ module.exports = function (File) {
     }
   );
 
-  File.beforeRemote('upload', function (ctx, a, b) {
-    console.log("BEFORE REMOTE", ctx, a, b);
+  File.beforeRemote('upload', function (ctx, a, next) {
+    //console.log("BEFORE REMOTE", ctx, a, b);
+    next();
   });
 
 };
