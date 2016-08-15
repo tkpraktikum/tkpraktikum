@@ -145,7 +145,7 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
   }])
-.factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
+.factory('AuthService', ['$q', '$state', 'LoopBackAuth', 'User', function ($q, $state, LoopBackAuth, User) {
 
   var user,
     currentConferenceId = null,
@@ -192,7 +192,13 @@ angular
         }).$promise;
 
       user.then(function (model) {
+        var isSet = !!currentConferenceId;
         setCurrentConferenceId(model.defaultConferenceId);
+        console.log(model);
+        if (!isSet && model.defaultConferenceId) {
+          console.log('late set');
+          $state.go($state.current, {}, {reload: true});
+        }
       });
 
       return user;

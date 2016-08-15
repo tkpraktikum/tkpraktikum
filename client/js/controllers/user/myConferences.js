@@ -31,9 +31,9 @@ angular
       };
       getConferences();
 
-      $scope.setDefault = function(conference) {
+      $scope.setDefault = function(id) {
         AuthService.getUser().then(function(user) {
-          User.prototype$updateAttributes({id: user.id}, {defaultConferenceId: conference.id});
+          User.prototype$updateAttributes({id: user.id}, {defaultConferenceId: id});
         });
       };
 
