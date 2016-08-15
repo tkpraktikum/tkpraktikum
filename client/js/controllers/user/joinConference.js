@@ -6,7 +6,7 @@ angular
       $scope.conference = {};
 
       $scope.join = function() {
-        AuthService.getUserId.then(function(userId) {
+        AuthService.getUserId().then(function(userId) {
           Conference
             .find({filter: {where: {name: $scope.conference.name, sharedSecret: $scope.conference.sharedSecret}}})
             .$promise

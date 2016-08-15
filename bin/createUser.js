@@ -45,11 +45,25 @@ module.exports = function(app, ds, callback) {
     users.map(function(u, idx) {
       u.updateAttribute('defaultConferenceId', chairs[idx].defaultConferenceId);
 
+      app.models.attendance.create({
+        conferenceId: conferences[idx].id,
+        attendeeId: u.id
+      }, function (err, model) {
+        if (!err) logger.info('Assigned attendee to conference:', u.username, conferences[idx].name);
+      });
+
+      app.models.attendance.create({
+        conferenceId: conferences[idx].id,
+        attendeeId: author.id
+      }, function (err, model) {
+        if (!err) logger.info('Assigned attendee to that conference:', author.username);
+      });
+
       app.models.chairman.create({
         conferenceId: conferences[idx].id,
         chairId: u.id
       }, function (err, model) {
-        if (!err) logger.info('Assigned chairman to conference:', u.username, conferences[idx].name);
+        if (!err) logger.info('Assigned chairman to that conference:', u.username);
       });
 
       app.models.author.create({
