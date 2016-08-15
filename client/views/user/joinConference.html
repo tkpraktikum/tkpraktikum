@@ -4,9 +4,10 @@
   <form name="joinConferenceForm" ng-submit="join()" novalidate>
     <div class="form-group"
          ng-class="{ 'has-error': (joinConferenceForm.name.$dirty && joinConferenceForm.name.$error.required) || (joinConferenceForm.name.$invalid && !joinConferenceForm.name.$error.required) }">
-      <label class="control-label" for="name">Conference Name</label>
-      <input type="text" autocomplete="off" name="name" id="name" placeholder="Conference Name"
-             class="form-control validation" required ng-model="conference.name"/>
+      <label class="control-label" for="id">Conference Name</label>
+      <select class="form-control" id="id" ng-model="conference.id">
+        <option ng-repeat="c in allConferences" value="{{c.id}}">{{c.name}}</option>
+      </select>
     </div>
     <div class="form-group"
          ng-class="{ 'has-error': (joinConferenceForm.sharedSecret.$dirty && joinConferenceForm.sharedSecret.$error.required) || (joinConferenceForm.sharedSecret.$invalid && !joinConferenceForm.sharedSecret.$error.required) }">

@@ -71,3 +71,7 @@ textarea {
     column-count: 3;
   }
 }
+
+.conference-link {
+  cursor: pointer;
+}
