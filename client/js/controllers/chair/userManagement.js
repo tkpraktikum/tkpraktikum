@@ -1,14 +1,36 @@
 angular
   .module('app')
   .controller('ChairUserManagementController',
-      ['$q', '$scope', '$state', '$stateParams', '$http' , 'AuthService', 'User', 'Conference',
-      function($q, $scope, $state, $stateParams, $http, AuthService, User, Conference) {
+      ['$q', '$scope', '$state', '$stateParams', '$http', '$timeout', 'AuthService', 'User', 'Conference',
+      function($q, $scope, $state, $stateParams, $http, $timeout, AuthService, User, Conference) {
 
         // sort by https://scotch.io/tutorials/sort-and-filter-a-table-using-angular
         $scope.sortType     = 'name'; // set the default sort type
         $scope.sortReverse  = false;  // set the default sort order
         $scope.searchUser   = '';     // set the default search/filter term
         $scope.userList = [];
+        $scope.filteredUserList = [];
+        $scope.filter = {};
+
+        $scope.applyFilter = function() {
+          $scope.filteredUserList =
+            $scope.userList.filter(function(u) {
+              if ($scope.filter.isAuthor) {
+                return u.isAuthor;
+              }
+              return true
+            }).filter(function(u) {
+              if ($scope.filter.isReviewer) {
+                return u.isReviewer;
+              }
+              return true
+            }).filter(function(u) {
+              if ($scope.filter.isChair) {
+                return u.isChair;
+              }
+              return true
+            });
+        };
 
         function getUsers() {
           var toIdList = function(userList) {
@@ -32,6 +54,7 @@ angular
                 user.isMe = (user.id === userId);
                 return user;
               });
+              $scope.applyFilter();
             }).catch(console.error);
           });
         }

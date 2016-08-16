@@ -1,8 +1,11 @@
 var logger = require('winston');
+var commonNames = require('./commonNames.json');
 
 module.exports = function(app, ds, callback) {
   var conferences = [],
     author = {
+      firstname: 'Anton',
+      lastname: 'Autor',
       username: 'author',
       password: 'tk',
       email: 'author1@chair.de',
@@ -10,22 +13,42 @@ module.exports = function(app, ds, callback) {
     },
     chairs = [
       {
-        username: 'chairman1',
-        password: 'tk',
+        firstname: 'Charlie',
+        lastname: 'Chair',
+        username: 'chair',
+        password: 'chair',
         email: 'chairmen1@chair.de',
         emailVerified: true
       },
       {
+        firstname: 'Max',
+        lastname: 'Example',
         username: 'chairman2',
         password: 'tk',
         email: 'chairman2@chair.de',
         emailVerified: true
       }
-    ];
+    ],
+    attendees = new Array(100);
+    for(var i=0; i < 100; i++) {
+      var firstName = commonNames.firstNames[Math.floor(Math.random() * commonNames.firstNames.length)],
+          lastName = commonNames.lastNames[Math.floor(Math.random() * commonNames.lastNames.length)];
+      lastName = lastName.slice(0,1) + lastName.slice(1).toLowerCase();
+      attendees[i] = {
+        username: firstName + lastName,
+        firstname: firstName,
+        lastname: lastName,
+        email: firstName + '.' + lastName + '@gmail.com',
+        password: 'geheim',
+        emailVerified: true
+      }
+    }
 
   app.models.conference.find({}, function (err, results) {
     results.map(function (conference, idx) {
-      chairs[idx].defaultConferenceId = conference.id;
+      if (idx < chairs.length) {
+        chairs[idx].defaultConferenceId = conference.id;
+      }
       author.defaultConferenceId = conference.id;
     });
 
@@ -76,5 +99,18 @@ module.exports = function(app, ds, callback) {
 
     logger.info('Created chairmans');
     callback(err);
+  });
+
+  app.models.user.create(attendees, function(err, users) {
+    if(err) return callback(err);
+    users.map(function(u) {
+      var idx = 0;
+      app.models.attendance.create({
+        conferenceId: conferences[idx].id,
+        attendeeId: u.id
+      }, function (err, model) {
+        if (!err) logger.info('Assigned attendee to conference:', u.username, conferences[idx].name);
+      });
+    });
   });
 };
