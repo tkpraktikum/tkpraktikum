@@ -1,87 +1,59 @@
-<div class="container" permission permission-except="'hasValidSession'">
-  <div class="col-md-7 centerContent">
-    <h1 class="text-center">Register</h1>
-    <br/>
-    <!-- TODO improve: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
-    <!-- TODO improve: validation for regex in email, username, university, pw and checkpw (comment the inputs out for regex validation -->
+<div class="row content-no-header" permission permission-except="'hasValidSession'">
+  <div class="col-md-8 col-md-offset-2">
+    <h1 class="page-title">Register</h1>
+    <div class="row" ng-show="affiliationMissing">
+      <div class="col-xs-12">
+        <div class="alert alert-danger" ng-show="affiliationMissing">
+          <b>Failure.</b> Please select your affiliation.
+        </div>
+      </div>
+    </div>
     <form name="newUserForm" method="post" action="/auth/signup">
       <div class="row">
-        <div class="form-group col-md-6"
-             ng-class="{ 'has-error': (newUserForm.firstname.$dirty && newUserForm.firstname.$error.required) || (newUserForm.firstname.$invalid && !newUserForm.firstname.$error.required) }">
-          <label class="control-label" for="firstname">Firstname</label>
+        <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+          <label class="control-label" for="firstname">First Name</label>
           <input type="text" autocomplete="off" name="firstname" id="firstname" placeholder="Firstname"
-                 class="form-control validation" required ng-model="newUser.firstname"/>
+                 class="form-control" required ng-model="newUser.firstname"/>
         </div>
-        <div class="form-group col-md-6"
-             ng-class="{ 'has-error': (newUserForm.lastname.$dirty && newUserForm.lastname.$error.required) || (newUserForm.lastname.$invalid && !newUserForm.lastname.$error.required) }">
-          <label class="control-label" for="lastname">Lastname</label>
+        <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+          <label class="control-label" for="lastname">Last Name</label>
           <input type="text" autocomplete="off" name="lastname" id="lastname" placeholder="Lastname"
-                 class="form-control validation" required ng-model="newUser.lastname"/>
+                 class="form-control" required ng-model="newUser.lastname"/>
         </div>
       </div>
       <div class="row">
-        <div class="form-group col-md-6"
-             ng-class="{ 'has-error': (newUserForm.email.$dirty && newUserForm.email.$error.required) || (newUserForm.email.$invalid && !newUserForm.email.$error.required) }">
+        <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
           <label class="control-label" for="email">E-Mail</label>
           <input type="email" autocomplete="off" name="email" id="email" placeholder="E-Mail"
-                 class="form-control validation" required ng-model="newUser.email"/>
+                 class="form-control" required ng-model="newUser.email"/>
         </div>
-        <div class="form-group col-md-6"
-             ng-class="{ 'has-error': (newUserForm.username.$dirty && newUserForm.username.$error.required) || (newUserForm.username.$invalid && !newUserForm.username.$error.required) }">
+        <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
           <label class="control-label" for="username">Username</label>
           <input type="text" autocomplete="off" name="username" id="username" placeholder="Username"
-                 class="form-control validation" required ng-model="newUser.username"/>
+                 class="form-control" required ng-model="newUser.username"/>
         </div>
       </div>
       <div class="form-group">
         <label class="control-label" for="affiliation">Affiliation</label>
-        <select id="affiliation" name="affiliation" class="form-control" ng-model="newUser.affiliation">
-          <option value="0">-- Create New --</option>
-          <option ng-repeat="a in affiliations" value="{{a.id}}">{{a.name}}</option>
-        </select>
-      </div>
-      <div ng-show="newUser.affiliation == 0">
-        <div class="row">
-          <div class="form-group col-md-6"
-               ng-class="{ 'has-error': (newUserForm.name.$dirty && newUserForm.name.$error.required) || (newUserForm.name.$invalid && !newUserForm.name.$error.required) }">
-            <label class="control-label" for="name">Name</label>
-            <input type="text" autocomplete="off" name="name" id="name" placeholder="Name"
-                   class="form-control validation" ng-model="newAffiliation.name"/>
-          </div>
-          <div class="form-group col-md-6"
-               ng-class="{ 'has-error': (newUserForm.city.$dirty && newUserForm.city.$error.required) || (newUserForm.city.$invalid && !newUserForm.city.$error.required) }">
-            <label class="control-label" for="city">City</label>
-            <input type="text" autocomplete="off" name="city" id="city" placeholder="City"
-                   class="form-control validation" ng-model="newAffiliation.city"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-6"
-               ng-class="{ 'has-error': (newUserForm.state.$dirty && newUserForm.state.$error.required) || (newUserForm.state.$invalid && !newUserForm.state.$error.required) }">
-            <label class="control-label" for="state">State</label>
-            <input type="text" autocomplete="off" state="state" id="state" placeholder="State"
-                   class="form-control validation" ng-model="newAffiliation.state"/>
-          </div>
-          <div class="form-group col-md-6"
-               ng-class="{ 'has-error': (newUserForm.country.$dirty && newUserForm.country.$error.required) || (newUserForm.country.$invalid && !newUserForm.country.$error.required) }">
-            <label class="control-label" for="country">Country</label>
-            <input type="text" autocomplete="off" state="country" id="country" placeholder="Country"
-                   class="form-control validation" ng-model="newAffiliation.country"/>
-          </div>
-        </div>
+        <input type="text" class="hidden" id="affiliation" name="affiliation" required value="{{affiliationInput}}">
+        <ui-select theme="bootstrap" ng-model="selected.selectedAffiliation">
+          <ui-select-match placeholder="Select or search an affiliation">{{selected.selectedAffiliation.name}}</ui-select-match>
+          <ui-select-choices repeat="a in affiliations | filter: $select.search"><!-- my add group-by="'country'" -->
+            <div ng-bind-html="a.name | highlight: $select.search"></div>
+            <small ng-bind-html="a.country | highlight: $select.search"></small>
+          </ui-select-choices>
+        </ui-select>
       </div>
       <div class="row">
-        <div class="form-group col-md-6"
-             ng-class="{ 'has-error': (newUserForm.password.$dirty && newUserForm.password.$error.required) || (newUserForm.password.$invalid && !newUserForm.password.$error.required) }">
+        <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
           <label class="control-label" for="password">Password</label>
           <input type="password" autocomplete="off" name="password" id="password" placeholder="Password"
-                 class="form-control validation" required ng-model="newUser.password"/>
+                 class="form-control" required ng-model="newUser.password"/>
         </div>
-        <div class="form-group col-md-6"
-             ng-class="{ 'has-error': (newUserForm.checkPassword.$dirty && newUserForm.checkPassword.$error.required) || (newUserForm.checkPassword.$invalid && !newUserForm.checkPassword.$error.required) }">
+        <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
           <label class="control-label" for="checkPassword">Confirm Password</label>
           <input type="password" autocomplete="off" name="checkPassword" id="checkPassword" placeholder="Confirm Password"
-                 class="form-control validation" check-password="newUser.password" required
+                 class="form-control" check-password="newUser.password" required
                  ng-model="newUser.checkPassword"/>
         </div>
       </div>

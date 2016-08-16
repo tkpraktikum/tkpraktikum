@@ -1,41 +1,32 @@
 angular
   .module('app')
-  .controller('ProfileController', ['$scope', 'AuthService', 'Affiliation', 'User', function ($scope, AuthService, Affiliation, User) {
+  .controller('ProfileController', ['$scope', '$state', 'AuthService', 'Affiliation', 'User', function ($scope, $state, AuthService, Affiliation, User) {
 
-    var attributes = ['title', 'firstname', 'lastname', 'profession', 'affiliation', 'zip', 'city', 'state', 'country'];
+    var attributes = ['title', 'email', 'username', 'firstname', 'lastname', 'profession', 'affiliation', 'zip', 'city', 'state', 'country'];
     $scope.user = {};
     $scope.affiliations = [];
     $scope.changeUserProfile = {};
     $scope.changeUserPassword = {};
     $scope.deleteUserProfile = {};
-    $scope.selectedItem = null;
     $scope.changeCaret = false;
-
-    AuthService.getUser().then(function (userData) {
-      $scope.user = userData;
-      attributes.map(function(p) {
-        $scope.changeUserProfile[p] = userData[p] || '';
-        if (p === 'affiliation') {
-          $scope.selectedItem = userData[p] || null;
-        }
-      });
-    });
+    $scope.selected = {};
 
     Affiliation.find().$promise.then(function (affiliations) {
       $scope.affiliations = affiliations;
+      AuthService.getUser().then(function (userData) {
+        $scope.user = userData;
+        attributes.map(function(p) {
+          $scope.changeUserProfile[p] = userData[p] || '';
+          if (p === 'affiliation' && userData[p]) {
+            $scope.selected.selectedAffiliation = affiliations.filter(function(a) { return a.id == userData[p]; })[0];
+          }
+        });
+      });
     });
-
-    $scope.dropDownItemSelected = function (selection) {
-      $scope.changeCaret = !$scope.changeCaret;
-      $scope.selectedItem = selection.name;
-      $scope.changeUserProfile.affiliation = selection.name;
-      $scope.changeUserProfile.city = selection.city;
-      $scope.changeUserProfile.state = selection.state;
-      $scope.changeUserProfile.country = selection.country;
-    };
 
     $scope.changeProfile = function () {
       var updates = {};
+      $scope.changeUserProfile.affiliation = $scope.selected.selectedAffiliation.id;
       attributes.map(function(p) {
         if ($scope.changeUserProfile[p] !== $scope.user[p]) {
           updates[p] = $scope.changeUserProfile[p];
@@ -43,7 +34,7 @@ angular
       });
       console.log(updates);
       User.prototype$updateAttributes({id: $scope.user.id}, updates).$promise.then(function() {
-        console.log("Success");
+        $scope.showSuccess = true;
       });
     };
 

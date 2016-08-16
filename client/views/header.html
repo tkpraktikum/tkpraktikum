@@ -23,6 +23,7 @@
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.submission.list({conferenceId: currentConferenceId})">Manage Submissions</a></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.review.list({conferenceId: currentConferenceId})">Manage Reviews</a></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.users({conferenceId: currentConferenceId})">Manage Users</a></li>
+            <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.statistics({conferenceId: currentConferenceId})">Statistics</a></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.tag({conferenceId: currentConferenceId})">Tags</a></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.affiliation({conferenceId: currentConferenceId})">Affiliation</a></li>
           </ul>
@@ -32,7 +33,7 @@
         <li class="dropdown" ui-sref-active="active" permission permission-only="'USER'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>{{user.firstname}} {{user.lastname}}</span> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.profile">Edit Profile</a></li>
+            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.profile.edit">Manage Profile</a></li>
             <li role="separator" class="divider"></li>
             <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.conference.my">My Conferences</a></li>
             <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.conference.join">Join Conference</a></li>

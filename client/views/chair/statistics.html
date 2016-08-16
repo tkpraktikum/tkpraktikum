@@ -1,0 +1,93 @@
+<div class="row content-no-header">
+  <div class="col-md-10 col-md-offset-1">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body" style="text-align: center">
+          <div class="flip-nav-statistics">
+            <input id="filterAuthor" ng-model="filter.showAuthor" type="checkbox" class="tgl tgl-flip"/>
+            <label data-tg-off="Author" data-tg-on="Author" for="filterAuthor" class="tgl-btn"></label>
+          </div>
+          <div class="flip-nav-statistics">
+            <input id="filterSubmissions" ng-model="filter.showSubmissions" type="checkbox" class="tgl tgl-flip"/>
+            <label data-tg-off="Submissions" data-tg-on="Submissions" for="filterSubmissions" class="tgl-btn"></label>
+          </div>
+          <div class="flip-nav-statistics">
+            <input id="filterReviews" ng-model="filter.showReviews" type="checkbox" class="tgl tgl-flip"/>
+            <label data-tg-off="Reviews" data-tg-on="Reviews" for="filterReviews" class="tgl-btn"></label>
+          </div>
+          <div class="flip-nav-statistics">
+            <input id="filterAffiliation" ng-model="filter.showAffiliation" type="checkbox" class="tgl tgl-flip"/>
+            <label data-tg-off="Affiliation" data-tg-on="Affiliation" for="filterAffiliation" class="tgl-btn"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Authors vs. Submissions</h3>
+        </div>
+        <div class="panel-body">
+          <canvas id="bar" class="chart chart-bar"
+                  chart-data="data" chart-labels="labels" chart-series="series" chart-options="options">
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Reviews</h3>
+        </div>
+        <div class="panel-body">
+          <canvas id="doughnut" class="chart chart-doughnut"
+                  chart-data="reviewsData" chart-labels="reviewsLabels" chart-options="reviewsOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Total Submissions</h3>
+        </div>
+        <div class="panel-body">
+          <canvas id="submissionTime" class="chart chart-line" chart-data="reviewsTimeData"
+                  chart-labels="reviewsTimeLabels" chart-series="reviewsTimeSeries" chart-options="reviewsTimeOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Total Reviews</h3>
+        </div>
+        <div class="panel-body">
+          <canvas id="reviewTime" class="chart chart-line" chart-data="reviewsTimeData"
+                  chart-labels="reviewsTimeLabels" chart-series="reviewsTimeSeries" chart-options="reviewsTimeOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Submissions By Affiliation</h3>
+        </div>
+        <div class="panel-body">
+          <canvas id="submissionAffiliation" class="chart chart-bar" chart-data="subAffData"
+                  chart-labels="subAffLabels" chart-series="subAffSeries" chart-options="subAffOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

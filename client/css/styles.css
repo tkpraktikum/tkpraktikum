@@ -1,12 +1,17 @@
 html, body {
   padding: 0;
-  min-height: 100%;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   line-height: 1.5;
 }
 
 .content {
   padding-top: 80px;
+}
+
+.page-title {
+  text-align: center;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
 }
 
 textarea {
@@ -35,7 +40,7 @@ textarea {
 
 .centerContent {
   float: none;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .validation.ng-dirty.ng-valid[required] {
@@ -74,4 +79,59 @@ textarea {
 
 .conference-link {
   cursor: pointer;
+}
+
+.sidebar-nav {
+  position: absolute;
+}
+
+.flip-nav-statistics {
+  display: inline-block;
+  margin: 0 auto;
+  width: 8em;
+}
+
+.flip-nav-statistics > .tgl-btn{
+  display: inline-block;
+  width: 8em;
+  margin: 4px 0px;
+}
+
+.content-no-header {
+  margin-top: 20px;
+}
+
+.sub-nav-li {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #aaaaaa;
+  width: 9em;
+  font-size: 14px;
+  font-family: sans-serif;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.sub-nav > li, .sub-nav > li:hover {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #AAAAAA;
+  width: 9em;
+  font-size: 14px;
+  font-family: sans-serif;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.sub-nav > li > a {
+  color: #ffffff;
+  padding: 8px 0;
+}
+
+.sub-nav > li.active > a, .sub-nav > li > a:hover, .sub-nav > li > a:active, .sub-nav > li > a:focus {
+  background-color: #cc0000;
+}
+
+#create-new-account {
+  margin-top: 15px;
 }

@@ -1,0 +1,51 @@
+<form name="changeProfileForm" ng-submit="changeProfile()" novalidate>
+  <div class="row" ng-show="showSuccess || showError">
+    <div class="col-xs-12">
+      <div class="alert alert-success" ng-show="showSuccess">
+        <b>Success.</b> Updated user profile.
+      </div>
+      <div class="alert alert-danger" ng-show="showError">
+        <b>Failure.</b> Could not update user profile
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="firstname">First Name</label>
+      <input type="text" autocomplete="off" name="firstname" id="firstname" placeholder="Firstname"
+             class="form-control" required ng-model="changeUserProfile.firstname"/>
+    </div>
+    <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="lastname">Last Name</label>
+      <input type="text" autocomplete="off" name="lastname" id="lastname" placeholder="Lastname"
+             class="form-control" ng-model="changeUserProfile.lastname"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="email">E-Mail</label>
+      <input type="email" autocomplete="off" name="email" id="email" placeholder="E-Mail"
+             class="form-control" required ng-model="changeUserProfile.email"/>
+    </div>
+    <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="username">Username</label>
+      <input type="text" autocomplete="off" name="username" id="username" placeholder="Username"
+             class="form-control" required ng-model="changeUserProfile.username"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="email">Affiliation</label>
+    <ui-select theme="bootstrap" ng-model="selected.selectedAffiliation">
+      <ui-select-match placeholder="Select or search an affiliation">{{selected.selectedAffiliation.name}}</ui-select-match>
+      <ui-select-choices repeat="a in affiliations | filter: $select.search"><!-- my add group-by="'country'" -->
+        <div ng-bind-html="a.name | highlight: $select.search"></div>
+        <small ng-bind-html="a.country | highlight: $select.search"></small>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <button class="btn btn-primary col-xs-12">Edit Profile</button>
+    </div>
+  </div>
+</form>

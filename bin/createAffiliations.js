@@ -1,33 +1,7 @@
 var logger = require('winston');
+var affiliations = require('./universities.json');
 
 module.exports = function(app, ds, callback) {
-  var affiliations = [
-    {
-      name: 'TU Darmstadt',
-      city: 'Darmstadt',
-      state: 'Hessen',
-      country: 'Germany'
-    },
-    {
-      name: 'HS Darmstadt',
-      city: 'Darmstadt',
-      state: 'Hessen',
-      country: 'Germany'
-    },
-    {
-      name: 'DHBW Mannheim',
-      city: 'Mannheim',
-      state: 'Baden-Württemberg',
-      country: 'Germany'
-    },
-    {
-      name: 'Uni Mannheim',
-      city: 'Mannheim',
-      state: 'Baden-Württemberg',
-      country: 'Germany'
-    }
-  ];
-
 
   app.models.Affiliation.create(affiliations, function(err) {
     if (!err) {

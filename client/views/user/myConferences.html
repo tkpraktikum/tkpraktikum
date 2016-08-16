@@ -1,21 +1,22 @@
-<div class="col-md-10 centerContent">
-  <h1 class="text-center page-title">Your Conferences</h1>
-  <div class="card-columns">
-    <div class="col-xs-12" ng-repeat="c in conferences">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><span class="highlight">{{c.name}}</span> <span ng-show="c.isDefault" class="conference-title-default">Default</span></h3>
-        </div>
-        <div class="panel-body">
-          <b>You are:
-            <span ng-show="c.isChair">Chair, </span>
-            <span ng-show="c.isAuthor">Author, </span>
-            <span ng-show="c.isReviewer">Reviewer, </span>
-            Attendee</b>
-          <p>{{c.description}}</p>
-          <div ng-show="!c.isDefault" class="conference-link" ng-click="setDefault(c.id)"><a>Set Default</a></div>
-          <div ng-show="c.isAuthor" class="conference-link"><a>Submissions</a></div>
-          <div ng-show="c.isChair" class="conference-link"><a>Manage Users</a></div>
+<div class="row content-no-header">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card-columns">
+      <div class="col-xs-12" ng-repeat="c in conferences">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><span class="highlight">{{c.name}}</span> <span ng-show="c.isDefault" class="conference-title-default">Default</span></h3>
+          </div>
+          <div class="panel-body">
+            <b>You are:
+              <span ng-show="c.isChair">Chair, </span>
+              <span ng-show="c.isAuthor">Author, </span>
+              <span ng-show="c.isReviewer">Reviewer, </span>
+              Attendee</b>
+            <p>{{c.description}}</p>
+            <div ng-show="!c.isDefault" class="conference-link" ng-click="setDefault(c.id)"><a>Set Default</a></div>
+            <div ng-show="c.isAuthor" class="conference-link"><a>Submissions</a></div>
+            <div ng-show="c.isChair" class="conference-link"><a>Manage Users</a></div>
+          </div>
         </div>
       </div>
     </div>

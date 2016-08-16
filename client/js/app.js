@@ -3,7 +3,11 @@ angular
     'lbServices',
     'ui.router',
     'permission',
-    'permission.ui'
+    'permission.ui',
+    'chart.js',
+    'ui.bootstrap.showErrors',
+    'ui.select',
+    'ngSanitize'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -64,9 +68,22 @@ angular
         data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.user.profile', {
+        abstract: true,
         url: '/profile',
-        templateUrl: 'views/user/user.html',
+        templateUrl: 'views/user/profile.html',
         controller: 'ProfileController',
+      })
+      .state('app.protected.user.profile.edit', {
+        url: '/edit',
+        templateUrl: 'views/user/profile.edit.html',
+      })
+      .state('app.protected.user.profile.changePassword', {
+        url: '/changePassword',
+        templateUrl: 'views/user/profile.changePassword.html',
+      })
+      .state('app.protected.user.profile.delete', {
+        url: '/delete',
+        templateUrl: 'views/user/profile.delete.html',
       })
       .state('app.protected.user.conference', {
         url: '/conference',
@@ -93,6 +110,11 @@ angular
         template: '<div ui-view></div>',
         abstract: true,
         controller: 'ConferenceController'
+      })
+      .state('app.protected.conference.statistics', {
+        url: 'statistics',
+        templateUrl: 'views/chair/statistics.html',
+        controller: 'StatisticsController'
       })
       .state('app.protected.conference.tag', {
         url: 'tag',
@@ -243,4 +265,6 @@ angular
   RoleStore.defineRole('AUTHOR', ['hasValidSession', 'author']);
   RoleStore.defineRole('REVIEWER', ['hasValidSession', 'reviewer']);
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
-});
+}).config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
+  showErrorsConfigProvider.showSuccess(true);
+}]);

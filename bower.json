@@ -22,6 +22,12 @@
     "angular-ui-router": "^0.2.18",
     "bootstrap": "^3.3.6",
     "angular-permission": "~3.0.1",
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "angular-chart.js": "npm:angular-chart.js#^1.0.0",
+    "angular-bootstrap-show-errors": "^2.3.0"
+  },
+  "resolutions": {
+    "angular-ui-select": "^0.19.1",
+    "angular-sanitize": "^1.5.8"
   }
 }

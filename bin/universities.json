@@ -1,0 +1,1432 @@
+[
+  {
+    "name": "Gustav-Siewerth-Akademie",
+    "country": "Germany",
+    "city": "Weilheim "
+  },
+  {
+    "name": "Fachhochschule Konstanz, Hochschule für Technik, Wirtschaft und Gestaltung",
+    "country": "Germany",
+    "city": "Konstanz "
+  },
+  {
+    "name": "Universität Konstanz",
+    "country": "Germany",
+    "city": "Konstanz "
+  },
+  {
+    "name": "Fachhochschule und Berufskollegs NTA, Prof.Dr. Grübler gemein. GmbH",
+    "country": "Germany",
+    "city": "Isny "
+  },
+  {
+    "name": "Philosophisch-Theologische Hochschule der Salesianer Don Boscos",
+    "country": "Germany",
+    "city": "Benediktbeuern "
+  },
+  {
+    "name": "Fachhochschule Kempten, Hochschule für Technik und Wirtschaft",
+    "country": "Germany",
+    "city": "Kempten "
+  },
+  {
+    "name": "Fachhochschule Ravensburg-Weingarten",
+    "country": "Germany",
+    "city": "Weingarten "
+  },
+  {
+    "name": "Pädagogische Hochschule Weingarten",
+    "country": "Germany",
+    "city": "Weingarten "
+  },
+  {
+    "name": "Fachhochschule Rosenheim, Hochschule für Technik und Wirtschaft",
+    "country": "Germany",
+    "city": "Rosenheim "
+  },
+  {
+    "name": "Albert-Ludwigs-Universität Freiburg",
+    "country": "Germany",
+    "city": "Freiburg "
+  },
+  {
+    "name": "Evangelische Fachhochschule Freiburg, Hochschule für Soziale Arbeit, Diakonie und Religionspädagogik",
+    "country": "Germany",
+    "city": "Freiburg "
+  },
+  {
+    "name": "Katholische Fachhochschule Freiburg, Hochschule für Sozialwesen, Religionspädagogik und Pflege",
+    "country": "Germany",
+    "city": "Freiburg "
+  },
+  {
+    "name": "Pädagogische Hochschule Freiburg",
+    "country": "Germany",
+    "city": "Freiburg "
+  },
+  {
+    "name": "Fachhochschule Furtwangen, Hochschule für Technik und Wirtschaft",
+    "country": "Germany",
+    "city": "Furtwangen "
+  },
+  {
+    "name": "Staatliche Hochschule für Musik",
+    "country": "Germany",
+    "city": "Trossingen "
+  },
+  {
+    "name": "Hochschule Albstadt-Sigmaringen",
+    "country": "Germany",
+    "city": "Sigmaringen "
+  },
+  {
+    "name": "Fachhochschule Biberach, Hochschule für Bauwesen und Wirtschaft",
+    "country": "Germany",
+    "city": "Biberach "
+  },
+  {
+    "name": "Europäische Betriebswirtschafts-Akademie",
+    "country": "Germany",
+    "city": "Munich "
+  },
+  {
+    "name": "Fachhochschule München",
+    "country": "Germany",
+    "city": "Munich "
+  },
+  {
+    "name": "Hochschule für Philosophie München",
+    "country": "Germany",
+    "city": "Munich "
+  },
+  {
+    "name": "Hochschule für Politik (HFP)",
+    "country": "Germany",
+    "city": "Munich "
+  },
+  {
+    "name": "Katholische Stiftungsfachhochschule München",
+    "country": "Germany",
+    "city": "Munich "
+  },
+  {
+    "name": "Ludwig-Maximilians-Universität München",
+    "country": "Germany",
+    "city": "Munich "
+  },
+  {
+    "name": "Technische Universität München",
+    "country": "Germany",
+    "city": "Munich "
+  },
+  {
+    "name": "Universität der Bundeswehr München",
+    "country": "Germany",
+    "city": "Munich "
+  },
+  {
+    "name": "Deutsch-Ordens Fachhochschule Riedlingen, Hochschule für Wirtschaft",
+    "country": "Germany",
+    "city": "Riedlingen "
+  },
+  {
+    "name": "Hochschule Albstadt-Sigmaringen",
+    "country": "Germany",
+    "city": "Albstadt "
+  },
+  {
+    "name": "Fachhochschule Augsburg",
+    "country": "Germany",
+    "city": "Augsburg "
+  },
+  {
+    "name": "Universität Augsburg",
+    "country": "Germany",
+    "city": "Augsburg "
+  },
+  {
+    "name": "Fachhochschule Ulm, Hochschule für Technik",
+    "country": "Germany",
+    "city": "Ulm "
+  },
+  {
+    "name": "Universität Ulm",
+    "country": "Germany",
+    "city": "Ulm "
+  },
+  {
+    "name": "Fachhochschule Neu-Ulm",
+    "country": "Germany",
+    "city": "Neu-Ulm "
+  },
+  {
+    "name": "Fachhochschule Weihenstephan",
+    "country": "Germany",
+    "city": "Freising "
+  },
+  {
+    "name": "Fachhochschule Offenburg, Hochschule für Technik und Wirtschaft",
+    "country": "Germany",
+    "city": "Offenburg "
+  },
+  {
+    "name": "Fachhochschule Rottenburg, Hochschule für Forstwirtschaft",
+    "country": "Germany",
+    "city": "Rottenburg "
+  },
+  {
+    "name": "Fachhochschule Reutlingen, Hochschule für Technik und Wirtschaft",
+    "country": "Germany",
+    "city": "Reutlingen "
+  },
+  {
+    "name": "Eberhard-Karls-Universität Tübingen",
+    "country": "Germany",
+    "city": "Tübingen "
+  },
+  {
+    "name": "Fachhochschule Landshut, Hochschule für Wirtschaft - Sozialwesen - Technik",
+    "country": "Germany",
+    "city": "Landshut "
+  },
+  {
+    "name": "Universität Passau",
+    "country": "Germany",
+    "city": "Passau "
+  },
+  {
+    "name": "Fachhochschule Nürtingen, Hochschule für Wirtschaft, Landwirtschaft und Landespflege",
+    "country": "Germany",
+    "city": "Nürtingen "
+  },
+  {
+    "name": "Staatlich anerkannte Fachhochschule für Kunsttherapie",
+    "country": "Germany",
+    "city": "Nürtingen "
+  },
+  {
+    "name": "Hochschule Esslingen",
+    "country": "Germany",
+    "city": "Esslingen "
+  },
+  {
+    "name": "Fachhochschule Ingolstadt",
+    "country": "Germany",
+    "city": "Ingolstadt "
+  },
+  {
+    "name": "Fachhochschule Stuttgart, Hochschule der Medien",
+    "country": "Germany",
+    "city": "Stuttgart "
+  },
+  {
+    "name": "Fachhochschule Stuttgart, Hochschule für Technik",
+    "country": "Germany",
+    "city": "Stuttgart "
+  },
+  {
+    "name": "Merz Akademie, Hochschule für Gestaltung Stuttgart",
+    "country": "Germany",
+    "city": "Stuttgart "
+  },
+  {
+    "name": "Universität Hohenheim",
+    "country": "Germany",
+    "city": "Stuttgart "
+  },
+  {
+    "name": "Universität Stuttgart",
+    "country": "Germany",
+    "city": "Stuttgart "
+  },
+  {
+    "name": "Fachhochschule Schwäbisch Gmünd, Hochschule für Gestaltung",
+    "country": "Germany",
+    "city": "Schwäbisch Gmünd "
+  },
+  {
+    "name": "Pädagogische Hochschule Schwäbisch Gmünd",
+    "country": "Germany",
+    "city": "Schwäbisch Gmünd "
+  },
+  {
+    "name": "Internationale Fachhochschule Aalen",
+    "country": "Germany",
+    "city": "Aalen "
+  },
+  {
+    "name": "Fachhochschule Deggendorf",
+    "country": "Germany",
+    "city": "Deggendorf "
+  },
+  {
+    "name": "Fachhochschule Pforzheim, Hochschule für Gestaltung, Technik und Wirtschaft",
+    "country": "Germany",
+    "city": "Pforzheim "
+  },
+  {
+    "name": "Katholische Universität Eichstätt",
+    "country": "Germany",
+    "city": "Eichstätt "
+  },
+  {
+    "name": "Evangelische Fachhochschule Reutlingen-Ludwigsburg, Hochschule für Soziale Arbeit, Religionspädagogik und Diakonie",
+    "country": "Germany",
+    "city": "Ludwigsburg "
+  },
+  {
+    "name": "Pädagogische Hochschule Ludwigsburg",
+    "country": "Germany",
+    "city": "Ludwigsburg "
+  },
+  {
+    "name": "Hochschule für Technik und Wirtschaft Karlsruhe",
+    "country": "Germany",
+    "city": "Karlsruhe "
+  },
+  {
+    "name": "Karlshochschule International University",
+    "country": "Germany",
+    "city": "Karlsruhe "
+  },
+  {
+    "name": "Merkur Internationale FH Karlsruhe",
+    "country": "Germany",
+    "city": "Karlsruhe "
+  },
+  {
+    "name": "Pädagogische Hochschule Karlsruhe",
+    "country": "Germany",
+    "city": "Karlsruhe "
+  },
+  {
+    "name": "Universität Fridericana Karlsruhe (Technische Hochschule)",
+    "country": "Germany",
+    "city": "Karlsruhe "
+  },
+  {
+    "name": "Fachhochschule Regensburg",
+    "country": "Germany",
+    "city": "Ratisbon "
+  },
+  {
+    "name": "Universität Regensburg",
+    "country": "Germany",
+    "city": "Ratisbon "
+  },
+  {
+    "name": "Fachhochschule Schwäbisch Hall, Hochschule für Gestaltung",
+    "country": "Germany",
+    "city": "Schwäbisch Hall "
+  },
+  {
+    "name": "International University in Germany",
+    "country": "Germany",
+    "city": "Bruchsal "
+  },
+  {
+    "name": "Fachhochschule Heilbronn, Hochschule für Technik und Wirtschaft",
+    "country": "Germany",
+    "city": "Heilbronn "
+  },
+  {
+    "name": "Hochschule für Technik und Wirtschaft des Saarlandes",
+    "country": "Germany",
+    "city": "Saarbrücken "
+  },
+  {
+    "name": "Katholische Hochschule für Soziale Arbeit Saarbrücken",
+    "country": "Germany",
+    "city": "Saarbrücken "
+  },
+  {
+    "name": "Universität des Saarlandes",
+    "country": "Germany",
+    "city": "Saarbrücken "
+  },
+  {
+    "name": "Augustana Hochschule Neuendettelsau",
+    "country": "Germany",
+    "city": "Neuendettelsau "
+  },
+  {
+    "name": "Deutsche Hochschule für Verwaltungswissenschaften Speyer",
+    "country": "Germany",
+    "city": "Spires "
+  },
+  {
+    "name": "Fachhochschule Heidelberg",
+    "country": "Germany",
+    "city": "Heidelberg "
+  },
+  {
+    "name": "Hochschule für Internationales Management",
+    "country": "Germany",
+    "city": "Heidelberg "
+  },
+  {
+    "name": "Hochschule für Jüdische Studien Heidelberg",
+    "country": "Germany",
+    "city": "Heidelberg "
+  },
+  {
+    "name": "Pädagogische Hochschule Heidelberg",
+    "country": "Germany",
+    "city": "Heidelberg "
+  },
+  {
+    "name": "Ruprecht-Karls-Universität Heidelberg",
+    "country": "Germany",
+    "city": "Heidelberg "
+  },
+  {
+    "name": "Schiller International University, Heidelberg",
+    "country": "Germany",
+    "city": "Heidelberg "
+  },
+  {
+    "name": "Fachhochschule Kaiserslautern",
+    "country": "Germany",
+    "city": "Kaiserslautern "
+  },
+  {
+    "name": "Universität Kaiserslautern",
+    "country": "Germany",
+    "city": "Kaiserslautern "
+  },
+  {
+    "name": "Evangelische Fachhochschule Nürnberg",
+    "country": "Germany",
+    "city": "Nuremberg "
+  },
+  {
+    "name": "Georg-Simon-Ohm-Fachhochschule Nürnberg",
+    "country": "Germany",
+    "city": "Nuremberg "
+  },
+  {
+    "name": "Evangelische Fachhochschule Ludwigshafen Hochschule für Sozial- und Gesundheitswesen",
+    "country": "Germany",
+    "city": "Ludwigshafen "
+  },
+  {
+    "name": "Fachhochschule Ludwigshafen, Hochschule für Wirtschaft",
+    "country": "Germany",
+    "city": "Ludwigshafen "
+  },
+  {
+    "name": "Duale Hochschule Baden-Württemberg",
+    "country": "Germany",
+    "city": "Mannheim "
+  },
+  {
+    "name": "Fachhochschule Mannheim, Hochschule für Sozialwesen",
+    "country": "Germany",
+    "city": "Mannheim "
+  },
+  {
+    "name": "Fachhochschule Mannheim, Hochschule für Technik und Gestaltung",
+    "country": "Germany",
+    "city": "Mannheim "
+  },
+  {
+    "name": "Popakademie Baden-Württemberg",
+    "country": "Germany",
+    "city": "Mannheim "
+  },
+  {
+    "name": "Universität Mannheim",
+    "country": "Germany",
+    "city": "Mannheim "
+  },
+  {
+    "name": "Friedrich-Alexander Universität Erlangen-Nürnberg",
+    "country": "Germany",
+    "city": "Erlangen "
+  },
+  {
+    "name": "Fachhochschule Worms",
+    "country": "Germany",
+    "city": "Worms "
+  },
+  {
+    "name": "Fachhochschule Trier, Hochschule für Technik, Wirtschaft und Gestaltung",
+    "country": "Germany",
+    "city": "Trier "
+  },
+  {
+    "name": "Theologische Fakultät Trier",
+    "country": "Germany",
+    "city": "Trier "
+  },
+  {
+    "name": "Universität Trier",
+    "country": "Germany",
+    "city": "Trier "
+  },
+  {
+    "name": "Bayerische Julius-Maximilians-Universität Würzburg",
+    "country": "Germany",
+    "city": "Würzburg "
+  },
+  {
+    "name": "Fachhochschule Würzburg - Schweinfurt",
+    "country": "Germany",
+    "city": "Würzburg "
+  },
+  {
+    "name": "Private FernFachhochschule Darmstadt",
+    "country": "Germany",
+    "city": "Pfungstadt "
+  },
+  {
+    "name": "Evangelische Fachhochschule Darmstadt",
+    "country": "Germany",
+    "city": "Darmstadt "
+  },
+  {
+    "name": "Hochschule Darmstadt",
+    "country": "Germany",
+    "city": "Darmstadt "
+  },
+  {
+    "name": "Technische Universität Darmstadt",
+    "country": "Germany",
+    "city": "Darmstadt "
+  },
+  {
+    "name": "Otto-Friedrich Universität Bamberg",
+    "country": "Germany",
+    "city": "Bamberg "
+  },
+  {
+    "name": "Universität Bayreuth",
+    "country": "Germany",
+    "city": "Bayreuth "
+  },
+  {
+    "name": "Fachhochschule Bingen",
+    "country": "Germany",
+    "city": "Bingen "
+  },
+  {
+    "name": "Fachhochschule Aschaffenburg",
+    "country": "Germany",
+    "city": "Aschaffenburg "
+  },
+  {
+    "name": "European Business School Schloß Reichartshausen",
+    "country": "Germany",
+    "city": "Oestrich-Winkel "
+  },
+  {
+    "name": "European Management School",
+    "country": "Germany",
+    "city": "Mainz "
+  },
+  {
+    "name": "Fachhochschule Mainz",
+    "country": "Germany",
+    "city": "Mainz "
+  },
+  {
+    "name": "Johannes-Gutenberg Universität Mainz",
+    "country": "Germany",
+    "city": "Mainz "
+  },
+  {
+    "name": "Katholische Fachhochschule Mainz",
+    "country": "Germany",
+    "city": "Mainz "
+  },
+  {
+    "name": "Universität Koblenz-Landau",
+    "country": "Germany",
+    "city": "Mainz "
+  },
+  {
+    "name": "Fachhochschule Wiesbaden",
+    "country": "Germany",
+    "city": "Wiesbaden "
+  },
+  {
+    "name": "Fachhochschule Frankfurt am Main",
+    "country": "Germany",
+    "city": "Frankfurt "
+  },
+  {
+    "name": "Hochschule für Bankwirtschaft (HfB), Private Fachhochschule der Bankakademie",
+    "country": "Germany",
+    "city": "Frankfurt "
+  },
+  {
+    "name": "Johann Wolfgang Goethe Universität Frankfurt am Main",
+    "country": "Germany",
+    "city": "Frankfurt "
+  },
+  {
+    "name": "Philosophisch-Theologische Hochschule Sankt Georgen",
+    "country": "Germany",
+    "city": "Frankfurt "
+  },
+  {
+    "name": "Lutherische Theologische Hochschule Oberursel",
+    "country": "Germany",
+    "city": "Oberursel "
+  },
+  {
+    "name": "Europa Fachhochschule Fresenius",
+    "country": "Germany",
+    "city": "Idstein "
+  },
+  {
+    "name": "Hochschule Coburg",
+    "country": "Germany",
+    "city": "Coburg "
+  },
+  {
+    "name": "Fachhochschule Hof",
+    "country": "Germany",
+    "city": "Hof "
+  },
+  {
+    "name": "Fachhochschule Koblenz",
+    "country": "Germany",
+    "city": "Koblenz "
+  },
+  {
+    "name": "Wissenschaftliche Hochschule für Unternehmensführung, Otto-Beisheim Hochschule",
+    "country": "Germany",
+    "city": "Koblenz "
+  },
+  {
+    "name": "Philosophisch-Theologische Hochschule Vallendar der Gesellschaft des Katholischen Apostolates (Pallottiner)",
+    "country": "Germany",
+    "city": "Vallendar "
+  },
+  {
+    "name": "Hochschule Fulda",
+    "country": "Germany",
+    "city": "Fulda "
+  },
+  {
+    "name": "Fachhochschule Gießen-Friedberg",
+    "country": "Germany",
+    "city": "Gießen "
+  },
+  {
+    "name": "Justus Liebig Universität Gießen",
+    "country": "Germany",
+    "city": "Gießen "
+  },
+  {
+    "name": "Internationale Fachhochschule Bad Honnef",
+    "country": "Germany",
+    "city": "Bad Honnef "
+  },
+  {
+    "name": "Technische Universität Ilmenau",
+    "country": "Germany",
+    "city": "Ilmenau "
+  },
+  {
+    "name": "Westsächsische Hochschule Zwickau (FH)",
+    "country": "Germany",
+    "city": "Zwickau "
+  },
+  {
+    "name": "Fachhochschule für das öffentliche Bibliothekswesen Bonn",
+    "country": "Germany",
+    "city": "Bonn "
+  },
+  {
+    "name": "Rheinische Friedrich-Wilhelms Universität Bonn",
+    "country": "Germany",
+    "city": "Bonn "
+  },
+  {
+    "name": "Fachhochschule Schmalkalden",
+    "country": "Germany",
+    "city": "Schmalkalden "
+  },
+  {
+    "name": "Fachhochschule Aachen",
+    "country": "Germany",
+    "city": "Aachen "
+  },
+  {
+    "name": "Rheinisch Westfälische Technische Hochschule Aachen",
+    "country": "Germany",
+    "city": "Aachen "
+  },
+  {
+    "name": "Fachhochschule Bonn-Rhein-Sieg",
+    "country": "Germany",
+    "city": "Sankt Augustin "
+  },
+  {
+    "name": "Philosophisch-Theologische Hochschule SVD Sankt Augustin",
+    "country": "Germany",
+    "city": "Sankt Augustin "
+  },
+  {
+    "name": "Phillips-Universität Marburg",
+    "country": "Germany",
+    "city": "Marburg "
+  },
+  {
+    "name": "Technische Universität Chemnitz",
+    "country": "Germany",
+    "city": "Chemnitz "
+  },
+  {
+    "name": "Europäische Fachhochschule",
+    "country": "Germany",
+    "city": "Brühl "
+  },
+  {
+    "name": "Universität Siegen",
+    "country": "Germany",
+    "city": "Siegen "
+  },
+  {
+    "name": "Hochschule Zittau/Görlitz (FH)",
+    "country": "Germany",
+    "city": "Zittau "
+  },
+  {
+    "name": "Internationales Hochschulinstitut Zittau",
+    "country": "Germany",
+    "city": "Zittau "
+  },
+  {
+    "name": "Technische Universität Bergakademie Freiberg",
+    "country": "Germany",
+    "city": "Freiberg "
+  },
+  {
+    "name": "Fachhochschule Jena",
+    "country": "Germany",
+    "city": "Jena "
+  },
+  {
+    "name": "Friedrich-Schiller Universität Jena",
+    "country": "Germany",
+    "city": "Jena "
+  },
+  {
+    "name": "Cologne Business School",
+    "country": "Germany",
+    "city": "Cologne "
+  },
+  {
+    "name": "Deutsche Sporthochschule Köln",
+    "country": "Germany",
+    "city": "Cologne "
+  },
+  {
+    "name": "Fachhochschule Köln",
+    "country": "Germany",
+    "city": "Cologne "
+  },
+  {
+    "name": "Katholische Fachhochschule Nordrhein-Westfalen",
+    "country": "Germany",
+    "city": "Cologne "
+  },
+  {
+    "name": "Rheinische Fachhochschule Köln",
+    "country": "Germany",
+    "city": "Cologne "
+  },
+  {
+    "name": "Universität Köln",
+    "country": "Germany",
+    "city": "Cologne "
+  },
+  {
+    "name": "Fachhochschule Erfurt",
+    "country": "Germany",
+    "city": "Erfurt "
+  },
+  {
+    "name": "Pädagogische Hochschule Erfurt/Mühlhausen",
+    "country": "Germany",
+    "city": "Erfurt "
+  },
+  {
+    "name": "Philosophisch-Theologisches Studium Erfurt, Staatlich anerkannte Wissenschaftliche Hochschule",
+    "country": "Germany",
+    "city": "Erfurt "
+  },
+  {
+    "name": "Universität Erfurt",
+    "country": "Germany",
+    "city": "Erfurt "
+  },
+  {
+    "name": "Bauhaus Universität Weimar",
+    "country": "Germany",
+    "city": "Weimar "
+  },
+  {
+    "name": "Hochschule Mittweida (FH)",
+    "country": "Germany",
+    "city": "Mittweida "
+  },
+  {
+    "name": "Evangelische Hochschule für Soziale Arbeit Dresden (FH)",
+    "country": "Germany",
+    "city": "Dresden "
+  },
+  {
+    "name": "Hochschule für Technik und Wirtschaft Dresden (FH)",
+    "country": "Germany",
+    "city": "Dresden "
+  },
+  {
+    "name": "Technische Universität Dresden",
+    "country": "Germany",
+    "city": "Dresden "
+  },
+  {
+    "name": "Evangelische Fachhochschule für Religionspädagogik, und Gemeindediakonie Moritzburg",
+    "country": "Germany",
+    "city": "Moritzburg "
+  },
+  {
+    "name": "Fachhochschule Düsseldorf",
+    "country": "Germany",
+    "city": "Düsseldorf "
+  },
+  {
+    "name": "Heinrich-Heine Universität Düsseldorf",
+    "country": "Germany",
+    "city": "Düsseldorf "
+  },
+  {
+    "name": "Kunstakademie Düsseldorf.",
+    "country": "Germany",
+    "city": "Düsseldorf "
+  },
+  {
+    "name": "Bergische Universität Gesamthochschule Wuppertal",
+    "country": "Germany",
+    "city": "Wuppertal "
+  },
+  {
+    "name": "Kirchliche Hochschule Wuppertal",
+    "country": "Germany",
+    "city": "Wuppertal "
+  },
+  {
+    "name": "Fachhochschule Nordhessen",
+    "country": "Germany",
+    "city": "Bad Sooden-Allendorf "
+  },
+  {
+    "name": "Universität Kassel",
+    "country": "Germany",
+    "city": "Kassel "
+  },
+  {
+    "name": "Fachhochschule Niederrhein",
+    "country": "Germany",
+    "city": "Krefeld "
+  },
+  {
+    "name": "AKAD Hochschulen für Berufstätige, Fachhochschule Leipzig",
+    "country": "Germany",
+    "city": "Leipzig "
+  },
+  {
+    "name": "Deutsche Telekom Fachhochschule Leipzig",
+    "country": "Germany",
+    "city": "Leipzig "
+  },
+  {
+    "name": "Handelshochschule Leipzig",
+    "country": "Germany",
+    "city": "Leipzig "
+  },
+  {
+    "name": "Hochschule für Technik, Wirtschaft und Kultur Leipzig (FH)",
+    "country": "Germany",
+    "city": "Leipzig "
+  },
+  {
+    "name": "Universität Leipzig",
+    "country": "Germany",
+    "city": "Leipzig "
+  },
+  {
+    "name": "Fachhochschule Merseburg",
+    "country": "Germany",
+    "city": "Merseburg "
+  },
+  {
+    "name": "Fernuniversität Gesamthochschule Hagen",
+    "country": "Germany",
+    "city": "Hagen "
+  },
+  {
+    "name": "BiTS - Business and Information Technology School gGmbH",
+    "country": "Germany",
+    "city": "Iserlohn "
+  },
+  {
+    "name": "Märkische Fachhochschule Iserlohn",
+    "country": "Germany",
+    "city": "Iserlohn "
+  },
+  {
+    "name": "Universität Duisburg-Essen",
+    "country": "Germany",
+    "city": "Duisburg "
+  },
+  {
+    "name": "Private Universität Witten/Herdecke",
+    "country": "Germany",
+    "city": "Witten "
+  },
+  {
+    "name": "Fachhochschule für Oekonomie und Management (FOM)",
+    "country": "Germany",
+    "city": "Essen "
+  },
+  {
+    "name": "Universität Duisburg-Essen",
+    "country": "Germany",
+    "city": "Essen "
+  },
+  {
+    "name": "Evangelische Fachhochschule Rheinland-Westfalen-Lippe",
+    "country": "Germany",
+    "city": "Bochum "
+  },
+  {
+    "name": "Fachhochschule Bochum",
+    "country": "Germany",
+    "city": "Bochum "
+  },
+  {
+    "name": "Ruhr-Universität Bochum",
+    "country": "Germany",
+    "city": "Bochum "
+  },
+  {
+    "name": "Technische Fachhochschule Georg Agricola für Rohstoff, Energie und, Umwelt zu Bochum",
+    "country": "Germany",
+    "city": "Bochum "
+  },
+  {
+    "name": "Martin-Luther Universität Halle-Wittenberg",
+    "country": "Germany",
+    "city": "Halle "
+  },
+  {
+    "name": "Fachhochschule Gelsenkirchen",
+    "country": "Germany",
+    "city": "Gelsenkirchen "
+  },
+  {
+    "name": "Fachhochschule Dortmund",
+    "country": "Germany",
+    "city": "Dortmund "
+  },
+  {
+    "name": "International School of Management ISM Dortmund",
+    "country": "Germany",
+    "city": "Dortmund "
+  },
+  {
+    "name": "Universität Dortmund",
+    "country": "Germany",
+    "city": "Dortmund "
+  },
+  {
+    "name": "Fachhochschule Nordhausen",
+    "country": "Germany",
+    "city": "Nordhausen "
+  },
+  {
+    "name": "Georg-August Universität Göttingen",
+    "country": "Germany",
+    "city": "Göttingen "
+  },
+  {
+    "name": "Private Fachhochschule Göttingen",
+    "country": "Germany",
+    "city": "Göttingen "
+  },
+  {
+    "name": "Fachhochschule Lausitz",
+    "country": "Germany",
+    "city": "Senftenberg "
+  },
+  {
+    "name": "Fachhochschule der Wirtschaft",
+    "country": "Germany",
+    "city": "Paderborn "
+  },
+  {
+    "name": "Theologische Fakultät Paderborn",
+    "country": "Germany",
+    "city": "Paderborn "
+  },
+  {
+    "name": "Universität Paderborn",
+    "country": "Germany",
+    "city": "Paderborn "
+  },
+  {
+    "name": "Hochschule Anhalt (FH), Hochschule für angewandte Wissenschaften",
+    "country": "Germany",
+    "city": "Köthen "
+  },
+  {
+    "name": "Brandenburgische Technische Universität Cottbus",
+    "country": "Germany",
+    "city": "Cottbus "
+  },
+  {
+    "name": "Technische Universität Clausthal",
+    "country": "Germany",
+    "city": "Clausthal-Zellerfeld "
+  },
+  {
+    "name": "Hochschule Harz, Hochschule für angewandte Wissenschaften (FH)",
+    "country": "Germany",
+    "city": "Wernigerode "
+  },
+  {
+    "name": "Fachhochschule Münster",
+    "country": "Germany",
+    "city": "Münster "
+  },
+  {
+    "name": "Philosophisch-Theologische Hochschule Münster",
+    "country": "Germany",
+    "city": "Münster "
+  },
+  {
+    "name": "Westfälische Wilhelms-Universität Münster",
+    "country": "Germany",
+    "city": "Münster "
+  },
+  {
+    "name": "Fachhochschule Bielefeld",
+    "country": "Germany",
+    "city": "Bielefeld "
+  },
+  {
+    "name": "Fachhochschule des Mittelstandes (FHM)",
+    "country": "Germany",
+    "city": "Bielefeld "
+  },
+  {
+    "name": "Kirchliche Hochschule Bethel",
+    "country": "Germany",
+    "city": "Bielefeld "
+  },
+  {
+    "name": "Universität Bielefeld",
+    "country": "Germany",
+    "city": "Bielefeld "
+  },
+  {
+    "name": "Fachhochschule Lippe",
+    "country": "Germany",
+    "city": "Lemgo "
+  },
+  {
+    "name": "Hochschule Magdeburg-Stendal (FH)",
+    "country": "Germany",
+    "city": "Magdeburg "
+  },
+  {
+    "name": "Otto-von-Guericke Universität Magdeburg",
+    "country": "Germany",
+    "city": "Magdeburg "
+  },
+  {
+    "name": "Theologische Hochschule Friedensau",
+    "country": "Germany",
+    "city": "Möckern "
+  },
+  {
+    "name": "Fachhochschule Hildesheim/Holzminden/Göttingen, Hochschule für angewandte Wissenschaft und Kunst",
+    "country": "Germany",
+    "city": "Hildesheim "
+  },
+  {
+    "name": "Universität Hildesheim",
+    "country": "Germany",
+    "city": "Hildesheim "
+  },
+  {
+    "name": "Fachhochschule Braunschweig/Wolfenbüttel",
+    "country": "Germany",
+    "city": "Wolfenbüttel "
+  },
+  {
+    "name": "DIPLOMA-Fachhochschule Ölsnitz/Vogtland",
+    "country": "Germany",
+    "city": "Bückeburg "
+  },
+  {
+    "name": "Technische Universität Carolo-Wilhelmina Braunschweig",
+    "country": "Germany",
+    "city": "Brunswick "
+  },
+  {
+    "name": "Fachhochschule Osnabrück",
+    "country": "Germany",
+    "city": "Osnabrück "
+  },
+  {
+    "name": "Katholische Fachhochschule Norddeutschland",
+    "country": "Germany",
+    "city": "Osnabrück "
+  },
+  {
+    "name": "Universität Osnabrück",
+    "country": "Germany",
+    "city": "Osnabrück "
+  },
+  {
+    "name": "Europa-Universität Viadrina Frankfurt (Oder)",
+    "country": "Germany",
+    "city": "Frankfurt "
+  },
+  {
+    "name": "Evangelische Fachhochschule Hannover",
+    "country": "Germany",
+    "city": "Hanover "
+  },
+  {
+    "name": "Fachhochschule für die Wirtschaft",
+    "country": "Germany",
+    "city": "Hanover "
+  },
+  {
+    "name": "Fachhochschule Hannover",
+    "country": "Germany",
+    "city": "Hanover "
+  },
+  {
+    "name": "Medizinische Hochschule Hannover",
+    "country": "Germany",
+    "city": "Hanover "
+  },
+  {
+    "name": "Tierärztliche Hochschule Hannover",
+    "country": "Germany",
+    "city": "Hanover "
+  },
+  {
+    "name": "Universität Hannover",
+    "country": "Germany",
+    "city": "Hanover "
+  },
+  {
+    "name": "Fachhochschule Potsdam",
+    "country": "Germany",
+    "city": "Potsdam "
+  },
+  {
+    "name": "Universität Potsdam",
+    "country": "Germany",
+    "city": "Potsdam "
+  },
+  {
+    "name": "Fachhochschule Brandenburg",
+    "country": "Germany",
+    "city": "Brandenburg "
+  },
+  {
+    "name": "Alice-Salomon-Fachhochschule für Sozialarbeit und Sozialpädagogik Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "E.A.P. Europäische Wirtschaftshochschule Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "European College of Liberal Arts",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Evangelische Fachhochschule Berlin, Fachhochschule für Sozialarbeit und Sozialpädagogik",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Fachhochschule für Technik und Wirtschaft Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Fachhochschule für Verwaltung und Rechtspflege Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Fachhochschule für Wirtschaft Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Freie Universität Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Hertie School of Governance",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Humboldt Universität Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Katholische Fachhochschule Berlin (KFB)",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Kunsthochschule Berlin-Weissensee, Hochschule für Gestaltung ",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "SRH University of Applied Sciences",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Steinbeis-Hochschule-Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Technische Fachhochschule Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Technische Universität Berlin",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Universität Der Künste Berlin (UDK)",
+    "country": "Germany",
+    "city": "Berlin "
+  },
+  {
+    "name": "Hochschule Vechta",
+    "country": "Germany",
+    "city": "Vechta "
+  },
+  {
+    "name": "Private Fachhochschule für Wirtschaft und Technik Vechta/Diepholz",
+    "country": "Germany",
+    "city": "Vechta "
+  },
+  {
+    "name": "Fachhochschule Eberswalde",
+    "country": "Germany",
+    "city": "Eberswalde "
+  },
+  {
+    "name": "Hochschule Bremen",
+    "country": "Germany",
+    "city": "Bremen "
+  },
+  {
+    "name": "Jacobs University Bremen",
+    "country": "Germany",
+    "city": "Bremen "
+  },
+  {
+    "name": "Universität Bremen",
+    "country": "Germany",
+    "city": "Bremen "
+  },
+  {
+    "name": "Freie Kunst-Studienstätte Ottersberg",
+    "country": "Germany",
+    "city": "Ottersberg "
+  },
+  {
+    "name": "Carl von Ossietzky Universität Oldenburg",
+    "country": "Germany",
+    "city": "Oldenburg "
+  },
+  {
+    "name": "Fachhochschule Nordostniedersachsen",
+    "country": "Germany",
+    "city": "Lüneburg "
+  },
+  {
+    "name": "Universität Lüneburg",
+    "country": "Germany",
+    "city": "Lüneburg "
+  },
+  {
+    "name": "Fachhochschule Oldenburg/Ostfriesland/Wilhelmshaven",
+    "country": "Germany",
+    "city": "Emden "
+  },
+  {
+    "name": "Hochschule Bremerhaven",
+    "country": "Germany",
+    "city": "Bremerhaven "
+  },
+  {
+    "name": "Evangelische Fachhochschule für Sozialpädagogik der \"Diakonenanstalt des Rauhen Hauses\" Hamburg",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "Fachhochschule Hamburg",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "Fern-Fachhochschule Hamburg",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "Hafencity Universität Hamburg",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "HWP - Hamburger Universität für Wirtschaft und Politik",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "International School of Management",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "Northern Institute of Technology Management (NIT)",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "Technische Universität Hamburg-Harburg",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "Universität der Bundeswehr Hamburg",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "Universität Hamburg",
+    "country": "Germany",
+    "city": "Hamburg "
+  },
+  {
+    "name": "Fachhochschule Neubrandenburg",
+    "country": "Germany",
+    "city": "Neubrandenburg "
+  },
+  {
+    "name": "Fachhochschule Wedel",
+    "country": "Germany",
+    "city": "Wedel "
+  },
+  {
+    "name": "Nordakademie, Staatlich anerkannte private Fachhochschule mit dualen Studiengängen",
+    "country": "Germany",
+    "city": "Elmshorn "
+  },
+  {
+    "name": "Fachhochschule Lübeck",
+    "country": "Germany",
+    "city": "Lübeck "
+  },
+  {
+    "name": "International School of New Media, University of Lübeck",
+    "country": "Germany",
+    "city": "Lübeck "
+  },
+  {
+    "name": "Medizinische Universität Lübeck",
+    "country": "Germany",
+    "city": "Lübeck "
+  },
+  {
+    "name": "Hochschule Wismar, Fachhochschule für Technik, Wirtschaft und Gestaltung",
+    "country": "Germany",
+    "city": "Wismar "
+  },
+  {
+    "name": "Private Hanseuniversität",
+    "country": "Germany",
+    "city": "Rostock "
+  },
+  {
+    "name": "Universität Rostock",
+    "country": "Germany",
+    "city": "Rostock "
+  },
+  {
+    "name": "Ernst-Moritz-Arndt Universität Greifswald",
+    "country": "Germany",
+    "city": "Greifswald "
+  },
+  {
+    "name": "Fachhochschule Westküste, Hochschule für Wirtschaft und Technik",
+    "country": "Germany",
+    "city": "Heide "
+  },
+  {
+    "name": "Hochschule für Berufstätige Rendsburg",
+    "country": "Germany",
+    "city": "Rendsburg "
+  },
+  {
+    "name": "Christian-Albrechts-Universität Kiel",
+    "country": "Germany",
+    "city": "Kiel "
+  },
+  {
+    "name": "Fachhochschule Kiel",
+    "country": "Germany",
+    "city": "Kiel "
+  },
+  {
+    "name": "Muthesius-Hochschule, Fachhochschule für Kunst und Gestaltung",
+    "country": "Germany",
+    "city": "Kiel "
+  },
+  {
+    "name": "Fachhochschule Stralsund",
+    "country": "Germany",
+    "city": "Stralsund "
+  },
+  {
+    "name": "Fachhochschule Flensburg",
+    "country": "Germany",
+    "city": "Flensburg "
+  },
+  {
+    "name": "Universität Flensburg",
+    "country": "Germany",
+    "city": "Flensburg "
+  }
+]

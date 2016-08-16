@@ -6,15 +6,18 @@ angular
     $scope.newUser = {};
     $scope.newAffiliation = {};
     $scope.form = angular.element('#newUserForm');
+    $scope.selected = {};
+    $scope.affiliationInput = "";
 
-    $scope.submitForm = function() {
-      if ($scope.newUser.affiliation == 0) {
-        return Affiliation.create($scope.newAffiliation).$promise.then(function(affiliation) {
-          $scope.newUser.affiliation = affiliation.id;
-          $scope.form.submit()
-        });
+    Affiliation.find().$promise.then(function (affiliations) {
+      $scope.affiliations = affiliations;
+    });
+
+    $scope.submitForm = function(e) {
+      if (!$scope.selected.selectedAffiliation) {
+        $scope.affiliationMissing = true;
       } else {
-        $scope.form.submit()
+        $scope.affiliationInput = $scope.selected.selectedAffiliation.id;
       }
     };
 

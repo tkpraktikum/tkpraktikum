@@ -45,3 +45,7 @@
 .social-icons .fa-google-plus,.social-icons .fa-google-plus-square {
   background-color:#CF3D2E;
 }
+
+.social-icons > div > div {
+  margin: 13px 0;
+}

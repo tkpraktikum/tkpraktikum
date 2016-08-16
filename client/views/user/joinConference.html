@@ -1,6 +1,6 @@
-<div class="col-md-6 centerContent">
-  <h1 class="text-center page-title">Join Conference</h1>
-  <br/>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  <h1 class="page-title">Join Conference</h1>
   <form name="joinConferenceForm" ng-submit="join()" novalidate>
     <div class="form-group"
          ng-class="{ 'has-error': (joinConferenceForm.name.$dirty && joinConferenceForm.name.$error.required) || (joinConferenceForm.name.$invalid && !joinConferenceForm.name.$error.required) }">
