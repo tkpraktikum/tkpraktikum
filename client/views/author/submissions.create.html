@@ -17,11 +17,16 @@
     <label for="submission-author-{{$index}}" class="col-sm-2 control-label">Author {{$index + 1}}</label>
 
     <div ng-class="$first ? 'col-sm-9' : 'col-sm-10'">
-      <input id="submission-author-{{$index}}"
-        type="text"
-        class="form-control"
-        ng-model="submission.authors[$index]"
-        placeholder="Name of Author {{$index + 1}} <author{{$index + 1}}@example.tld>">
+      <ui-select id="submission-author-{{$index}}" placeholder="Name of Author {{$index + 1}} <author{{$index + 1}}@example.tld>" ng-model="submission.authors[$index]">
+        <ui-select-match placeholder="Select author...">{{$select.selected.firstname}} {{$select.selected.lastname}} &lt;{{$select.selected.email}}&gt;</ui-select-match>
+        <ui-select-choices repeat="author in authors | filter: {$: $select.search}">
+          <div ng-bind-html="author.username | highlight: $select.search"></div>
+          <small>
+            email: <span ng-bind-html="author.email | highlight: $select.search"></span>
+            username: <span ng-bind-html="author.username | highlight: $select.search"></span>
+          </small>
+        </ui-select-choices>
+      </ui-select>
     </div>
 
     <div class="col-sm-1" ng-if="$first">

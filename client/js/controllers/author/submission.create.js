@@ -1,10 +1,11 @@
 angular
   .module('app')
   .controller('SubmissionCreateController',
-      ['$scope', '$stateParams', 'Submission', 'Tag', 'AuthService', 'Submissiontag', 'Authorship', 'User',
-      function($scope, $stateParams, Submission, Tag, AuthService, Submissiontag, Authorship, User) {
+      ['$scope', '$stateParams', 'Submission', 'Tag', 'AuthService', 'Submissiontag', 'Authorship', 'User', 'Conference',
+      function($scope, $stateParams, Submission, Tag, AuthService, Submissiontag, Authorship, User, Conference) {
 
-    var asyncReq = (function () {
+    var conferenceId = $stateParams.conferenceId,
+      asyncReq = (function () {
         var pendingRequests = 0;
 
         return {
@@ -90,8 +91,15 @@ angular
     };
 
     $scope.addAuthorField = function (author) {
-      // TODO: Auto complete fields with User.authors.find()
-      author = author || '';
+      var index = $scope.submission.authors.length + 1;
+      author = author || {
+        id: -1,
+        username: "author" + index,
+        firstname: "Author-" + index,
+        lastname: "Name",
+        email: "author" + index + "@example.de"
+      };
+
       $scope.submission.authors.push(author);
     };
 
@@ -107,7 +115,7 @@ angular
       // Create submission
       asyncReq.start();
       Submission.create({}, {
-        conferenceId: $stateParams.conferenceId,
+        conferenceId: conferenceId,
         title: $scope.submission.title,
         abstract: $scope.submission.abstract
       })
@@ -124,9 +132,11 @@ angular
 
         // Link authors to submission
         _($scope.submission.authors).each(function (author) {
+          if (author.id <= 0) return;
+
           asyncReq.start();
           Authorship.create({
-            authorId: 1, // TODO
+            authorId: author.id,
             submissionId: submission.id
           }).$promise.finally(function () { asyncReq.end(); });
         });
@@ -136,8 +146,24 @@ angular
       .finally(function () { asyncReq.end(); });
     };
 
-    // Bootstrap
-    AuthService.getUser().then(function (user) {
-      $scope.addAuthorField(user.username + ' <' + user.email + '>');
+    Conference.findById({
+      id: conferenceId,
+      filter: {include: ['authors']
+    }})
+    .$promise
+    .then(function (conference) {
+      // Auto suggestion lookup table
+      $scope.authors = _(conference.authors).map(function (author) {
+        return _.chain(author)
+          .pick('id', 'username', 'firstname', 'lastname', 'email')
+          .defaults({ firstname: 'Unknown', lastname: '' })
+          .value();
+      });
+
+      // Prefill current user as author
+      AuthService.getUserId().then(function (userId) {
+        var author = _($scope.authors).findWhere({id: userId});
+        $scope.addAuthorField(author);
+      });
     });
   }]);
