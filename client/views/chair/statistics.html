@@ -4,22 +4,10 @@
     <div class="col-xs-12">
       <div class="panel panel-default">
         <div class="panel-body" style="text-align: center">
-          <div class="flip-nav-statistics">
-            <input id="filterAuthor" ng-model="filter.showAuthor" type="checkbox" class="tgl tgl-flip"/>
-            <label data-tg-off="Author" data-tg-on="Author" for="filterAuthor" class="tgl-btn"></label>
-          </div>
-          <div class="flip-nav-statistics">
-            <input id="filterSubmissions" ng-model="filter.showSubmissions" type="checkbox" class="tgl tgl-flip"/>
-            <label data-tg-off="Submissions" data-tg-on="Submissions" for="filterSubmissions" class="tgl-btn"></label>
-          </div>
-          <div class="flip-nav-statistics">
-            <input id="filterReviews" ng-model="filter.showReviews" type="checkbox" class="tgl tgl-flip"/>
-            <label data-tg-off="Reviews" data-tg-on="Reviews" for="filterReviews" class="tgl-btn"></label>
-          </div>
-          <div class="flip-nav-statistics">
-            <input id="filterAffiliation" ng-model="filter.showAffiliation" type="checkbox" class="tgl tgl-flip"/>
-            <label data-tg-off="Affiliation" data-tg-on="Affiliation" for="filterAffiliation" class="tgl-btn"></label>
-          </div>
+          <a class="btn btn-nav" ng-class="{'active': filterAuthor}" ng-click="filterAuthor = !filterAuthor">Author</a>
+          <a class="btn btn-nav" ng-class="{'active': filterSub}" ng-click="filterSub = !filterSub">Submission</a>
+          <a class="btn btn-nav" ng-class="{'active': filterRev}" ng-click="filterRev = !filterRev">Reviews</a>
+          <a class="btn btn-nav" ng-class="{'active': filterAff}" ng-click="filterAff = !filterAff">Affiliation</a>
         </div>
       </div>
     </div>

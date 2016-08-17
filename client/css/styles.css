@@ -115,11 +115,11 @@ textarea {
 
 .btn-nav {
   color: #fff;
-  /*background-color: #cc0000;
-  border-color: #b30000;*/
   background-color: #AAAAAA;
   border-color: #999999;
-  width: 100%;
+  width: 10em;
+  height: auto;
+  padding: 3px 5px;
 }
 .btn-nav:focus,
 .btn-nav.focus {
