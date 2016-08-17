@@ -18,7 +18,7 @@ angular
                   {attendeeId: userId, conferenceId: conference.id})
                 .$promise
                 .then(function () {
-                  // TODO goto my conference
+                  $state.go('app.protected.user.conference.my');
                 });
             });
         });

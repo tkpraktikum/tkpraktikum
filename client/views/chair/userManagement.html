@@ -1,48 +1,55 @@
-<h1>Users</h1>
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-    <tr>
-      <th>
-        <a ui-sref="chair" ng-click="sortType = 'title'; sortReverse = !sortReverse">
-          Title
-          <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
-          <span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
-        </a>
-      </th>
-      <th>
-        <a ui-sref="chair" ng-click="sortType = 'email'; sortReverse = !sortReverse">
-          E-Mail
-          <span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
-          <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
-        </a>
-      </th>
-      <th style="text-align: center">Author</th>
-      <th style="text-align: center">Reviewer</th>
-      <th style="text-align: center">Chair</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="u in userList | orderBy:sortType:sortReverse | filter:searchUser">
-      <td>{{u.username}}</td>
-      <td>{{u.email}}</td>
-      <td>
-        <div class="checkbox" style="text-align: center">
-          <label><input type="checkbox" ng-model="u.isAuthor" ng-change="changeAuthor(u)" /></label>
+<div class="col-md-10 col-md-offset-1 content-no-header">
+  <form name="filterForm">
+    <div class="row">
+      <div class="form-group col-xs-12">
+        <label class="sr-only" for="filterUser">Filter</label>
+        <div class="input-group">
+          <input type="text" class="form-control" name="filterUser" id="filterUser" ng-model="filterUser" placeholder="Filter">
+          <div class="input-group-addon input-group-addon-flip">
+            <input id="filterAuthor" ng-model="filter.isAuthor" type="checkbox" class="tgl tgl-flip" ng-change="applyFilter()"/>
+            <label data-tg-off="Author" data-tg-on="Author" for="filterAuthor" class="tgl-btn"></label>
+          </div>
+          <div class="input-group-addon input-group-addon-flip">
+            <input id="filterReviewer" ng-model="filter.isReviewer" type="checkbox" class="tgl tgl-flip" ng-change="applyFilter()"/>
+            <label data-tg-off="Reviewer" data-tg-on="Reviewer" for="filterReviewer" class="tgl-btn"></label>
+          </div>
+
+          <div class="input-group-addon input-group-addon-flip">
+            <input id="filterChair" ng-model="filter.isChair" type="checkbox" class="tgl tgl-flip" ng-change="applyFilter()"/>
+            <label data-tg-off="Chair" data-tg-on="Chair" for="filterChair" class="tgl-btn"></label>
+          </div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
         </div>
-      </td>
-      <td>
-        <div class="checkbox" style="text-align: center">
-          <label><input type="checkbox" ng-model="u.isReviewer" ng-change="changeReviewer(u)" /></label>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-4" ng-repeat="u in filteredUserList | filter:filterUser">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><span class="highlight">{{u.lastname}}, {{u.firstname}}</span></h3>
         </div>
-      </td>
-      <td>
-        <div class="checkbox form-group" style="text-align: center">
-          <label><input type="checkbox" ng-model="u.isChair" ng-change="changeChair(u)" ng-disabled="u.isMe"/></label>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4" style="text-align: center">
+              <span>Author</span>
+              <input id="author-{{u.id}}" ng-model="u.isAuthor" type="checkbox" class="tgl tgl-ios" ng-change="changeAuthor(u)"/>
+              <label for="author-{{u.id}}" class="tgl-btn"></label>
+            </div>
+            <div class="col-xs-4" style="text-align: center">
+              <span>Reviewer</span>
+              <input id="reviewer-{{u.id}}" ng-model="u.isReviewer" type="checkbox" class="tgl tgl-ios" ng-change="changeReviewer(u)"/>
+              <label for="reviewer-{{u.id}}" class="tgl-btn"></label>
+            </div>
+            <div class="col-xs-4" style="text-align: center">
+              <span>Chair</span>
+              <input id="chair-{{u.id}}" ng-model="u.isChair" type="checkbox" class="tgl tgl-ios" ng-change="changeChair(u)"/>
+              <label for="chair-{{u.id}}" class="tgl-btn"></label>
+            </div>
+          </div>
         </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+      </div>
+    </div>
+  </div>
 </div>
 

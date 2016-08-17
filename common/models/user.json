@@ -10,6 +10,12 @@
       "type": "number",
       "required": true,
       "default": "0"
+    },
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
     }
   },
   "validations": [],

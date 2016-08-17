@@ -1,0 +1,73 @@
+{
+  "ids": {
+    "userCredential": 1,
+    "userIdentity": 1,
+    "accessToken": 1,
+    "ACL": 1,
+    "user": 2,
+    "submission": 1,
+    "tag": 9,
+    "review": 1,
+    "affiliation": 5,
+    "submissiontag": 1,
+    "useraffiliation": 1,
+    "conference": 5,
+    "authorship": 1,
+    "attendance": 5,
+    "chairman": 5,
+    "author": 1,
+    "reviewer": 1,
+    "file": 1
+  },
+  "models": {
+    "userCredential": {},
+    "userIdentity": {},
+    "accessToken": {},
+    "ACL": {},
+    "user": {
+      "1": "{\"firstname\": \"Charlie\", \"lastname\": \"Chair\", \"status\":\"0\",\"username\":\"chair\",\"password\":\"$2a$10$Ct0h4f.Kg.niurmhbRYjOOgY5MlkuLTB.pBHv6swh6516kGq5Hxt6\",\"email\":\"chair@chair.de\",\"emailVerified\":true,\"id\":1}"
+    },
+    "submission": {},
+    "tag": {
+      "1": "{\"name\":\"computer-science\",\"id\":1}",
+      "2": "{\"name\":\"network\",\"id\":2}",
+      "3": "{\"name\":\"security\",\"id\":3}",
+      "4": "{\"name\":\"machine-learning\",\"id\":4}",
+      "5": "{\"name\":\"big-data\",\"id\":5}",
+      "6": "{\"name\":\"testing\",\"id\":6}",
+      "7": "{\"name\":\"software-engineering\",\"id\":7}",
+      "8": "{\"name\":\"software-architecture\",\"id\":8}"
+    },
+    "review": {},
+    "affiliation": {
+      "1": "{\"name\":\"TU Darmstadt\",\"city\":\"Darmstadt\",\"state\":\"Hessen\",\"country\":\"Germany\",\"id\":1}",
+      "2": "{\"name\":\"HS Darmstadt\",\"city\":\"Darmstadt\",\"state\":\"Hessen\",\"country\":\"Germany\",\"id\":2}",
+      "3": "{\"name\":\"DHBW Mannheim\",\"city\":\"Mannheim\",\"state\":\"Baden-Württemberg\",\"country\":\"Germany\",\"id\":3}",
+      "4": "{\"name\":\"Uni Mannheim\",\"city\":\"Mannheim\",\"state\":\"Baden-Württemberg\",\"country\":\"Germany\",\"id\":4}"
+    },
+    "submissiontag": {},
+    "useraffiliation": {},
+    "conference": {
+      "1": "{\"name\":\"AWS re:Invent\",\"sharedSecret\":\"aws\",\"id\":1, \"description\": \"At AWS re:Invent 2016, connect with peers and cloud experts, collaborate at our bootcamps, and learn how AWS can improve productivity, security and performance.\"}",
+      "2": "{\"name\":\"Google I/O\",\"sharedSecret\":\"google\",\"id\":2, \"description\": \"Google I/O (simply I/O) is an annual developer conference held by Google in San Francisco, California. I/O showcases technical in-depth sessions focused on building web, mobile, and enterprise applications with Google and open sources such as Android, ChromeCandhrome OS, APIs, Google Web Toolkit, App Engine, and more\"}",
+      "3": "{\"name\":\"TechEd\",\"sharedSecret\":\"teched\",\"id\":3, \"description\": \"TechEd was an annual conference for developers and IT professionals put on by Microsoft. It took place in several locations around the world. The first TechEd happened in 1993 in Orlando, Florida, United States, the last took place in Barcelona in 2014. Microsoft rescheduled its conference schedule and introduced Microsoft Ignite from 2015 on.The conference normally lasts between three and five days, and consists of presentation and whiteboard sessions and hands-on labs. It offers opportunities to meet Microsoft experts, MVPs and community members. Networking is enhanced through parties, community areas and Ask the Expert sessions. The event also includes an exhibition area where vendors can show off technologies and sell products. There is a vast content catalog from which attendees can select sessions that will be most beneficial. An agenda is published online before the conference begins.\"}",
+      "4": "{\"name\":\"Apache Spark Summit\",\"sharedSecret\":\"spark\",\"id\":4, \"description\": \"Since our inaugural event in 2013, thousands of developers, scientists, analysts, researchers and executives from around the globe have flocked to Spark Summit to better understand how big data, machine learning and data science can deliver new insights. Whether you’re new to Apache Spark or a hardcore enthusiast, Spark Summit is the place to meet with leading experts to share knowledge, receive training and foster valuable connections.\"}"
+    },
+    "authorship": {},
+    "attendance": {
+      "1": "{\"conferenceId\":1,\"attendeeId\":1,\"id\":1}",
+      "2": "{\"conferenceId\":2,\"attendeeId\":1,\"id\":2}",
+      "3": "{\"conferenceId\":3,\"attendeeId\":1,\"id\":3}",
+      "4": "{\"conferenceId\":4,\"attendeeId\":1,\"id\":4}"
+    },
+    "chairman": {
+      "1": "{\"conferenceId\":1,\"chairId\":1,\"id\":1}",
+      "2": "{\"conferenceId\":2,\"chairId\":1,\"id\":2}",
+      "3": "{\"conferenceId\":3,\"chairId\":1,\"id\":3}",
+      "4": "{\"conferenceId\":4,\"chairId\":1,\"id\":4}"
+    },
+    "author": {},
+    "reviewer": {},
+    "file": {}
+  }
+}

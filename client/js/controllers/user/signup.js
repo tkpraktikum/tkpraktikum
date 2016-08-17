@@ -1,8 +1,31 @@
 angular
   .module('app')
-  .controller('SignupController', ['$scope', '$state', function($scope, $state) {
+  .controller('SignupController', ['$q', '$scope', '$state', '$http', 'Affiliation', function($q, $scope, $state, $http, Affiliation) {
 
-    $scope.createUser = function() {
-      console.log(JSON.stringify($scope.newUser));
-    }
+    $scope.affiliations = [];
+    $scope.newUser = {};
+    $scope.newAffiliation = {};
+    $scope.form = angular.element('#newUserForm');
+    $scope.selected = {};
+    $scope.affiliationInput = "";
+
+    Affiliation.find().$promise.then(function (affiliations) {
+      $scope.affiliations = affiliations;
+    });
+
+    $scope.submitForm = function(e) {
+      if (!$scope.selected.selectedAffiliation) {
+        $scope.affiliationMissing = true;
+      } else {
+        $scope.affiliationInput = $scope.selected.selectedAffiliation.id;
+      }
+    };
+
+    var getAffiliations = function() {
+      Affiliation.find().$promise.then(function(a) {
+        $scope.affiliations = a;
+      });
+    };
+
+    getAffiliations();
   }]);

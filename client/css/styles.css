@@ -1,6 +1,21 @@
-body {
-  padding-top: 50px;
-  padding-bottom: 50px;
+html, body {
+  padding: 0;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.5;
+}
+
+.content {
+  padding-top: 80px;
+}
+
+.page-title {
+  text-align: center;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+textarea {
+  resize: none;
 }
 
 @media (min-width: 1200px) {
@@ -25,7 +40,7 @@ body {
 
 .centerContent {
   float: none;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .validation.ng-dirty.ng-valid[required] {
@@ -46,6 +61,122 @@ body {
 
 .fullwidth-dropdown-list {
   width: 100%;
+}
+
+.card-columns {
+  column-count: 1;
+}
+
+.card-columns > div {
+  break-inside: avoid-column;
+}
+
+@media (min-width: 992px) {
+  .card-columns {
+    column-count: 3;
+  }
+}
+
+.conference-link {
+  cursor: pointer;
+}
+
+.sidebar-nav {
+  position: absolute;
+}
+
+.flip-nav-statistics {
+  display: inline-block;
+  margin: 0 auto;
+  width: 8em;
+}
+
+.flip-nav-statistics > .tgl-btn{
+  display: inline-block;
+  width: 8em;
+  margin: 4px 0px;
+}
+
+.content-no-header {
+  margin-top: 20px;
+}
+
+.sub-nav-li {
+  display: inline-block;
+}
+
+#create-new-account {
+  margin-top: 15px;
+}
+
+.button-nav > .row {
+  margin-bottom: 20px;
+}
+
+.btn-nav {
+  color: #fff;
+  background-color: #AAAAAA;
+  border-color: #999999;
+  width: 10em;
+  height: auto;
+  padding: 3px 5px;
+}
+.btn-nav:focus,
+.btn-nav.focus {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav:hover {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav:active,
+.btn-nav.active,
+.open > .dropdown-toggle.btn-nav {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav:active:hover,
+.btn-nav.active:hover,
+.open > .dropdown-toggle.btn-nav:hover,
+.btn-nav:active:focus,
+.btn-nav.active:focus,
+.open > .dropdown-toggle.btn-nav:focus,
+.btn-nav:active.focus,
+.btn-nav.active.focus,
+.open > .dropdown-toggle.btn-nav.focus {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav:active,
+.btn-nav.active,
+.open > .dropdown-toggle.btn-nav {
+  background-image: none;
+}
+.btn-nav.disabled:hover,
+.btn-nav[disabled]:hover,
+fieldset[disabled] .btn-nav:hover,
+.btn-nav.disabled:focus,
+.btn-nav[disabled]:focus,
+fieldset[disabled] .btn-nav:focus,
+.btn-nav.disabled.focus,
+.btn-nav[disabled].focus,
+fieldset[disabled] .btn-nav.focus {
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav .badge {
+  color: #cc0000;
+  background-color: #fff;
+}
+
+.btn-nav.active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 .dropzone {
@@ -80,4 +211,3 @@ body {
     transform: rotate(359deg);
   }
 }
-

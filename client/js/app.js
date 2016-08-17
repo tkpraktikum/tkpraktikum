@@ -4,6 +4,8 @@ angular
     'ui.router',
     'permission',
     'permission.ui',
+    'chart.js',
+    'ui.bootstrap.showErrors',
     'ui.select',
     'ngSanitize'
   ])
@@ -66,9 +68,22 @@ angular
         data: { permissions: { only: ['USER'] }}
       })
       .state('app.protected.user.profile', {
+        abstract: true,
         url: '/profile',
-        templateUrl: 'views/user/user.html',
+        templateUrl: 'views/user/profile.html',
         controller: 'ProfileController',
+      })
+      .state('app.protected.user.profile.edit', {
+        url: '/edit',
+        templateUrl: 'views/user/profile.edit.html',
+      })
+      .state('app.protected.user.profile.changePassword', {
+        url: '/changePassword',
+        templateUrl: 'views/user/profile.changePassword.html',
+      })
+      .state('app.protected.user.profile.delete', {
+        url: '/delete',
+        templateUrl: 'views/user/profile.delete.html',
       })
       .state('app.protected.user.conference', {
         url: '/conference',
@@ -95,6 +110,16 @@ angular
         template: '<div ui-view></div>',
         abstract: true,
         controller: 'ConferenceController'
+      })
+      .state('app.protected.conference.home', {
+        url: 'home',
+        templateUrl: 'views/user/conference.landing.html',
+        controller: 'ConferenceLandingController'
+      })
+      .state('app.protected.conference.statistics', {
+        url: 'statistics',
+        templateUrl: 'views/chair/statistics.html',
+        controller: 'StatisticsController'
       })
       .state('app.protected.conference.tag', {
         url: 'tag',
@@ -151,7 +176,7 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
   }])
-.factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
+.factory('AuthService', ['$q', '$state', 'LoopBackAuth', 'User', function ($q, $state, LoopBackAuth, User) {
 
   var user,
     currentConferenceId = null,
@@ -198,7 +223,13 @@ angular
         }).$promise;
 
       user.then(function (model) {
+        var isSet = !!currentConferenceId;
         setCurrentConferenceId(model.defaultConferenceId);
+        console.log(model);
+        if (!isSet && model.defaultConferenceId) {
+          console.log('late set');
+          $state.go($state.current, {}, {reload: true});
+        }
       });
 
       return user;
@@ -243,4 +274,6 @@ angular
   RoleStore.defineRole('AUTHOR', ['hasValidSession', 'author']);
   RoleStore.defineRole('REVIEWER', ['hasValidSession', 'reviewer']);
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
-});
+}).config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
+  showErrorsConfigProvider.showSuccess(true);
+}]);
