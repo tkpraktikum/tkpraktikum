@@ -103,33 +103,6 @@ textarea {
 
 .sub-nav-li {
   display: inline-block;
-  border-radius: 4px;
-  background-color: #aaaaaa;
-  width: 9em;
-  font-size: 14px;
-  font-family: sans-serif;
-  font-weight: bold;
-  line-height: 1;
-}
-
-.sub-nav > li, .sub-nav > li:hover {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #AAAAAA;
-  width: 9em;
-  font-size: 14px;
-  font-family: sans-serif;
-  font-weight: bold;
-  line-height: 1;
-}
-
-.sub-nav > li > a {
-  color: #ffffff;
-  padding: 8px 0;
-}
-
-.sub-nav > li.active > a, .sub-nav > li > a:hover, .sub-nav > li > a:active, .sub-nav > li > a:focus {
-  background-color: #cc0000;
 }
 
 #create-new-account {
@@ -138,4 +111,70 @@ textarea {
 
 .button-nav > .row {
   margin-bottom: 20px;
+}
+
+.btn-nav {
+  color: #fff;
+  /*background-color: #cc0000;
+  border-color: #b30000;*/
+  background-color: #AAAAAA;
+  border-color: #999999;
+  width: 100%;
+}
+.btn-nav:focus,
+.btn-nav.focus {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav:hover {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav:active,
+.btn-nav.active,
+.open > .dropdown-toggle.btn-nav {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav:active:hover,
+.btn-nav.active:hover,
+.open > .dropdown-toggle.btn-nav:hover,
+.btn-nav:active:focus,
+.btn-nav.active:focus,
+.open > .dropdown-toggle.btn-nav:focus,
+.btn-nav:active.focus,
+.btn-nav.active.focus,
+.open > .dropdown-toggle.btn-nav.focus {
+  color: #fff;
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav:active,
+.btn-nav.active,
+.open > .dropdown-toggle.btn-nav {
+  background-image: none;
+}
+.btn-nav.disabled:hover,
+.btn-nav[disabled]:hover,
+fieldset[disabled] .btn-nav:hover,
+.btn-nav.disabled:focus,
+.btn-nav[disabled]:focus,
+fieldset[disabled] .btn-nav:focus,
+.btn-nav.disabled.focus,
+.btn-nav[disabled].focus,
+fieldset[disabled] .btn-nav.focus {
+  background-color: #cc0000;
+  border-color: #b30000;
+}
+.btn-nav .badge {
+  color: #cc0000;
+  background-color: #fff;
+}
+
+.btn-nav.active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
