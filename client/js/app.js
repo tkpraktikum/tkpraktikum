@@ -3,7 +3,9 @@ angular
     'lbServices',
     'ui.router',
     'permission',
-    'permission.ui'
+    'permission.ui',
+    'ui.select',
+    'ngSanitize'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -118,8 +120,12 @@ angular
       })
       .state('app.protected.conference.submission.create', {
         url: '/create',
-        templateUrl: 'views/author/submissions.create.html',
-        data: { permissions: { only: ['AUTHOR'] }}
+        views: {
+          '@app.protected': {
+            controller: 'SubmissionCreateController',
+            templateUrl: 'views/author/submissions.create.html'
+          }
+        }
       })
       .state('app.protected.conference.review', {
         abstract: true,
