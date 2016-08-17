@@ -135,3 +135,7 @@ textarea {
 #create-new-account {
   margin-top: 15px;
 }
+
+.button-nav > .row {
+  margin-bottom: 20px;
+}

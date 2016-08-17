@@ -111,6 +111,11 @@ angular
         abstract: true,
         controller: 'ConferenceController'
       })
+      .state('app.protected.conference.home', {
+        url: 'home',
+        templateUrl: 'views/user/conference.landing.html',
+        controller: 'ConferenceLandingController'
+      })
       .state('app.protected.conference.statistics', {
         url: 'statistics',
         templateUrl: 'views/chair/statistics.html',

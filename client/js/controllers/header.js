@@ -9,7 +9,7 @@ angular
     $scope.changeConference = function(conferenceId) {
       AuthService.setCurrentConferenceId(conferenceId);
       $scope.currentConferenceId = conferenceId;
-      $state.go('app.protected.conference.tag', {
+      $state.go('app.protected.conference.home', {
         conferenceId: conferenceId
       }, {reload: true});
     };
