@@ -52,7 +52,7 @@
   },
   "submissiontag": {
     "dataSource": "postgres",
-    "public": false
+    "public": true
   },
   "useraffiliation": {
     "dataSource": "postgres",

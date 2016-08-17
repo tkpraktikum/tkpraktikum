@@ -9,6 +9,7 @@
   <!-- Bootstrap -->
   <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link href="vendor/angular-ui-select/dist/select.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/dropzone/dist/dropzone.css">
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="css/switch.css" rel="stylesheet">
@@ -27,16 +28,18 @@
 
 <div ui-view class="container"></div>
 
+<script src="vendor/underscore/underscore-min.js"></script>
+<script src="vendor/dropzone/dist/dropzone.js"></script>
 <script src="vendor/jquery/dist/jquery.js"></script>
 <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
 <script src="vendor/angular/angular.js"></script>
 <script src="vendor/angular-resource/angular-resource.js"></script>
+<script src="vendor/angular-sanitize/angular-sanitize.js"></script>
 <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/angular-ui-select/dist/select.js"></script>
 <script src="vendor/angular-permission/dist/angular-permission.js"></script>
 <script src="vendor/angular-permission/dist/angular-permission-ui.js"></script>
 <script src="vendor/angular-bootstrap-show-errors/src/showErrors.min.js"></script>
-<script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
-<script src="vendor/angular-ui-select/dist/select.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.bundle.min.js"></script>
 <script src="vendor/angular-chart.js/dist/angular-chart.js"></script>
 <script src="js/services/lb-services.js"></script>
@@ -53,12 +56,14 @@
 <script src="js/controllers/user/login.js"></script>
 <script src="js/controllers/user/signup.js"></script>
 <script src="js/controllers/author/submissions.js"></script>
+<script src="js/controllers/author/submission.create.js"></script>
 <script src="js/controllers/reviewer/reviews.js"></script>
 <script src="js/controllers/chair/userManagement.js"></script>
 <script src="js/controllers/conference.js"></script>
 <script src="js/controllers/user/conferenceLanding.js"></script>
 <script src="js/controllers/header.js"></script>
 
+<script>Dropzone.autoDiscover = false;</script>
 
 </body>
 </html>
