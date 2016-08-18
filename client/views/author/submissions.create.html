@@ -1,90 +1,98 @@
-<h1>Create Submission</h1>
-<hr>
-<form class="form-horizontal" enctype="multipart/form-data" ng-submit="createSubmission($event)" novalidate>
-  <div class="form-group">
-    <label for="submission-title" class="col-sm-2 control-label">Title</label>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h1 class="page-title">Create Submission</h1>
 
-    <div class="col-sm-10">
-      <input id="submission-title"
-        type="text"
-        class="form-control"
-        ng-model="submission.title"
-        placeholder="The title of your paper">
-    </div>
-  </div>
+    <form class="form-horizontal" enctype="multipart/form-data" ng-submit="createSubmission($event)" novalidate>
+      <div class="form-group">
+        <label for="submission-title" class="col-sm-2 control-label">Title</label>
 
-  <div class="form-group" ng-repeat="author in submission.authors track by $index">
-    <label for="submission-author-{{$index}}" class="col-sm-2 control-label">Author {{$index + 1}}</label>
-
-    <div ng-class="$first ? 'col-sm-9' : 'col-sm-10'">
-      <ui-select id="submission-author-{{$index}}" placeholder="Name of Author {{$index + 1}} <author{{$index + 1}}@example.tld>" ng-model="submission.authors[$index]">
-        <ui-select-match placeholder="Select author...">{{$select.selected.firstname}} {{$select.selected.lastname}} &lt;{{$select.selected.email}}&gt;</ui-select-match>
-        <ui-select-choices repeat="author in authors | filter: $select.search">
-          <div ng-bind-html="author.username | highlight: $select.search"></div>
-          <small>
-            email: <span ng-bind-html="author.email | highlight: $select.search"></span>
-            username: <span ng-bind-html="author.username | highlight: $select.search"></span>
-          </small>
-        </ui-select-choices>
-      </ui-select>
-    </div>
-
-    <div class="col-sm-1" ng-if="$first">
-      <div class="btn-group">
-        <button type="button" class="btn btn-success btn-sm" ng-click="addAuthorField()" ng-if="submission.authors.length < 4">
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
-
-        <button type="button" class="btn btn-danger btn-sm" ng-click="removeAuthorField()" ng-if="submission.authors.length != 1">
-          <span class="glyphicon glyphicon-minus"></span>
-        </button>
+        <div class="col-sm-10">
+          <input id="submission-title"
+            type="text"
+            class="form-control"
+            ng-model="submission.title"
+            placeholder="The title of your paper">
+        </div>
       </div>
-    </div>
+
+      <div class="form-group" ng-repeat="author in submission.authors track by $index">
+        <label for="submission-author-{{$index}}" class="col-sm-2 control-label">Author {{$index + 1}}</label>
+
+        <div class="col-sm-10">
+          <div class="row">
+            <div ng-class="$first ? 'col-xs-10' : 'col-xs-12'">
+              <ui-select id="submission-author-{{$index}}" placeholder="Name of Author {{$index + 1}} <author{{$index + 1}}@example.tld>" ng-model="submission.authors[$index]">
+                <ui-select-match placeholder="Select author...">{{$select.selected.firstname}} {{$select.selected.lastname}} &lt;{{$select.selected.email}}&gt;</ui-select-match>
+                <ui-select-choices repeat="author in authors | filter: $select.search">
+                  <div ng-bind-html="author.username | highlight: $select.search"></div>
+                  <small>
+                    email: <span ng-bind-html="author.email | highlight: $select.search"></span>
+                    username: <span ng-bind-html="author.username | highlight: $select.search"></span>
+                  </small>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+
+            <div class="col-xs-2" style="text-align:right; padding-top: 5px" ng-if="$first">
+              <div class="btn-group">
+                <button type="button" class="btn btn-success btn-sm" ng-click="addAuthorField()" ng-if="submission.authors.length < 4">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+
+                <button type="button" class="btn btn-danger btn-sm" ng-click="removeAuthorField()" ng-if="submission.authors.length != 1">
+                  <span class="glyphicon glyphicon-minus"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="submission-abstract" class="col-sm-2 control-label">Abstract</label>
+
+        <div class="col-sm-10">
+          <textarea id="submission-abstract"
+            class="form-control"
+            ng-model="submission.abstract"
+            placeholder="The abstract of your paper"
+            rows="5">
+          </textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="submission-keywords" class="col-sm-2 control-label">Keywords</label>
+
+        <div class="col-sm-10">
+          <ui-select id="submission-keywords" multiple tagging="transformTag" on-select="createTag($item)" ng-model="submission.tags">
+            <ui-select-match placeholder="Keywords, e.g., html5, javascript, google-chrome, ...">{{$item.name}}</ui-select-match>
+            <ui-select-choices refresh="populateAutoCompleteTags($select)" refresh-delay="300" position="down" repeat="tag in tagSuggestions">
+              <span ng-bind-html="tag.name | highlight: $select.search"></span>
+              <span ng-if="tag.id < 0" ng-bind-html="'<small>(new)</small>'"></span>
+            </ui-select-choices>
+          </ui-select>
+
+          <p class="help-block">Enter any numbers of keywords. Press ENTER to confirm each of them.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="submission-file" class="col-sm-2 control-label">Paper (PDF)</label>
+
+        <div class="col-sm-10">
+          <div id="submission-file" class="dropzone"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary col-xs-12" ng-disabled="pendingRequest">
+            Submit Paper
+            <i class="fa fa-circle-o-notch rotate" ng-show="pendingRequest"></i>
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
-
-  <div class="form-group">
-    <label for="submission-abstract" class="col-sm-2 control-label">Abstract</label>
-
-    <div class="col-sm-10">
-      <textarea id="submission-abstract"
-        class="form-control"
-        ng-model="submission.abstract"
-        placeholder="The abstract of your paper"
-        rows="7">
-      </textarea>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="submission-keywords" class="col-sm-2 control-label">Keywords</label>
-
-    <div class="col-sm-10">
-      <ui-select id="submission-keywords" multiple tagging="transformTag" on-select="createTag($item)" ng-model="submission.tags">
-        <ui-select-match placeholder="Keywords, e.g., html5, javascript, google-chrome, ...">{{$item.name}}</ui-select-match>
-        <ui-select-choices refresh="populateAutoCompleteTags($select)" refresh-delay="300" position="down" repeat="tag in tagSuggestions">
-          <span ng-bind-html="tag.name | highlight: $select.search"></span>
-          <span ng-if="tag.id < 0" ng-bind-html="'<small>(new)</small>'"></span>
-        </ui-select-choices>
-      </ui-select>
-
-      <p class="help-block">Enter any numbers of keywords. Press ENTER to confirm each of them.</p>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="submission-file" class="col-sm-2 control-label">Paper (PDF)</label>
-
-    <div class="col-sm-10">
-      <div id="submission-file" class="dropzone"></div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default" ng-disabled="pendingRequest">
-        Submit Paper
-        <i class="fa fa-circle-o-notch rotate" ng-show="pendingRequest"></i>
-      </button>
-    </div>
-  </div>
-</form>
+</div>
