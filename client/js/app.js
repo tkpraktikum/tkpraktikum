@@ -21,7 +21,8 @@ angular
         abstract: true,
         views: {
           '': {
-            templateUrl: 'views/layout.html'
+            templateUrl: 'views/layout.html',
+            controller: 'LayoutController'
           },
           'header@app': {
             templateUrl: 'views/header.html',
@@ -180,6 +181,7 @@ angular
 
   var user,
     currentConferenceId = null,
+    flashMessage = null,
     login = function (username, password, rememberMe) {
       return user = User.login({
           username: username,
@@ -194,6 +196,7 @@ angular
         // LoopBackAuth.clearUser();
         // LoopBackAuth.clearStorage();
         currentConferenceId = null;
+        flashMessage = null;
         user = $q.reject();
       });
     },
@@ -251,7 +254,10 @@ angular
     getUserId: function () { return user.then(function (user) { return user.id; }); },
     isAuthenticated: isAuthenticated,
     getCurrentConferenceId: getCurrentConferenceId,
-    setCurrentConferenceId: setCurrentConferenceId
+    setCurrentConferenceId: setCurrentConferenceId,
+    hasFlash: function () { return !!flashMessage; },
+    getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
+    setFlash: function (msg) { flashMessage = msg; }
   };
 }])
 .run(function($rootScope, $q, PermissionStore, RoleStore, AuthService) {
