@@ -17,7 +17,7 @@ module.exports = function(app, ds, callback) {
         lastname: 'Chair',
         username: 'chair',
         password: 'chair',
-        email: 'chairmen1@chair.de',
+        email: 'chairman1@chair.de',
         emailVerified: true
       },
       {
