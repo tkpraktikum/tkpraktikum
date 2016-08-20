@@ -1,3 +1,12 @@
 <div ui-view="header"></div>
-<div ui-view class="content"></div>
+
+<div class="container content">
+  <div ng-show="!!flashMessage" class="alert alert-success flash-message">
+    <button type="button" class="close" ng-click="dismissFlash($e)">&times;</button>
+    {{ flashMessage }}
+  </div>
+
+  <div ui-view></div>
+</div>
+
 <div ui-view="footer"></div>

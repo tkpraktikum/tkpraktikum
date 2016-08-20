@@ -21,7 +21,8 @@ angular
         abstract: true,
         views: {
           '': {
-            templateUrl: 'views/layout.html'
+            templateUrl: 'views/layout.html',
+            controller: 'LayoutController'
           },
           'header@app': {
             templateUrl: 'views/header.html',
@@ -177,10 +178,11 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
   }])
-.factory('AuthService', ['$q', '$state', 'LoopBackAuth', 'User', function ($q, $state, LoopBackAuth, User) {
+.factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
 
   var user,
     currentConferenceId = null,
+    flashMessage = null,
     login = function (username, password, rememberMe) {
       return user = User.login({
           username: username,
@@ -195,6 +197,7 @@ angular
         // LoopBackAuth.clearUser();
         // LoopBackAuth.clearStorage();
         currentConferenceId = null;
+        flashMessage = null;
         user = $q.reject();
       });
     },
@@ -224,13 +227,7 @@ angular
         }).$promise;
 
       user.then(function (model) {
-        var isSet = !!currentConferenceId;
         setCurrentConferenceId(model.defaultConferenceId);
-        console.log(model);
-        if (!isSet && model.defaultConferenceId) {
-          console.log('late set');
-          $state.go($state.current, {}, {reload: true});
-        }
       });
 
       return user;
@@ -258,7 +255,10 @@ angular
     getUserId: function () { return user.then(function (user) { return user.id; }); },
     isAuthenticated: isAuthenticated,
     getCurrentConferenceId: getCurrentConferenceId,
-    setCurrentConferenceId: setCurrentConferenceId
+    setCurrentConferenceId: setCurrentConferenceId,
+    hasFlash: function () { return !!flashMessage; },
+    getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
+    setFlash: function (msg) { flashMessage = msg; }
   };
 }])
 .run(function($rootScope, $q, PermissionStore, RoleStore, AuthService) {

@@ -97,7 +97,8 @@ textarea {
   margin: 4px 0px;
 }
 
-.content-no-header {
+.content-no-header,
+.flash-message {
   margin-top: 20px;
 }
 
