@@ -181,6 +181,12 @@ angular
         controller: 'ReviewController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
+      .state('app.protected.conference.review.overview', {
+        url: '/overview',
+        templateUrl: 'views/reviewer/reviews.overview.html',
+        controller: 'ReviewOverviewController',
+        data: { permissions: { only: ['REVIEWER'] }}
+      })
       .state('app.protected.conference.review.list', {
         url: '/list',
         templateUrl: 'views/reviewer/reviews.list.html',

@@ -1,0 +1,19 @@
+<div class="row content-no-header">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card-columns">
+      <div class="col-xs-12" ng-repeat="s in submissions">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">{{s.title}}</h2>
+          </div>
+          <div class="panel-body">
+            <p><b>Tags:</b><span ng-repeat="t in s.tags track by $index"> <span ng-show="!$first">, </span>{{t}}</span></p>
+            <a class="btn btn-primary btn-sm col-xs-6">Show Submission</a>
+            <a class="btn btn-primary btn-sm col-xs-6">Create Review</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
