@@ -164,6 +164,7 @@ angular
       .state('app.protected.conference.review.list', {
         url: '/list',
         templateUrl: 'views/reviewer/reviews.list.html',
+        controller: 'ReviewListController',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
       .state('app.protected.conference.review.create', {

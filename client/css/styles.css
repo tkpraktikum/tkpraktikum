@@ -250,3 +250,18 @@ fieldset[disabled] .btn-nav.focus {
   text-decoration: underline;
 }
 
+.panel-body .markdown {
+  margin-left: -15px;
+  margin-right: -15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.panel-body .expertise {
+  margin: 0 20px 0 0;
+}
+
+h2.panel-title {
+  font-size: 24px;
+}
