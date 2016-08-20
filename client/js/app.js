@@ -145,7 +145,14 @@ angular
         templateUrl: 'views/chair/submissions.html',
         controller: 'SubmissionsChairController',
         data: { permissions: { only: ['CHAIR'] }}
-      }).state('app.protected.conference.submission', {
+      })
+      .state('app.protected.conference.admin.submissionsDetails', {
+        url: '/submissions/:id',
+        templateUrl: 'views/chair/submission.details.html',
+        controller: 'SubmissionsChairController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.conference.submission', {
         url: 'submission',
         abstract: true,
         templateUrl: 'views/author/submissions.list.html',
