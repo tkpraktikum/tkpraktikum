@@ -155,23 +155,24 @@ angular
       .state('app.protected.conference.submission', {
         url: 'submission',
         abstract: true,
-        templateUrl: 'views/author/submissions.list.html',
-        controller: 'SubmissionController',
+        template: '<div ui-view></div>',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.list', {
         url: '/list',
         templateUrl: 'views/author/submissions.list.html',
+        controller: 'SubmissionController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.create', {
         url: '/create',
-        views: {
-          '@app.protected': {
-            controller: 'SubmissionCreateController',
-            templateUrl: 'views/author/submissions.create.html'
-          }
-        }
+        controller: 'SubmissionCreateController',
+        templateUrl: 'views/author/submissions.create.html'
+      })
+      .state('app.protected.conference.submission.edit', {
+        url: '/edit/:submissionId',
+        controller: 'SubmissionCreateController',
+        templateUrl: 'views/author/submissions.create.html'
       })
       .state('app.protected.conference.review', {
         abstract: true,

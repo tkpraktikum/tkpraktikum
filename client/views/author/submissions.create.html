@@ -84,7 +84,8 @@
       <div class="row">
         <div class="form-group col-xs-12">
           <button type="submit" class="btn btn-primary col-xs-12" ng-disabled="pendingRequest">
-            Submit Paper
+            <span ng-show="!edit">Submit Paper</span>
+            <span ng-show="!!edit">Edit Submission</span>
             <i class="fa fa-circle-o-notch rotate" ng-show="pendingRequest"></i>
           </button>
         </div>
