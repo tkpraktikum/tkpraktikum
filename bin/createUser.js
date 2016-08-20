@@ -49,7 +49,7 @@ module.exports = function(app, ds, callback) {
       if (idx < chairs.length) {
         chairs[idx].defaultConferenceId = conference.id;
       }
-      author.defaultConferenceId = conference.id;
+      author.defaultConferenceId = author.defaultConferenceId || conference.id;
     });
 
     conferences = results;

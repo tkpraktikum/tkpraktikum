@@ -20,15 +20,15 @@
             placeholder="The title of your paper"
             required
             minlength="8">
-            <p ng-show="hasInputError(form.title)" class="help-block">Title must be at least 8 characters long.</p>
+          <p ng-show="hasInputError(form.title)" class="help-block">Title must be at least 8 characters long.</p>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-xs-12" ng-repeat="author in submission.authors track by $index">
           <label for="submission-author-{{$index}}">{{$index + 1}}. Author</label>
           <div ng-class="{'input-group': !$first}">
-            <ui-select id="submission-author-{{$index}}" ng-model="submission.authors[$index]" ng-disabled="$first" ng-change="checkAuthors()">
-              <ui-select-match placeholder="Select author...">{{$select.selected.firstname}} {{$select.selected.lastname}} &lt;{{$select.selected.email}}&gt;</ui-select-match>
+            <ui-select id="submission-author-{{$index}}" ng-model="submission.authors[$index]" ng-disabled="$first" ng-change="filterValidAuthors()">
+              <ui-select-match placeholder="Select author...">{{ $select.selected.fullName }} &lt;{{$select.selected.email}}&gt;</ui-select-match>
               <ui-select-choices repeat="author in authors | filter: $select.search">
                 <div ng-bind-html="author.fullName | highlight: $select.search"></div>
                 <small>
@@ -37,7 +37,7 @@
               </ui-select-choices>
             </ui-select>
             <span ng-show="!$first" class="input-group-btn">
-              <button type="button" ng-click="submission.authors[$index] = undefined; checkAuthors()" class="btn btn-default">
+              <button type="button" ng-click="submission.authors[$index] = undefined; filterValidAuthors()" class="btn btn-default">
                 <span class="glyphicon glyphicon-trash"></span>
               </button>
             </span>

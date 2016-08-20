@@ -160,7 +160,7 @@ angular
       .finally(function () { asyncReq.end(); });
     };
 
-    $scope.checkAuthors = function() {
+    $scope.filterValidAuthors = function() {
       $scope.submission.authors = _.uniq($scope.submission.authors.filter(function(a) { return !!a; }).concat([undefined]));
       $scope.authors = $scope.allAuthors.filter(function(a) { return $scope.submission.authors.indexOf(a) === -1;});
     };
@@ -174,7 +174,7 @@ angular
       // Auto suggestion lookup table
       $scope.allAuthors = _(conference.authors).map(function (author) {
         var a = _.chain(author)
-          .pick('id', 'username', 'firstname', 'lastname', 'email')
+          .pick('id', 'firstname', 'lastname', 'email')
           .defaults({ firstname: 'Unknown', lastname: '' })
           .value();
         a.fullName = a.firstname + ' ' + a.lastname;
