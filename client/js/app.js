@@ -7,7 +7,8 @@ angular
     'chart.js',
     'ui.bootstrap.showErrors',
     'ui.select',
-    'ngSanitize'
+    'ngSanitize',
+    'btford.markdown'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -132,17 +133,36 @@ angular
         templateUrl: 'views/chair/affiliation.html',
         controller: 'AffiliationController'
       })
+      .state('app.protected.conference.admin', {
+        url: 'admin',
+        abstract: true,
+        template: '<div ui-view></div>',
+        controller: 'SubmissionController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.conference.admin.submissions', {
+        url: '/submissions',
+        templateUrl: 'views/chair/submissions.html',
+        controller: 'SubmissionsChairController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.conference.admin.submissionsDetails', {
+        url: '/submissions/:id',
+        templateUrl: 'views/chair/submission.details.html',
+        controller: 'SubmissionsChairController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
       .state('app.protected.conference.submission', {
         url: 'submission',
         abstract: true,
-        templateUrl: 'views/author/submissions.html',
+        templateUrl: 'views/author/submissions.list.html',
         controller: 'SubmissionController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.list', {
         url: '/list',
         templateUrl: 'views/author/submissions.list.html',
-        data: { permissions: { only: ['AUTHOR', 'CHAIR'] }}
+        data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.create', {
         url: '/create',
@@ -156,18 +176,20 @@ angular
       .state('app.protected.conference.review', {
         abstract: true,
         url: 'review',
-        templateUrl: 'views/reviewer/reviews.html',
+        template: '<div ui-view></div>',
         controller: 'ReviewController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
       .state('app.protected.conference.review.list', {
         url: '/list',
         templateUrl: 'views/reviewer/reviews.list.html',
+        controller: 'ReviewListController',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
       .state('app.protected.conference.review.create', {
         url: '/create',
         templateUrl: 'views/reviewer/reviews.create.html',
+        controller: 'ReviewCreateController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
       .state('app.protected.conference.users', {
@@ -276,4 +298,11 @@ angular
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
 }).config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
   showErrorsConfigProvider.showSuccess(true);
+}]).
+config(['markdownConverterProvider', function (markdownConverterProvider) {
+  // options to be passed to Showdown
+  // see: https://github.com/coreyti/showdown#extensions
+  markdownConverterProvider.config({
+    extensions: []
+  });
 }]);

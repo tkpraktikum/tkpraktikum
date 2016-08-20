@@ -11,6 +11,7 @@
   <link href="vendor/angular-ui-select/dist/select.min.css" rel="stylesheet">
   <link rel="stylesheet" href="vendor/dropzone/dist/dropzone.css">
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="vendor/simplemde/dist/simplemde.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="css/switch.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
@@ -29,6 +30,7 @@
 <div ui-view></div>
 
 <script src="vendor/underscore/underscore-min.js"></script>
+<script src="vendor/simplemde/dist/simplemde.min.js"></script>
 <script src="vendor/dropzone/dist/dropzone.js"></script>
 <script src="vendor/jquery/dist/jquery.js"></script>
 <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
@@ -40,6 +42,8 @@
 <script src="vendor/angular-permission/dist/angular-permission.js"></script>
 <script src="vendor/angular-permission/dist/angular-permission-ui.js"></script>
 <script src="vendor/angular-bootstrap-show-errors/src/showErrors.min.js"></script>
+<script src="vendor/showdown/src/showdown.js"></script>
+<script src="vendor/angular-markdown-directive/markdown.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.bundle.min.js"></script>
 <script src="vendor/angular-chart.js/dist/angular-chart.js"></script>
 <script src="js/services/lb-services.js"></script>
@@ -59,9 +63,12 @@
 <script src="js/controllers/author/submission.create.js"></script>
 <script src="js/controllers/reviewer/reviews.js"></script>
 <script src="js/controllers/chair/userManagement.js"></script>
+<script src="js/controllers/chair/submissions.js"></script>
 <script src="js/controllers/conference.js"></script>
 <script src="js/controllers/user/conferenceLanding.js"></script>
 <script src="js/controllers/header.js"></script>
+<script src="js/controllers/reviewer/review.create.js"></script>
+<script src="js/controllers/reviewer/review.list.js"></script>
 <script src="js/controllers/layout.js"></script>
 
 <script>Dropzone.autoDiscover = false;</script>
