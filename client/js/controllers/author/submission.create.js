@@ -93,15 +93,6 @@ angular
     };
 
     $scope.addAuthorField = function (author) {
-      var index = $scope.submission.authors.length + 1;
-      author = author || {
-        id: -1,
-        username: "author" + index,
-        firstname: "Author-" + index,
-        lastname: "Name",
-        email: "author" + index + "@example.de"
-      };
-
       $scope.submission.authors.push(author);
     };
 
@@ -169,6 +160,11 @@ angular
       .finally(function () { asyncReq.end(); });
     };
 
+    $scope.checkAuthors = function() {
+      $scope.submission.authors = _.uniq($scope.submission.authors.filter(function(a) { return !!a; }).concat([undefined]));
+      $scope.authors = $scope.allAuthors.filter(function(a) { return $scope.submission.authors.indexOf(a) === -1;});
+    };
+
     Conference.findById({
       id: conferenceId,
       filter: {include: ['authors']
@@ -176,17 +172,21 @@ angular
     .$promise
     .then(function (conference) {
       // Auto suggestion lookup table
-      $scope.authors = _(conference.authors).map(function (author) {
-        return _.chain(author)
+      $scope.allAuthors = _(conference.authors).map(function (author) {
+        var a = _.chain(author)
           .pick('id', 'username', 'firstname', 'lastname', 'email')
           .defaults({ firstname: 'Unknown', lastname: '' })
           .value();
+        a.fullName = a.firstname + ' ' + a.lastname;
+        return a;
       });
 
       // Prefill current user as author
       AuthService.getUserId().then(function (userId) {
-        var author = _($scope.authors).findWhere({id: userId});
+        $scope.authors = $scope.allAuthors.filter(function(a) { return a.id != userId});
+        var author = _($scope.allAuthors).findWhere({id: userId});
         $scope.addAuthorField(author);
+        $scope.addAuthorField();
       });
     });
   }]);
