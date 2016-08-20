@@ -110,6 +110,7 @@ angular
     };
 
     $scope.createSubmission = function ($event, formController) {
+      $scope.submission.abstract = $scope.abstractEditor.value();
       var form = $event.currentTarget;
 
       if ($scope.hasFormError(formController)) {
@@ -137,7 +138,7 @@ angular
             }).$promise.finally(function () { asyncReq.end(); });
           }),
           // Link authors to submission
-          authorships = _($scope.submission.authors).map(function (author) {
+          authorships = _($scope.submission.authors).filter(function(a) { return !!a}).map(function (author) {
             if (author.id <= 0) return;
 
             asyncReq.start();
@@ -189,4 +190,7 @@ angular
         $scope.addAuthorField();
       });
     });
+
+    var hideIcons = ["guide", "fullscreen", "side-by-side"];
+    $scope.abstractEditor = new SimpleMDE({ hideIcons: hideIcons, element: document.getElementById("submission-abstract") });
   }]);

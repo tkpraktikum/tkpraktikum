@@ -44,22 +44,19 @@
           </div>
         </div>
       </div>
-
       <div class="row">
-        <div class="form-group col-xs-12" ng-class="{ 'has-error': hasInputError(form.abstract) }">
+        <div class="form-group col-xs-12">
           <label for="submission-abstract" class="control-label">Abstract</label>
-            <textarea id="submission-abstract"
+          <textarea id="submission-abstract"
               name="abstract"
               class="form-control"
-              ng-model="submission.abstract"
               ng-model-options="{ updateOn: 'blur' }"
               placeholder="The abstract of your paper"
               rows="5"
               required
-              minlength="20">
-            </textarea>
+              minlength="20"></textarea>
 
-            <p ng-show="hasInputError(form.abstract)" class="help-block">Abstract must be at least 20 characters long.</p>
+            <p class="help-block">Abstract must be at least 20 characters long.</p>
         </div>
       </div>
 
