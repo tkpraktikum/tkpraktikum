@@ -1,27 +1,49 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <h1 class="page-title">Create Submission</h1>
+    <h1 class="page-title">Create Review</h1>
     <div class="row">
       <div class="form-group">
         <label class="control-label">Submission Title</label>
-        <div>Text</div>
+        <div>{{submission.title}}</div>
       </div>
     </div>
     <div class="row">
       <div class="form-group">
-        <label class="control-label">Submission Abstract</label>
-        <div>Text</div>
+        <label class="control-label">
+          <span ng-click="showAbstract = !showAbstract" class="collapse-link" data-target="#submissionAbstractTest" data-toggle="collapse"
+             aria-expanded="false" aria-controls="submissionAbstractTest">
+            Submission Abstract
+              <span class="caret" ng-show="!!showAbstract"></span>
+              <span class="caret-left" ng-show="!showAbstract"></span>
+          </span>
+        </label>
+        <div class="collapsing" id="submissionAbstractTest">
+          <div btf-markdown="submission.abstract">
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="form-group">
         <label class="control-label">My Expertise</label>
         <div class="row">
-          <label class="radio-inline radio-inline-rating col-xs-2 col-xs-offset-1"><span>Very Good</span><input type="radio" name="expertise"></label>
-          <label class="radio-inline radio-inline-rating col-xs-2"><span>Good</span><input type="radio" name="expertise"></label>
-          <label class="radio-inline radio-inline-rating col-xs-2"><span>Ok</span><input type="radio" name="expertise"></label>
-          <label class="radio-inline radio-inline-rating col-xs-2"><span>Less</span><input type="radio" name="expertise"></label>
-          <label class="radio-inline radio-inline-rating col-xs-2"><span>None</span><input type="radio" name="expertise"></label>
+          <div class="btn-group col-xs-12" data-toggle="buttons">
+            <label class="btn btn-sm btn-primary active col-xs-2">
+              <input type="radio" autocomplete="off">Very Good
+            </label>
+            <label class="btn btn-sm btn-primary col-xs-2">
+              <input type="radio" autocomplete="off">Good
+            </label>
+            <label class="btn btn-sm btn-primary col-xs-2">
+              <input type="radio" autocomplete="off">OK
+            </label>
+            <label class="btn btn-sm btn-primary col-xs-2">
+              <input type="radio" autocomplete="off">Less
+            </label>
+            <label class="btn btn-sm btn-primary col-xs-2">
+              <input type="radio" autocomplete="off">None
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -29,11 +51,23 @@
       <div class="form-group">
         <label class="control-label">Overall Evaluation</label>
         <div class="row">
-          <label class="radio-inline radio-inline-rating col-xs-2 col-xs-offset-1"><span>Very Good</span><input type="radio" name="evaluation"></label>
-          <label class="radio-inline radio-inline-rating col-xs-2"><span>Good</span><input type="radio" name="evaluation"></label>
-          <label class="radio-inline radio-inline-rating col-xs-2"><span>Ok</span><input type="radio" name="evaluation"></label>
-          <label class="radio-inline radio-inline-rating col-xs-2"><span>Less</span><input type="radio" name="evaluation"></label>
-          <label class="radio-inline radio-inline-rating col-xs-2"><span>None</span><input type="radio" name="evaluation"></label>
+          <div class="btn-group col-xs-12" data-toggle="buttons">
+            <label class="btn btn-sm btn-primary active col-xs-2">
+              <input type="radio" autocomplete="off">Very Good
+            </label>
+            <label class="btn btn-sm btn-primary col-xs-2">
+              <input type="radio" autocomplete="off">Good
+            </label>
+            <label class="btn btn-sm btn-primary col-xs-2">
+              <input type="radio" autocomplete="off">OK
+            </label>
+            <label class="btn btn-sm btn-primary col-xs-2">
+              <input type="radio" autocomplete="off">Less
+            </label>
+            <label class="btn btn-sm btn-primary col-xs-2">
+              <input type="radio" autocomplete="off">None
+            </label>
+          </div>
         </div>
       </div>
     </div>

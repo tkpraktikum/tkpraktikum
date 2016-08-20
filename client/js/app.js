@@ -7,7 +7,8 @@ angular
     'chart.js',
     'ui.bootstrap.showErrors',
     'ui.select',
-    'ngSanitize'
+    'ngSanitize',
+    'btford.markdown'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -277,4 +278,11 @@ angular
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
 }).config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
   showErrorsConfigProvider.showSuccess(true);
+}]).
+config(['markdownConverterProvider', function (markdownConverterProvider) {
+  // options to be passed to Showdown
+  // see: https://github.com/coreyti/showdown#extensions
+  markdownConverterProvider.config({
+    extensions: []
+  });
 }]);
