@@ -548,11 +548,15 @@
     },
     "chairman": {
       "1": "{\"conferenceId\":1,\"chairId\":2,\"id\":1}",
-      "2": "{\"conferenceId\":2,\"chairId\":3,\"id\":2}"
+      "2": "{\"conferenceId\":2,\"chairId\":2,\"id\":2}",
+      "3": "{\"conferenceId\":3,\"chairId\":2,\"id\":3}",
+      "4": "{\"conferenceId\":4,\"chairId\":2,\"id\":4}"
     },
     "author": {
       "1": "{\"conferenceId\":1,\"authorId\":1,\"id\":1}",
-      "2": "{\"conferenceId\":2,\"authorId\":1,\"id\":2}"
+      "2": "{\"conferenceId\":2,\"authorId\":1,\"id\":2}",
+      "3": "{\"conferenceId\":1,\"authorId\":2,\"id\":3}",
+      "4": "{\"conferenceId\":2,\"authorId\":2,\"id\":4}"
     },
     "reviewer": {},
     "file": {}
