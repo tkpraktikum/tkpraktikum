@@ -93,15 +93,8 @@ angular
     };
 
     $scope.addAuthorField = function (author) {
+      console.log($scope.submission.authors);
       var index = $scope.submission.authors.length + 1;
-      author = author || {
-        id: -1,
-        username: "author" + index,
-        firstname: "Author-" + index,
-        lastname: "Name",
-        email: "author" + index + "@example.de"
-      };
-
       $scope.submission.authors.push(author);
     };
 
@@ -169,6 +162,10 @@ angular
       .finally(function () { asyncReq.end(); });
     };
 
+    $scope.checkAuthors = function() {
+      $scope.submission.authors = $scope.submission.authors.filter(function(a) { return !!a; }).concat([undefined]);
+    };
+
     Conference.findById({
       id: conferenceId,
       filter: {include: ['authors']
@@ -177,16 +174,19 @@ angular
     .then(function (conference) {
       // Auto suggestion lookup table
       $scope.authors = _(conference.authors).map(function (author) {
-        return _.chain(author)
+        var a = _.chain(author)
           .pick('id', 'username', 'firstname', 'lastname', 'email')
           .defaults({ firstname: 'Unknown', lastname: '' })
           .value();
+        a.fullName = a.firstname + ' ' + a.lastname;
+        return a;
       });
 
       // Prefill current user as author
       AuthService.getUserId().then(function (userId) {
         var author = _($scope.authors).findWhere({id: userId});
         $scope.addAuthorField(author);
+        $scope.addAuthorField();
       });
     });
   }]);
