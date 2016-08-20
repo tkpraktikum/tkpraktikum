@@ -1,8 +1,10 @@
 angular
   .module('app')
   .controller('SubmissionCreateController',
-      ['$scope', '$stateParams', 'Submission', 'Tag', 'AuthService', 'Submissiontag', 'Authorship', 'User', 'Conference',
-      function($scope, $stateParams, Submission, Tag, AuthService, Submissiontag, Authorship, User, Conference) {
+      ['$q', '$scope', '$anchorScroll', '$state', '$stateParams', 'Submission', 'Tag',
+       'AuthService', 'Submissiontag', 'Authorship', 'User', 'Conference',
+      function($q, $scope, $anchorScroll, $state, $stateParams, Submission, Tag,
+        AuthService, Submissiontag, Authorship, User, Conference) {
 
     var conferenceId = $stateParams.conferenceId,
       asyncReq = (function () {
@@ -91,15 +93,6 @@ angular
     };
 
     $scope.addAuthorField = function (author) {
-      var index = $scope.submission.authors.length + 1;
-      author = author || {
-        id: -1,
-        username: "author" + index,
-        firstname: "Author-" + index,
-        lastname: "Name",
-        email: "author" + index + "@example.de"
-      };
-
       $scope.submission.authors.push(author);
     };
 
@@ -107,10 +100,24 @@ angular
       $scope.submission.authors.pop();
     };
 
-    $scope.createSubmission = function ($event) {
+    $scope.hasFormError = function (formController) {
+      return formController.$submitted &&
+        (formController.$pristine || !formController.$valid);
+    };
+
+    $scope.hasInputError = function (input) {
+      return input.$dirty && _(input.$error).keys().length > 0;
+    };
+
+    $scope.createSubmission = function ($event, formController) {
       var form = $event.currentTarget;
 
-      // TODO: Verify form! Ensure that required attributes are set!
+      if ($scope.hasFormError(formController)) {
+        // Show errors if the form were left untouched
+        formController.title.$setDirty();
+        formController.abstract.$setDirty();
+        return $anchorScroll();
+      }
 
       // Create submission
       asyncReq.start();
@@ -122,28 +129,40 @@ angular
       .$promise
       .then(function (submission) {
         // Link tags to submission
-        _($scope.submission.tags).each(function (tag) {
-          asyncReq.start();
-          Submissiontag.create({
-            tagId: tag.id,
-            submissionId: submission.id
-          }).$promise.finally(function () { asyncReq.end(); });
-        });
+        var submissiontags = _($scope.submission.tags).map(function (tag) {
+            asyncReq.start();
+            return Submissiontag.create({
+              tagId: tag.id,
+              submissionId: submission.id
+            }).$promise.finally(function () { asyncReq.end(); });
+          }),
+          // Link authors to submission
+          authorships = _($scope.submission.authors).map(function (author) {
+            if (author.id <= 0) return;
 
-        // Link authors to submission
-        _($scope.submission.authors).each(function (author) {
-          if (author.id <= 0) return;
-
-          asyncReq.start();
-          Authorship.create({
-            authorId: author.id,
-            submissionId: submission.id
-          }).$promise.finally(function () { asyncReq.end(); });
-        });
+            asyncReq.start();
+            return Authorship.create({
+              authorId: author.id,
+              submissionId: submission.id
+            }).$promise.finally(function () { asyncReq.end(); });
+          });
 
         // TODO: Link file to submission
+
+        // On success: Redirect user to submission overview
+        $q.all(submissiontags.concat(authorships)).then(function () {
+          AuthService.setFlash('Submission was created successfully!');
+          $state.go('app.protected.conference.submission.list', {
+            conferenceId: conferenceId
+          }, {reload: true});
+        });
       })
       .finally(function () { asyncReq.end(); });
+    };
+
+    $scope.filterValidAuthors = function() {
+      $scope.submission.authors = _.uniq($scope.submission.authors.filter(function(a) { return !!a; }).concat([undefined]));
+      $scope.authors = $scope.allAuthors.filter(function(a) { return $scope.submission.authors.indexOf(a) === -1;});
     };
 
     Conference.findById({
@@ -153,17 +172,21 @@ angular
     .$promise
     .then(function (conference) {
       // Auto suggestion lookup table
-      $scope.authors = _(conference.authors).map(function (author) {
-        return _.chain(author)
-          .pick('id', 'username', 'firstname', 'lastname', 'email')
+      $scope.allAuthors = _(conference.authors).map(function (author) {
+        var a = _.chain(author)
+          .pick('id', 'firstname', 'lastname', 'email')
           .defaults({ firstname: 'Unknown', lastname: '' })
           .value();
+        a.fullName = a.firstname + ' ' + a.lastname;
+        return a;
       });
 
       // Prefill current user as author
       AuthService.getUserId().then(function (userId) {
-        var author = _($scope.authors).findWhere({id: userId});
+        $scope.authors = $scope.allAuthors.filter(function(a) { return a.id != userId});
+        var author = _($scope.allAuthors).findWhere({id: userId});
         $scope.addAuthorField(author);
+        $scope.addAuthorField();
       });
     });
   }]);

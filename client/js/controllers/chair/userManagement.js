@@ -1,8 +1,8 @@
 angular
   .module('app')
   .controller('ChairUserManagementController',
-      ['$q', '$scope', '$state', '$stateParams', '$http', '$timeout', 'AuthService', 'User', 'Conference',
-      function($q, $scope, $state, $stateParams, $http, $timeout, AuthService, User, Conference) {
+      ['$q', '$scope', '$stateParams', 'AuthService', 'User', 'Conference',
+      function($q, $scope, $stateParams, AuthService, User, Conference) {
 
         // sort by https://scotch.io/tutorials/sort-and-filter-a-table-using-angular
         $scope.sortType     = 'name'; // set the default sort type
