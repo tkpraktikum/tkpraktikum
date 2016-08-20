@@ -155,7 +155,7 @@ angular
       .state('app.protected.conference.review', {
         abstract: true,
         url: 'review',
-        templateUrl: 'views/reviewer/reviews.html',
+        template: '<div ui-view></div>',
         controller: 'ReviewController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
@@ -167,6 +167,7 @@ angular
       .state('app.protected.conference.review.create', {
         url: '/create',
         templateUrl: 'views/reviewer/reviews.create.html',
+        controller: 'ReviewCreateController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
       .state('app.protected.conference.users', {

@@ -1,5 +1,5 @@
 html, body {
-  padding: 0;
+  padding: 0 0 20px 0;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   line-height: 1.5;
 }
@@ -211,3 +211,25 @@ fieldset[disabled] .btn-nav.focus {
     transform: rotate(359deg);
   }
 }
+
+.radio-inline-rating {
+  padding: 0;
+  text-align: center;
+}
+
+.radio-inline-rating {
+  height: 50px;
+}
+
+.radio-inline-rating > span {
+  display: block;
+}
+
+.radio input[type="radio"], .radio-inline-rating input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+  margin-left: -5px;
+}
+
+.radio-inline-rating + .radio-inline-rating, .checkbox-inline + .checkbox-inline {
+  margin-left: 0;
+}
+

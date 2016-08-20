@@ -1,19 +1,70 @@
-<h1>Create Submission</h1>
-<hr>
-<h3>Number of submissions: <span ng-bind="count"></span> </h3>
-<form name="newReviewForm" novalidate ng-submit="createReview()">
-  <!-- TODO improve: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
-  <div class="row">
-    <div class="col-lg-6 form-group">
-      <label for="title">Title</label>
-      <input type="text" autocomplete="off" class="form-control" id="title" placeholder="Title" name="title" required ng-model="newReview.title">
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1 class="page-title">Create Submission</h1>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label">Submission Title</label>
+        <div>Text</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label">Submission Abstract</label>
+        <div>Text</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label">My Expertise</label>
+        <div class="row">
+          <label class="radio-inline radio-inline-rating col-xs-2 col-xs-offset-1"><span>Very Good</span><input type="radio" name="expertise"></label>
+          <label class="radio-inline radio-inline-rating col-xs-2"><span>Good</span><input type="radio" name="expertise"></label>
+          <label class="radio-inline radio-inline-rating col-xs-2"><span>Ok</span><input type="radio" name="expertise"></label>
+          <label class="radio-inline radio-inline-rating col-xs-2"><span>Less</span><input type="radio" name="expertise"></label>
+          <label class="radio-inline radio-inline-rating col-xs-2"><span>None</span><input type="radio" name="expertise"></label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label">Overall Evaluation</label>
+        <div class="row">
+          <label class="radio-inline radio-inline-rating col-xs-2 col-xs-offset-1"><span>Very Good</span><input type="radio" name="evaluation"></label>
+          <label class="radio-inline radio-inline-rating col-xs-2"><span>Good</span><input type="radio" name="evaluation"></label>
+          <label class="radio-inline radio-inline-rating col-xs-2"><span>Ok</span><input type="radio" name="evaluation"></label>
+          <label class="radio-inline radio-inline-rating col-xs-2"><span>Less</span><input type="radio" name="evaluation"></label>
+          <label class="radio-inline radio-inline-rating col-xs-2"><span>None</span><input type="radio" name="evaluation"></label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label" for="reviewSummary">Evaluation Summary</label>
+        <textarea id="reviewSummary" name="reviewSummary" class="form-control"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label" for="reviewStrong">Major Strong Points</label>
+        <textarea id="reviewStrong" name="reviewStrong" class="form-control"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label" for="reviewWeak">Major Weak Points</label>
+        <textarea id="reviewWeak" name="reviewWeak" class="form-control"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label" for="reviewDetailed">Detailed Comments</label>
+        <textarea id="reviewDetailed" name="reviewDetailed" class="form-control"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <button class="btn btn-primary col-xs-12">Submit Review</button>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-1">
-      <button class="btn btn-default" ng-disabled="newReviewForm.$invalid">Create</button>
-    </div>
-  </div>
-</form>
-<hr>
-
+</div>
