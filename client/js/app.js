@@ -133,17 +133,29 @@ angular
         templateUrl: 'views/chair/affiliation.html',
         controller: 'AffiliationController'
       })
-      .state('app.protected.conference.submission', {
+      .state('app.protected.conference.admin', {
+        url: 'admin',
+        abstract: true,
+        template: '<div ui-view></div>',
+        controller: 'SubmissionController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.conference.admin.submissions', {
+        url: '/submissions',
+        templateUrl: 'views/chair/submissions.html',
+        controller: 'SubmissionsChairController',
+        data: { permissions: { only: ['CHAIR'] }}
+      }).state('app.protected.conference.submission', {
         url: 'submission',
         abstract: true,
-        templateUrl: 'views/author/submissions.html',
+        templateUrl: 'views/author/submissions.list.html',
         controller: 'SubmissionController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.list', {
         url: '/list',
         templateUrl: 'views/author/submissions.list.html',
-        data: { permissions: { only: ['AUTHOR', 'CHAIR'] }}
+        data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.create', {
         url: '/create',
