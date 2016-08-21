@@ -159,9 +159,9 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
       .state('app.protected.conference.admin.submissionsDetails', {
-        url: '/submissions/:id',
-        templateUrl: 'views/chair/submission.details.html',
-        controller: 'SubmissionsChairController',
+        url: '/submissions/:submissionId',
+        templateUrl: 'views/shared/submission.details.html',
+        controller: 'ViewSubmissionController',
         data: { permissions: { only: ['CHAIR'] }}
       })
       .state('app.protected.conference.submission', {
@@ -191,6 +191,12 @@ angular
         url: 'review',
         template: '<div ui-view></div>',
         controller: 'ReviewController',
+        data: { permissions: { only: ['REVIEWER'] }}
+      })
+      .state('app.protected.conference.review.submission', {
+        url: '/submission/:submissionId',
+        templateUrl: 'views/shared/submission.details.html',
+        controller: 'ViewSubmissionController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
       .state('app.protected.conference.review.overview', {
