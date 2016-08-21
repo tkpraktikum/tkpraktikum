@@ -89,4 +89,68 @@ angular
             });
           });
         });
+
+      function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+        return array;
+      }
+
+      $scope.doAutoAssignment = function(count) {
+        var proposedReviewer = {};
+        var submissions = $scope.submissions.map(function(s) {
+          proposedReviewer[s.id] = [];
+          return {
+            id: s.id,
+            authors: s.authors.map(function(a) {return a.id})
+          }
+        });
+        var reviewer = $scope.reviewer.map(function(r) { return r.id});
+        var reviewerTaskCount = {};
+        reviewer.forEach(function(r) {
+          reviewerTaskCount[r] = 0;
+        });
+
+        var currentMax = parseInt((submissions.length * count) / reviewer.length, 10) + 1;
+        for(var i=0; i < count; i++) {
+          submissions.forEach(function (s) {
+            var tempMax = currentMax;
+            while(!found) {
+              var found = false;
+              var localReviewer = shuffleArray(reviewer);
+              for (var j = 0; j < localReviewer.length; j++) {
+                var r = localReviewer[j];
+                if (reviewerTaskCount[r] < currentMax) {
+                  if (s.authors.indexOf(r) === -1 && proposedReviewer[s.id].indexOf(r) === -1) {
+                    reviewerTaskCount[r]++;
+                    proposedReviewer[s.id].push(r);
+                    found = true;
+                    break;
+                  }
+                }
+              }
+              if (!found) {
+                tempMax += 1;
+                if (tempMax >= currentMax * 2) {
+                  found = true; // break;
+                }
+              }
+            }
+          });
+        }
+
+        _.keys(proposedReviewer).forEach(function(k) {
+          proposedReviewer[k] = proposedReviewer[k].map(function(rId) {
+            return $scope.reviewer.filter(function(r) { return r.id === rId})[0]
+          });
+        });
+
+        $scope.assignedReviewer = proposedReviewer;
+        $scope.filterValidReviewers();
+
+      };
   }]);
