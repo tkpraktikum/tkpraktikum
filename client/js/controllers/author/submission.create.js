@@ -2,9 +2,9 @@ angular
   .module('app')
   .controller('SubmissionCreateController',
       ['$q', '$scope', '$anchorScroll', '$state', '$stateParams', 'Submission', 'Tag',
-       'AuthService', 'Submissiontag', 'Authorship', 'User', 'Conference',
+       'AuthService', 'Submissiontag', 'Authorship', 'User', 'Conference', 'FileUpload',
       function($q, $scope, $anchorScroll, $state, $stateParams, Submission, Tag,
-        AuthService, Submissiontag, Authorship, User, Conference) {
+        AuthService, Submissiontag, Authorship, User, Conference, FileUpload) {
 
     var conferenceId = $stateParams.conferenceId,
       asyncReq = (function () {
@@ -29,7 +29,8 @@ angular
         addRemoveLinks: true,
         maxFiles: 1,
         init: function () {
-          this.on('sending', function () {
+          this.on('sending', function (dz, xhr, formData) {
+            xhr.setRequestHeader('X-Access-Token', AuthService.getAccessTokenId());
             asyncReq.start();
             $scope.$apply();
           });
@@ -45,7 +46,7 @@ angular
         }
       });
 
-    $scope.submission = { authors: [], tags: [] };
+    $scope.submission = { authors: [], tags: [], file: {} };
     $scope.tagSuggestions = [];
 
     $scope.populateAutoCompleteTags = function ($select) {
@@ -113,7 +114,7 @@ angular
       var form = $event.currentTarget;
 
       if ($scope.hasFormError(formController)) {
-        // Show errors if the form were left untouched
+        // Show errors if the form was left untouched
         formController.title.$setDirty();
         formController.abstract.$setDirty();
         return $anchorScroll();
@@ -137,20 +138,35 @@ angular
             }).$promise.finally(function () { asyncReq.end(); });
           }),
           // Link authors to submission
-          authorships = _($scope.submission.authors).map(function (author) {
-            if (author.id <= 0) return;
+          authorships = _.chain($scope.submission.authors)
+            .filter(function (author) { return !!author; })
+            .map(function (author) {
+              if (author.id <= 0) return;
 
-            asyncReq.start();
-            return Authorship.create({
-              authorId: author.id,
-              submissionId: submission.id
-            }).$promise.finally(function () { asyncReq.end(); });
-          });
+              asyncReq.start();
 
-        // TODO: Link file to submission
+              return Authorship.create({
+                authorId: author.id,
+                submissionId: submission.id
+              }).$promise.finally(function () { asyncReq.end(); });
+            })
+            .value(),
+          // Link file to submission
+          file = (function () {
+            if ($scope.submission.file && $scope.submission.file.name) {
+              asyncReq.start();
+
+              return FileUpload.create(_.extend(
+                { submissionId: submission.id },
+                $scope.submission.file
+              )).$promise.finally(function () { asyncReq.end(); });
+            } else {
+              return $q.resolve();
+            }
+          })();
 
         // On success: Redirect user to submission overview
-        $q.all(submissiontags.concat(authorships)).then(function () {
+        $q.all(submissiontags.concat(authorships).concat([file])).then(function () {
           AuthService.setFlash('Submission was created successfully!');
           $state.go('app.protected.conference.submission.list', {
             conferenceId: conferenceId

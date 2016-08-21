@@ -200,7 +200,6 @@ angular
       })
   }])
 .factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
-
   var user,
     currentConferenceId = null,
     flashMessage = null,
@@ -274,6 +273,7 @@ angular
     hasRole: hasRole,
     getUser: function () { return user; },
     getUserId: function () { return user.then(function (user) { return user.id; }); },
+    getAccessTokenId: function () { return LoopBackAuth.accessTokenId; },
     isAuthenticated: isAuthenticated,
     getCurrentConferenceId: getCurrentConferenceId,
     setCurrentConferenceId: setCurrentConferenceId,

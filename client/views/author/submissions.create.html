@@ -23,6 +23,7 @@
           <p ng-show="hasInputError(form.title)" class="help-block">Title must be at least 8 characters long.</p>
         </div>
       </div>
+
       <div class="row">
         <div class="form-group col-xs-12" ng-repeat="author in submission.authors track by $index">
           <label for="submission-author-{{$index}}">{{$index + 1}}. Author</label>
