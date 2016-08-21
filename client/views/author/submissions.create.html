@@ -28,7 +28,7 @@
           <label for="submission-author-{{$index}}">{{$index + 1}}. Author</label>
           <div ng-class="{'input-group': !$first}">
             <ui-select id="submission-author-{{$index}}" ng-model="submission.authors[$index]" ng-disabled="$first" ng-change="filterValidAuthors()">
-              <ui-select-match placeholder="Select author...">{{ $select.selected.fullName }} &lt;{{$select.selected.email}}&gt;</ui-select-match>
+              <ui-select-match placeholder="Select Author...">{{ $select.selected.fullName }} &lt;{{$select.selected.email}}&gt;</ui-select-match>
               <ui-select-choices repeat="author in authors | filter: $select.search">
                 <div ng-bind-html="author.fullName | highlight: $select.search"></div>
                 <small>

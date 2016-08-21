@@ -53,6 +53,11 @@
       "foreignKey": "authorId",
       "through": "authorship"
     },
+    "reviews": {
+      "type": "hasMany",
+      "model": "review",
+      "foreignKey": "reviewerId"
+    },
     "reviewer": {
       "type": "hasMany",
       "model": "conference",

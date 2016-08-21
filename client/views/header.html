@@ -26,7 +26,6 @@
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reviews <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak><a ui-sref="app.protected.conference.review.overview({conferenceId: currentConferenceId})">Overview</a></li>
-            <li ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak><a ui-sref="app.protected.conference.review.create({conferenceId: currentConferenceId})">Create</a></li>
             <li ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak><a ui-sref="app.protected.conference.review.list({conferenceId: currentConferenceId})">My Reviews</a></li>
           </ul>
         </li>
@@ -34,6 +33,7 @@
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Conference Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.admin.submissions({conferenceId: currentConferenceId})">Submissions</a></li>
+            <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.admin.reviews.assignment({conferenceId: currentConferenceId})">Assign Reviewer</a></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.review.list({conferenceId: currentConferenceId})">Reviews</a></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.users({conferenceId: currentConferenceId})">Users</a></li>
             <li ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak><a ui-sref="app.protected.conference.statistics({conferenceId: currentConferenceId})">Statistics</a></li>

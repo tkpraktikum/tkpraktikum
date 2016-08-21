@@ -140,6 +140,18 @@ angular
         controller: 'SubmissionController',
         data: { permissions: { only: ['CHAIR'] }}
       })
+      .state('app.protected.conference.admin.reviews', {
+        url: '/reviews',
+        abstract: true,
+        template: '<div ui-view></div>',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.conference.admin.reviews.assignment', {
+        url: '/assignment',
+        templateUrl: 'views/chair/reviewer.assignment.html',
+        controller: 'ReviewerAssignmentController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
       .state('app.protected.conference.admin.submissions', {
         url: '/submissions',
         templateUrl: 'views/chair/submissions.html',
@@ -193,9 +205,9 @@ angular
         controller: 'ReviewListController',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
-      .state('app.protected.conference.review.create', {
-        url: '/create',
-        templateUrl: 'views/reviewer/reviews.create.html',
+      .state('app.protected.conference.review.edit', {
+        url: '/edit/:reviewId',
+        templateUrl: 'views/reviewer/reviews.edit.html',
         controller: 'ReviewCreateController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
