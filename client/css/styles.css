@@ -277,3 +277,11 @@ h2.panel-title {
 .reviewer-assignment-dropdown {
   margin-top: 10px;
 }
+
+.full-width {
+  width: 100%;
+}
+
+.form-submit {
+  margin-top: 10px;
+}

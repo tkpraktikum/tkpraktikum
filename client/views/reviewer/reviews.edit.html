@@ -101,8 +101,18 @@
         </div>
       </div>
       <div class="row">
+        <div class="btn-group full-width" data-toggle="buttons">
+          <label class="btn btn-sm btn-primary col-xs-6" ng-click="review.finished = false;" ng-class="{active: !review.finished}">
+            <input type="radio" autocomplete="off">Draft
+          </label>
+          <label class="btn btn-sm btn-primary col-xs-6" ng-click="review.finished = true;" ng-class="{active: !!review.finished}">
+            <input type="radio" autocomplete="off">Finished
+          </label>
+        </div>
+      </div>
+      <div class="row">
         <div class="form-group">
-          <button class="btn btn-primary col-xs-12">Submit Review</button>
+          <button class="btn btn-primary col-xs-12 form-submit">Submit Review</button>
         </div>
       </div>
     </form>
