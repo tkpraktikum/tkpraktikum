@@ -8,8 +8,8 @@
       </div>
     </div>
 
-    <form name="form" enctype="multipart/form-data" ng-submit="edit ? updateSubmission($event, form) : createSubmission($event, form)" novalidate>
-{{ submission }}
+    <form name="form" enctype="multipart/form-data" ng-submit="edit ? updateSubmission(form) : createSubmission(form)" novalidate>
+
       <div class="row">
         <div class="form-group col-xs-12" ng-class="{ 'has-error': hasInputError(form.title) }">
           <label class="control-label" for="submission-title">Title</label>
@@ -76,6 +76,7 @@
               <span ng-if="tag.id < 0" ng-bind-html="'<small>(new)</small>'"></span>
             </ui-select-choices>
           </ui-select>
+
           <p class="help-block">Enter any numbers of keywords. Press ENTER to confirm each of them.</p>
         </div>
       </div>
@@ -84,6 +85,10 @@
         <div class="form-group col-xs-12">
           <label for="submission-file" class="control-label">Paper (PDF)</label>
           <div id="submission-file" class="dropzone"></div>
+
+          <p ng-show="edit && oldFile" class="help-block">
+            Upload a new file to replace the existing file: <a ng-href="{{oldFile.url}}">{{ oldFile.originalFilename }}</a> ({{ oldFile.size | bytes }})
+          </p>
         </div>
       </div>
 
@@ -91,7 +96,7 @@
         <div class="form-group col-xs-12">
           <button type="submit" class="btn btn-primary col-xs-12" ng-disabled="pendingRequest">
             <span ng-show="!edit">Submit Paper</span>
-            <span ng-show="edit">Edit Submission</span>
+            <span ng-show="edit">Update Submission</span>
             <i class="fa fa-circle-o-notch rotate" ng-show="pendingRequest"></i>
           </button>
         </div>

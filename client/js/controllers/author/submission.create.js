@@ -8,33 +8,6 @@ angular
 
     var submissionId = parseInt($stateParams.submissionId, 10),
       conferenceId = $stateParams.conferenceId,
-      loadSubmission = function (submissionId) {
-        return $q.all([
-          Submission.findById({
-            id: submissionId,
-            filter: {include: ['authors', 'tags']
-          }}).$promise,
-          Authorship.find({ filter: {
-            fields: ['authorId', 'orderNum'],
-            where: { submissionId: submissionId }
-          }}).$promise/*,
-          FileUpload.find({ filter: {
-            where: { submissionId: submissionId }
-          }}).$promise*/
-        ]).then(function(r) {
-          var submission = r[0],
-            authorOrder = _.chain(r[1])
-              .indexBy('authorId')
-              .mapObject(function (v) { return v.orderNum; })
-              .value();
-
-          submission.authors = _(submission.authors).sortBy(function (author) {
-            return authorOrder[author.id];
-          });
-
-          return submission;
-        });
-      },
       asyncReq = (function () {
         var pendingRequests = 0;
 
@@ -49,6 +22,77 @@ angular
           }
         };
       })(),
+      oldTagIds = [],
+      oldAuthorIds = [],
+      loadSubmission = function (submissionId) {
+        asyncReq.start();
+
+        return $q.all([
+          Submission.findById({
+            id: submissionId,
+            filter: {include: ['authors', 'tags', 'documents']
+          }}).$promise,
+          Authorship.find({ filter: {
+            fields: ['authorId', 'orderNum'],
+            where: { submissionId: submissionId }
+          }}).$promise
+        ])
+        // Ensure that authors are in correct order. Loopback cannot handle it natively
+        .then(function(r) {
+          var submission = r[0],
+            authorOrder = _.chain(r[1])
+              .indexBy('authorId')
+              .mapObject(function (v) { return v.orderNum; })
+              .value();
+
+          submission.authors = _(submission.authors).sortBy(function (author) {
+            return authorOrder[author.id];
+          });
+
+          return submission;
+        })
+        .finally(asyncReq.end);
+      },
+      linkTagsToSubmission = function (submissionId) {
+        return _($scope.submission.tags).map(function (tag) {
+          asyncReq.start();
+          return Submissiontag.create({
+            tagId: tag.id,
+            submissionId: submissionId
+          }).$promise.finally(asyncReq.end);
+        });
+      },
+      linkAuthorsToSubmission = function (submissionId) {
+        return _.chain($scope.submission.authors)
+          .filter(function (author) { return !!author && author.id > 0; })
+          .map(function (author, idx) {
+            asyncReq.start();
+            return Authorship.create({
+              authorId: author.id,
+              submissionId: submissionId,
+              orderNum: idx + 1,
+            }).$promise.finally(asyncReq.end);
+          })
+          .value();
+      },
+      linkFileToSubmission = function (submissionId) {
+        if ($scope.submission.file && $scope.submission.file.name) {
+          asyncReq.start();
+
+          return FileUpload.create(_.extend(
+            { submissionId: submissionId },
+            $scope.submission.file
+          )).$promise.finally(asyncReq.end);
+        } else {
+          return $q.resolve();
+        }
+      },
+      showFormErrors = function (formController) {
+        // Show errors if the form was left untouched
+        formController.title.$setDirty();
+        formController.abstract.$setDirty();
+        return $anchorScroll();
+      },
       dropzone = new Dropzone('#submission-file', {
         paramName: 'file',
         url: '/api/containers/submissions/upload',
@@ -75,11 +119,22 @@ angular
       });
 
     $scope.edit = !!$stateParams.submissionId;
-    $scope.simpleMdeOptions = { hideIcons: ["guide", "fullscreen", "side-by-side"] };
     $scope.tagSuggestions = [];
+    $scope.simpleMdeOptions = {
+      hideIcons: ["guide", "fullscreen", "side-by-side"],
+      spellChecker: false
+    };
 
     if ($scope.edit) {
       loadSubmission(submissionId).then(function (submission) {
+        oldTagIds = _(submission.tags).map(function (t) { return t.id; });
+        oldAuthorIds = _(submission.authors).map(function (a) { return a.id; });
+
+        if (submission.documents.length >= 1) {
+          $scope.oldFile = submission.documents[0];
+          delete submission.documents;
+        }
+
         $scope.submission = submission;
         $scope.filterValidAuthors();
       });
@@ -127,7 +182,7 @@ angular
             item.id = tag.id;
           }
         })
-        .finally(function () { asyncReq.end(); });
+        .finally(asyncReq.end);
       }
     };
 
@@ -139,23 +194,20 @@ angular
       $scope.submission.authors.pop();
     };
 
-    $scope.hasFormError = function (formController) {
+    $scope.hasFormError = function (formController, validIfPristine) {
+      validIfPristine = validIfPristine || false;
+
       return formController.$submitted &&
-        (formController.$pristine || !formController.$valid);
+        ((!validIfPristine && formController.$pristine) || !formController.$valid);
     };
 
     $scope.hasInputError = function (input) {
       return input.$dirty && _(input.$error).keys().length > 0;
     };
 
-    $scope.createSubmission = function ($event, formController) {
-      var form = $event.currentTarget;
-
+    $scope.createSubmission = function (formController) {
       if ($scope.hasFormError(formController)) {
-        // Show errors if the form was left untouched
-        formController.title.$setDirty();
-        formController.abstract.$setDirty();
-        return $anchorScroll();
+        return showFormErrors(formController);
       }
 
       // Create submission
@@ -167,39 +219,9 @@ angular
       })
       .$promise
       .then(function (submission) {
-        // Link tags to submission
-        var submissiontags = _($scope.submission.tags).map(function (tag) {
-            asyncReq.start();
-            return Submissiontag.create({
-              tagId: tag.id,
-              submissionId: submission.id
-            }).$promise.finally(function () { asyncReq.end(); });
-          }),
-          // Link authors to submission
-          authorships = _.chain($scope.submission.authors)
-            .filter(function (author) { return !!author && author.id > 0; })
-            .map(function (author, idx) {
-              asyncReq.start();
-              return Authorship.create({
-                authorId: author.id,
-                submissionId: submission.id,
-                orderNum: idx + 1,
-              }).$promise.finally(function () { asyncReq.end(); });
-            })
-            .value(),
-          // Link file to submission
-          file = (function () {
-            if ($scope.submission.file && $scope.submission.file.name) {
-              asyncReq.start();
-
-              return FileUpload.create(_.extend(
-                { submissionId: submission.id },
-                $scope.submission.file
-              )).$promise.finally(function () { asyncReq.end(); });
-            } else {
-              return $q.resolve();
-            }
-          })();
+        var submissiontags = linkTagsToSubmission(submission.id),
+          authorships = linkAuthorsToSubmission(submission.id),
+          file = linkFileToSubmission(submission.id);
 
         // On success: Redirect user to submission overview
         $q.all(submissiontags.concat(authorships).concat([file])).then(function () {
@@ -209,13 +231,68 @@ angular
           }, {reload: true});
         }, function (err) {
           // TODO: rollback (some of the above relations could not be created)
+          // e.g. via local deleteSubmission(id) function
         });
       })
-      .finally(function () { asyncReq.end(); });
+      .finally(asyncReq.end);
     };
 
-    $scope.updateSubmission = function ($event, formController) {
-      console.log("UPDATE SUBMISSION!");
+    $scope.updateSubmission = function (formController) {
+      if ($scope.hasFormError(formController, true)) {
+        return showFormErrors(formController);
+      }
+
+      // Check what tags and authors have changed
+      var newTagIds = _($scope.submission.tags).map(function (t) { return t.id })
+        newAuthorIds = _.chain($scope.submission.authors)
+          .filter(function (a) { return !!a && a.id >= 0; })
+          .map(function (a) { return a.id; }).value(),
+        createTagIds = _(newTagIds).difference(oldTagIds),
+        createAuthorIds = _(newAuthorIds).difference(oldAuthorIds),
+        deleteTagIds = _(oldTagIds).difference(newTagIds),
+        deleteAuthorIds = _(oldAuthorIds).difference(newAuthorIds),
+        pendingPromises = [];
+
+      // Update submission
+      if (formController.$dirty) {
+        asyncReq.start();
+        pendingPromises.push(Submission.patchAttributes({
+          id: submissionId,
+          // conferenceId: conferenceId,
+          title: $scope.submission.title,
+          abstract: $scope.submission.abstract
+        }).$promise.finally(asyncReq.end));
+      }
+
+      // Selective deletion of relational records is buggy/impossible.
+      // Strategy: When changed, delete all relational records and re-populate them afterwards
+      if (deleteTagIds.length >= 1 || createTagIds.length >= 1) {
+        asyncReq.start();
+        Submission.tags.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end);
+        pendingPromises = pendingPromises.concat(linkTagsToSubmission(submissionId));
+      }
+
+      if (deleteAuthorIds.length >= 1 || createAuthorIds.length >= 1) {
+        asyncReq.start();
+        Submission.authors.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end);
+        pendingPromises = pendingPromises.concat(linkAuthorsToSubmission(submissionId))
+      }
+
+      if ($scope.submission.file) {
+        asyncReq.start();
+        Submission.documents.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end);
+        pendingPromises.push(linkFileToSubmission(submissionId));
+      }
+
+      $q.all(pendingPromises).then(function() {
+        AuthService.setFlash('Submission was updated successfully!');
+        $state.go('app.protected.conference.submission.list', {
+          conferenceId: conferenceId
+        }, {reload: true});
+      }, function (err) {
+        // TODO: rollback (some of the above relations could not be created)
+        // e.g. via local deleteSubmission(id) function
+      });
     };
 
     $scope.filterValidAuthors = function() {
