@@ -6,9 +6,35 @@ angular
       function($q, $scope, $anchorScroll, $state, $stateParams, Submission, Tag,
         AuthService, Submissiontag, Authorship, User, Conference, FileUpload) {
 
-    var edit = !!$stateParams.submissionId,
-      submissionId = parseInt($stateParams.submissionId, 10),
+    var submissionId = parseInt($stateParams.submissionId, 10),
       conferenceId = $stateParams.conferenceId,
+      loadSubmission = function (submissionId) {
+        return $q.all([
+          Submission.findById({
+            id: submissionId,
+            filter: {include: ['authors', 'tags']
+          }}).$promise,
+          Authorship.find({ filter: {
+            fields: ['authorId', 'orderNum'],
+            where: { submissionId: submissionId }
+          }}).$promise/*,
+          FileUpload.find({ filter: {
+            where: { submissionId: submissionId }
+          }}).$promise*/
+        ]).then(function(r) {
+          var submission = r[0],
+            authorOrder = _.chain(r[1])
+              .indexBy('authorId')
+              .mapObject(function (v) { return v.orderNum; })
+              .value();
+
+          submission.authors = _(submission.authors).sortBy(function (author) {
+            return authorOrder[author.id];
+          });
+
+          return submission;
+        });
+      },
       asyncReq = (function () {
         var pendingRequests = 0;
 
@@ -48,35 +74,18 @@ angular
         }
       });
 
-    // TODO: Implement edit
-    if (edit) {
-      $q.all([
-        Submission.findById({
-          id: submissionId,
-          filter: {include: ['authors', 'tags']
-        }}).$promise,
-        Authorship.find({ filter: {
-          fields: ['authorId', 'orderNum'],
-          where: { submissionId: submissionId }
-        }}).$promise
-      ]).then(function(r) {
-        var submission = r[0],
-          authorOrder = _.chain(r[1])
-            .indexBy('authorId')
-            .mapObject(function (v) { return v.orderNum; })
-            .value();
+    $scope.edit = !!$stateParams.submissionId;
+    $scope.simpleMdeOptions = { hideIcons: ["guide", "fullscreen", "side-by-side"] };
+    $scope.tagSuggestions = [];
 
-        submission.authors = _(submission.authors).sortBy(function (author) {
-          return authorOrder[author.id];
-        });
+    if ($scope.edit) {
+      loadSubmission(submissionId).then(function (submission) {
         $scope.submission = submission;
         $scope.filterValidAuthors();
       });
+    } else {
+      $scope.submission = { authors: [], tags: [], file: {} };
     }
-
-    $scope.simpleMdeOptions = { hideIcons: ["guide", "fullscreen", "side-by-side"] };
-    $scope.submission = { authors: [], tags: [], file: {} };
-    $scope.tagSuggestions = [];
 
     $scope.populateAutoCompleteTags = function ($select) {
       $scope.tagSuggestions = [];
@@ -205,10 +214,15 @@ angular
       .finally(function () { asyncReq.end(); });
     };
 
+    $scope.updateSubmission = function ($event, formController) {
+      console.log("UPDATE SUBMISSION!");
+    };
+
     $scope.filterValidAuthors = function() {
       $scope.submission.authors = _.uniq($scope.submission.authors.filter(function (a) {
         return !!a;
       }).concat([undefined]));
+
       if($scope.allAuthors) {
         $scope.authors = $scope.allAuthors.filter(function (a) {
           return $scope.submission.authors.indexOf(a) === -1;
@@ -224,20 +238,17 @@ angular
     .then(function (conference) {
       // Auto suggestion lookup table
       $scope.allAuthors = _(conference.authors).map(function (author) {
-        return _.chain(author)
-          .pick('id', 'firstname', 'lastname', 'email')
-          .defaults({ firstname: 'Unknown', lastname: '' })
-          .value();
+        return _(author).pick('id', 'firstname', 'lastname', 'fullName', 'email');
       });
+
+      if ($scope.edit) return;
 
       // Prefill current user as author
       AuthService.getUserId().then(function (userId) {
-        $scope.authors = $scope.allAuthors.filter(function(a) { return a.id != userId});
+        $scope.authors = $scope.allAuthors.filter(function(a) { return a.id != userId });
         var author = _($scope.allAuthors).findWhere({id: userId});
-        if (!edit) {
-          $scope.addAuthorField(author);
-        }
-        $scope.filterValidAuthors()
+        $scope.addAuthorField(author);
+        $scope.filterValidAuthors();
       });
     });
   }]);

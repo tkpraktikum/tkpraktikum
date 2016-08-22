@@ -8,8 +8,8 @@
       </div>
     </div>
 
-    <form name="form" enctype="multipart/form-data" ng-submit="createSubmission($event, form)" novalidate>
-
+    <form name="form" enctype="multipart/form-data" ng-submit="edit ? updateSubmission($event, form) : createSubmission($event, form)" novalidate>
+{{ submission }}
       <div class="row">
         <div class="form-group col-xs-12" ng-class="{ 'has-error': hasInputError(form.title) }">
           <label class="control-label" for="submission-title">Title</label>
