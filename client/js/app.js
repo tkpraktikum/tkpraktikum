@@ -97,10 +97,20 @@ angular
         templateUrl: 'views/user/joinConference.html',
         controller: 'JoinConferenceController',
       })
-      .state('app.protected.user.conference.create', {
-        url: '/create',
-        templateUrl: 'views/user/createConference.html',
+      .state('app.protected.user.conference.manage', {
+        url: '/manage',
+        template: '<div ui-view></div>',
+        abstract: true
+      })
+      .state('app.protected.user.conference.manage.create', {
+        templateUrl: 'views/user/manageConference.html',
         controller: 'CreateConferenceController',
+        url: '/create',
+      })
+      .state('app.protected.user.conference.manage.edit', {
+        templateUrl: 'views/user/manageConference.html',
+        controller: 'CreateConferenceController',
+        url: '/:conferenceId',
       })
       .state('app.protected.user.conference.my', {
         url: '/my',

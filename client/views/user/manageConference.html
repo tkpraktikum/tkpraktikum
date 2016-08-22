@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  <h1 class="page-title">Manage Conference</h1>
+  <form name="createConferenceForm" ng-submit="create()" novalidate>
+    <div class="form-group"
+         ng-class="{ 'has-error': (createConferenceForm.name.$dirty && createConferenceForm.name.$error.required) || (createConferenceForm.name.$invalid && !createConferenceForm.name.$error.required) }">
+      <label class="control-label" for="name">Conference Name</label>
+      <input type="text" autocomplete="off" name="name" id="name" placeholder="Conference Name"
+             class="form-control validation" required ng-model="conference.name"/>
+    </div>
+    <div class="row">
+      <div class='col-xs-12'>
+        <div class="form-group">
+          <label class="control-label" for="sharedSecret">Submission Deadline</label>
+          <div class='input-group date' id='submissionDeadline'>
+            <input type='text' class="form-control"/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-xs-12'>
+        <div class="form-group">
+          <label class="control-label" for="sharedSecret">Review Deadline</label>
+          <div class='input-group date' id='reviewDeadline'>
+            <input type='text' class="form-control" />
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-6">
+        <div><label class="control-label" for="sharedSecret">Allow Submission</label></div>
+        <div class="btn-group full-width" data-toggle="buttons">
+          <label class="btn btn-sm btn-default col-xs-6" ng-click="conference.forceSubmission = false;" ng-class="{active: !conference.forceSubmission}">
+            <input name="overall" type="radio" autocomplete="off">Date
+          </label>
+          <label class="btn btn-sm btn-default col-xs-6" ng-click="conference.forceSubmission = true;" ng-class="{active: conference.forceSubmission}">
+            <input name="overall" type="radio" autocomplete="off">Force Allow
+          </label>
+        </div>
+      </div>
+      <div class="form-group col-xs-6">
+        <div>
+          <label class="control-label" for="sharedSecret">Allow Reviews</label>
+        </div>
+        <div class="btn-group full-width" data-toggle="buttons">
+          <label class="btn btn-sm btn-default col-xs-6" ng-click="conference.forceReview = false;" ng-class="{active: !conference.forceReview}">
+            <input name="overall" type="radio" autocomplete="off">Date
+          </label>
+          <label class="btn btn-sm btn-default col-xs-6" ng-click="conference.forceReview = true;" ng-class="{active: conference.forceReview}">
+            <input name="overall" type="radio" autocomplete="off">Force Allow
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="sharedSecret">Shared Secret</label>
+      <input type="text" autocomplete="off" name="sharedSecret" id="sharedSecret" placeholder="Shared Secret"
+             class="form-control validation" required ng-model="conference.sharedSecret"/>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="conferenceDescription">Conference Description</label>
+      <textarea id="conferenceDescription" name="conferenceDescription" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <div class="row centerContent">
+        <button class="btn btn-primary col-lg-12 col-md-12 col-sm-12 col-xs-12">Save Conference</button>
+      </div>
+    </div>
+  </form>
+  <br/>
+</div>

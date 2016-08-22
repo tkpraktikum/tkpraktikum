@@ -31,7 +31,8 @@
     "angular-bootstrap-show-errors": "^2.3.0",
     "simplemde": "^1.11.2",
     "angular-markdown-directive": "^0.3.1",
-    "showdown": "^1.4.3"
+    "showdown": "^1.4.3",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37"
   },
   "resolutions": {
     "showdown": "~0.3.1"
