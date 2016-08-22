@@ -7,6 +7,7 @@
         <div class="alert alert-danger" role="alert">Please fix the form errors below</div>
       </div>
     </div>
+
     <form name="form" enctype="multipart/form-data" ng-submit="createSubmission($event, form)" novalidate>
       <div class="row">
         <div class="form-group col-xs-12" ng-class="{ 'has-error': hasInputError(form.title) }">
@@ -20,6 +21,7 @@
             placeholder="The title of your paper"
             required
             minlength="8">
+
           <p ng-show="hasInputError(form.title)" class="help-block">Title must be at least 8 characters long.</p>
         </div>
       </div>
@@ -45,19 +47,21 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="form-group col-xs-12">
-          <label for="submission-abstract" class="control-label">Abstract</label>
-          <textarea id="submission-abstract"
-              name="abstract"
-              class="form-control"
-              ng-model-options="{ updateOn: 'blur' }"
-              placeholder="The abstract of your paper"
-              rows="5"
-              required
-              minlength="20"></textarea>
 
-            <p class="help-block">Abstract must be at least 20 characters long.</p>
+      <div class="row">
+        <div class="form-group col-xs-12" ng-class="{ 'has-error': hasInputError(form.abstract) }">
+          <label for="submission-abstract" class="control-label">Abstract</label>
+          <textarea simplemde="simpleMdeOptions"
+            id="submission-abstract"
+            name="abstract"
+            class="form-control"
+            ng-model="submission.abstract"
+            placeholder="The abstract of your paper"
+            rows="5"
+            required
+            minlength="20"></textarea>
+
+          <p ng-show="hasInputError(form.abstract)" class="help-block">Abstract must be at least 20 characters long.</p>
         </div>
       </div>
 

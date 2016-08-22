@@ -8,7 +8,8 @@ angular
     'ui.bootstrap.showErrors',
     'ui.select',
     'ngSanitize',
-    'btford.markdown'
+    'btford.markdown',
+    'simplemde'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');

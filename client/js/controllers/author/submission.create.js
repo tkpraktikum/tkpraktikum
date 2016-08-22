@@ -6,30 +6,9 @@ angular
       function($q, $scope, $anchorScroll, $state, $stateParams, Submission, Tag,
         AuthService, Submissiontag, Authorship, User, Conference, FileUpload) {
 
-    // TODO: Implement edit
-    var edit = !!$stateParams.submissionId;
-    $scope.edit = edit;
-    var submissionId = parseInt($stateParams.submissionId, 10);
-
-    var hideIcons = ["guide", "fullscreen", "side-by-side"];
-    $scope.abstractEditor = new SimpleMDE({ hideIcons: hideIcons, element: document.getElementById("submission-abstract") });
-
-    if (edit) {
-      Submission
-        .findById({id: submissionId, filter: {include: ['authors', 'tags']}})
-        .$promise
-        .then(function(s) {
-          s.authors = s.authors.map(function(a) {
-            a.fullName = a.firstname + ' ' + a.lastname;
-            return a;
-          });
-          $scope.submission = s;
-          $scope.abstractEditor.value(s.abstract);
-          $scope.filterValidAuthors();
-        });
-    }
-
-    var conferenceId = $stateParams.conferenceId,
+    var edit = !!$stateParams.submissionId,
+      submissionId = parseInt($stateParams.submissionId, 10),
+      conferenceId = $stateParams.conferenceId,
       asyncReq = (function () {
         var pendingRequests = 0;
 
@@ -69,6 +48,22 @@ angular
         }
       });
 
+    // TODO: Implement edit
+    if (edit) {
+      Submission
+        .findById({id: submissionId, filter: {include: ['authors', 'tags']}})
+        .$promise
+        .then(function(s) {
+          s.authors = s.authors.map(function(a) {
+            a.fullName = a.firstname + ' ' + a.lastname;
+            return a;
+          });
+          $scope.submission = s;
+          $scope.filterValidAuthors();
+        });
+    }
+
+    $scope.simpleMdeOptions = { hideIcons: ["guide", "fullscreen", "side-by-side"] };
     $scope.submission = { authors: [], tags: [], file: {} };
     $scope.tagSuggestions = [];
 
@@ -134,13 +129,12 @@ angular
     };
 
     $scope.createSubmission = function ($event, formController) {
-      $scope.submission.abstract = $scope.abstractEditor.value();
       var form = $event.currentTarget;
 
       if ($scope.hasFormError(formController)) {
         // Show errors if the form was left untouched
         formController.title.$setDirty();
-        //formController.abstract.$setDirty();
+        formController.abstract.$setDirty();
         return $anchorScroll();
       }
 
