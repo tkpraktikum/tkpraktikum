@@ -17,13 +17,7 @@ angular
           .submissions({id: userId, filter: { where: {conferenceId: $stateParams.conferenceId}, include: ['tags', 'authors']}})
           .$promise
           .then(function(result) {
-            $scope.submissions = result.map(function(s) {
-              s.authors = s.authors.map(function(a) {
-                a.fullName = a.firstname + ' ' + a.lastname;
-                return a;
-              });
-              return s;
-            });
+            $scope.submissions = result;
             $scope.count = result.length;
           });
       });

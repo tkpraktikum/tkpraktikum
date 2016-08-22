@@ -66,10 +66,6 @@ angular
             .mapObject(function (v) { return v.orderNum; })
             .value();
 
-        submission.authors = submission.authors.map(function(a) {
-          a.fullName = a.firstname + ' ' + a.lastname;
-          return a;
-        });
         submission.authors = _(submission.authors).sortBy(function (author) {
           return authorOrder[author.id];
         });
@@ -228,12 +224,10 @@ angular
     .then(function (conference) {
       // Auto suggestion lookup table
       $scope.allAuthors = _(conference.authors).map(function (author) {
-        var a = _.chain(author)
+        return _.chain(author)
           .pick('id', 'firstname', 'lastname', 'email')
           .defaults({ firstname: 'Unknown', lastname: '' })
           .value();
-        a.fullName = a.firstname + ' ' + a.lastname;
-        return a;
       });
 
       // Prefill current user as author
