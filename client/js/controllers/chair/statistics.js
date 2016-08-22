@@ -1,33 +1,55 @@
 angular
   .module('app')
   .controller('StatisticsController',
-    ['$q', '$scope', '$state', '$stateParams', '$http', '$timeout', 'AuthService', 'User', 'Conference',
-      function($q, $scope, $state, $stateParams, $http, $timeout, AuthService, User, Conference) {
-        $scope.labels = ['Submissions'];
-        $scope.series = ['Authors', 'Submissions'];
+    ['$q', '$scope', '$state', '$stateParams', '$http', '$timeout', 'AuthService', 'Submission', 'User', 'Conference', 'Review',
+      function($q, $scope, $state, $stateParams, $http, $timeout, AuthService, Submission, User, Conference, Review) {
 
-        $scope.options = {
-          legend: {display: true},
-          scales : {
-            yAxes: [{
-              display: true,
-              ticks: {
-                suggestedMin: 0
-              }
-            }]
-          }
+        var authorVsSubmissions = function() {
+          $scope.labels = ['Submissions'];
+          $scope.series = ['Authors', 'Submissions'];
+
+          $scope.options = {
+            legend: {display: true},
+            scales : {
+              yAxes: [{
+                display: true,
+                ticks: {
+                  suggestedMin: 0
+                }
+              }]
+            }
+          };
+
+          $scope.data = [[],[]];
+
+          Conference.authors.count({id: AuthService.getCurrentConferenceId()}).$promise.then(function(result) {
+            $scope.data[0].push(result.count);
+          });
+
+          Submission.count({filter: {where: { conferenceId: AuthService.getCurrentConferenceId()}}}).$promise.then(function(result) {
+            $scope.data[1].push(result.count);
+          });
         };
+        authorVsSubmissions();
 
-        $scope.data = [
-          [100],
-          [70]
-        ];
+        var reviewsFinishedVsDraft = function() {
+          $scope.reviewsLabels = ["Finished", "Open"];
+          $scope.reviewsData = [];
+          $scope.reviewsOptions = {
+            legend: {display: true}
+          };
 
-        $scope.reviewsLabels = ["Finished", "Open"];
-        $scope.reviewsData = [270, 30];
-        $scope.reviewsOptions = {
-          legend: {display: true}
+          Submission.find({filter: {where: { conferenceId: AuthService.getCurrentConferenceId()}}}).$promise
+            .then(function(submission) {
+              var ids = submission.map(function(s) { return {submissionId: s.id}; });
+              Review.find({filter: {where: { or: ids}}}).$promise.then(function(r) {
+                $scope.reviewsData.push(r.filter(function(r) { return r.finished;}).length);
+                $scope.reviewsData.push(r.filter(function(r) { return !r.finished;}).length);
+              });
+            });
+
         };
+        reviewsFinishedVsDraft();
 
         $scope.reviewsTimeLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September"];
         $scope.reviewsTimeSeries = ['Series A'];
@@ -36,7 +58,7 @@ angular
         ];
 
         $scope.reviewsTimeOptions = {
-          scales : {
+          scales: {
             yAxes: [{
               display: true,
               ticks: {

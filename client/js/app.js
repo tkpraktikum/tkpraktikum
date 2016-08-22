@@ -140,6 +140,18 @@ angular
         controller: 'SubmissionController',
         data: { permissions: { only: ['CHAIR'] }}
       })
+      .state('app.protected.conference.admin.reviews', {
+        url: '/reviews',
+        abstract: true,
+        template: '<div ui-view></div>',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.conference.admin.reviews.assignment', {
+        url: '/assignment',
+        templateUrl: 'views/chair/reviewer.assignment.html',
+        controller: 'ReviewerAssignmentController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
       .state('app.protected.conference.admin.submissions', {
         url: '/submissions',
         templateUrl: 'views/chair/submissions.html',
@@ -147,31 +159,32 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
       .state('app.protected.conference.admin.submissionsDetails', {
-        url: '/submissions/:id',
-        templateUrl: 'views/chair/submission.details.html',
-        controller: 'SubmissionsChairController',
+        url: '/submissions/:submissionId',
+        templateUrl: 'views/shared/submission.details.html',
+        controller: 'ViewSubmissionController',
         data: { permissions: { only: ['CHAIR'] }}
       })
       .state('app.protected.conference.submission', {
         url: 'submission',
         abstract: true,
-        templateUrl: 'views/author/submissions.list.html',
-        controller: 'SubmissionController',
+        template: '<div ui-view></div>',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.list', {
         url: '/list',
         templateUrl: 'views/author/submissions.list.html',
+        controller: 'SubmissionController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.create', {
         url: '/create',
-        views: {
-          '@app.protected': {
-            controller: 'SubmissionCreateController',
-            templateUrl: 'views/author/submissions.create.html'
-          }
-        }
+        controller: 'SubmissionCreateController',
+        templateUrl: 'views/author/submissions.create.html'
+      })
+      .state('app.protected.conference.submission.edit', {
+        url: '/edit/:submissionId',
+        controller: 'SubmissionCreateController',
+        templateUrl: 'views/author/submissions.create.html'
       })
       .state('app.protected.conference.review', {
         abstract: true,
@@ -180,15 +193,27 @@ angular
         controller: 'ReviewController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
+      .state('app.protected.conference.review.submission', {
+        url: '/submission/:submissionId',
+        templateUrl: 'views/shared/submission.details.html',
+        controller: 'ViewSubmissionController',
+        data: { permissions: { only: ['REVIEWER'] }}
+      })
+      .state('app.protected.conference.review.overview', {
+        url: '/overview',
+        templateUrl: 'views/reviewer/reviews.overview.html',
+        controller: 'ReviewOverviewController',
+        data: { permissions: { only: ['REVIEWER'] }}
+      })
       .state('app.protected.conference.review.list', {
         url: '/list',
         templateUrl: 'views/reviewer/reviews.list.html',
         controller: 'ReviewListController',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
-      .state('app.protected.conference.review.create', {
-        url: '/create',
-        templateUrl: 'views/reviewer/reviews.create.html',
+      .state('app.protected.conference.review.edit', {
+        url: '/edit/:reviewId',
+        templateUrl: 'views/reviewer/reviews.edit.html',
         controller: 'ReviewCreateController',
         data: { permissions: { only: ['REVIEWER'] }}
       })

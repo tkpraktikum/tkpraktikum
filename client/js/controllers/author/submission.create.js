@@ -6,6 +6,29 @@ angular
       function($q, $scope, $anchorScroll, $state, $stateParams, Submission, Tag,
         AuthService, Submissiontag, Authorship, User, Conference, FileUpload) {
 
+    // TODO: Implement edit
+    var edit = !!$stateParams.submissionId;
+    $scope.edit = edit;
+    var submissionId = parseInt($stateParams.submissionId, 10);
+
+    var hideIcons = ["guide", "fullscreen", "side-by-side"];
+    $scope.abstractEditor = new SimpleMDE({ hideIcons: hideIcons, element: document.getElementById("submission-abstract") });
+
+    if (edit) {
+      Submission
+        .findById({id: submissionId, filter: {include: ['authors', 'tags']}})
+        .$promise
+        .then(function(s) {
+          s.authors = s.authors.map(function(a) {
+            a.fullName = a.firstname + ' ' + a.lastname;
+            return a;
+          });
+          $scope.submission = s;
+          $scope.abstractEditor.value(s.abstract);
+          $scope.filterValidAuthors();
+        });
+    }
+
     var conferenceId = $stateParams.conferenceId,
       asyncReq = (function () {
         var pendingRequests = 0;
@@ -111,12 +134,13 @@ angular
     };
 
     $scope.createSubmission = function ($event, formController) {
+      $scope.submission.abstract = $scope.abstractEditor.value();
       var form = $event.currentTarget;
 
       if ($scope.hasFormError(formController)) {
         // Show errors if the form was left untouched
         formController.title.$setDirty();
-        formController.abstract.$setDirty();
+        //formController.abstract.$setDirty();
         return $anchorScroll();
       }
 
@@ -144,7 +168,6 @@ angular
               if (author.id <= 0) return;
 
               asyncReq.start();
-
               return Authorship.create({
                 authorId: author.id,
                 submissionId: submission.id
@@ -177,8 +200,14 @@ angular
     };
 
     $scope.filterValidAuthors = function() {
-      $scope.submission.authors = _.uniq($scope.submission.authors.filter(function(a) { return !!a; }).concat([undefined]));
-      $scope.authors = $scope.allAuthors.filter(function(a) { return $scope.submission.authors.indexOf(a) === -1;});
+      $scope.submission.authors = _.uniq($scope.submission.authors.filter(function (a) {
+        return !!a;
+      }).concat([undefined]));
+      if($scope.allAuthors) {
+        $scope.authors = $scope.allAuthors.filter(function (a) {
+          return $scope.submission.authors.indexOf(a) === -1;
+        });
+      }
     };
 
     Conference.findById({
@@ -201,8 +230,10 @@ angular
       AuthService.getUserId().then(function (userId) {
         $scope.authors = $scope.allAuthors.filter(function(a) { return a.id != userId});
         var author = _($scope.allAuthors).findWhere({id: userId});
-        $scope.addAuthorField(author);
-        $scope.addAuthorField();
+        if (!edit) {
+          $scope.addAuthorField(author);
+        }
+        $scope.filterValidAuthors()
       });
     });
   }]);

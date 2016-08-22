@@ -3,15 +3,15 @@
     <div class="col-xs-12" ng-repeat="r in reviews">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h2 class="panel-title">{{r.submissionTitle}}</h2>
+          <h2 class="panel-title">{{r.submission.title}}</h2>
         </div>
         <div class="panel-body">
-          <span class="expertise">Expertise: <b>Good</b></span><span>Overall: <b>Very Good</b></span>
+          <span class="expertise">Expertise: <b>{{r.expertise}}</b></span><span>Overall: <b>{{r.overall}}</b></span>
           <div btf-markdown="r.summary" class="markdown"></div>
           <div btf-markdown="r.strong" class="markdown"></div>
           <div btf-markdown="r.weak" class="markdown"></div>
           <div btf-markdown="r.detailed" class="markdown"></div>
-          <button class="btn btn-primary col-xs-12">Edit Review</button>
+          <a ui-sref="app.protected.conference.review.edit({reviewId: r.id})" class="btn btn-primary col-xs-12">Edit Review</a>
         </div>
       </div>
     </div>
