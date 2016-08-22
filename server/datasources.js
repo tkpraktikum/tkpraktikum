@@ -22,7 +22,7 @@ module.exports = function(app) {
       // * - `authorization` (headers and cookies)
 
       var ts = (new Date()).getTime(),
-        userId = req.accessToken.userId,
+        userId = req.accessToken && req.accessToken.userId || 0,
         newFilename = ts + '-' + userId + '_' + origFilename.name;
 
       return newFilename;
