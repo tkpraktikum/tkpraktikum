@@ -50,17 +50,32 @@ angular
 
     // TODO: Implement edit
     if (edit) {
-      Submission
-        .findById({id: submissionId, filter: {include: ['authors', 'tags']}})
-        .$promise
-        .then(function(s) {
-          s.authors = s.authors.map(function(a) {
-            a.fullName = a.firstname + ' ' + a.lastname;
-            return a;
-          });
-          $scope.submission = s;
-          $scope.filterValidAuthors();
+      $q.all([
+        Submission.findById({
+          id: submissionId,
+          filter: {include: ['authors', 'tags']
+        }}).$promise,
+        Authorship.find({ filter: {
+          fields: ['authorId', 'orderNum'],
+          where: { submissionId: submissionId }
+        }}).$promise
+      ]).then(function(r) {
+        var submission = r[0],
+          authorOrder = _.chain(r[1])
+            .indexBy('authorId')
+            .mapObject(function (v) { return v.orderNum; })
+            .value();
+
+        submission.authors = submission.authors.map(function(a) {
+          a.fullName = a.firstname + ' ' + a.lastname;
+          return a;
         });
+        submission.authors = _(submission.authors).sortBy(function (author) {
+          return authorOrder[author.id];
+        });
+        $scope.submission = submission;
+        $scope.filterValidAuthors();
+      });
     }
 
     $scope.simpleMdeOptions = { hideIcons: ["guide", "fullscreen", "side-by-side"] };
@@ -157,14 +172,13 @@ angular
           }),
           // Link authors to submission
           authorships = _.chain($scope.submission.authors)
-            .filter(function (author) { return !!author; })
-            .map(function (author) {
-              if (author.id <= 0) return;
-
+            .filter(function (author) { return !!author && author.id > 0; })
+            .map(function (author, idx) {
               asyncReq.start();
               return Authorship.create({
                 authorId: author.id,
-                submissionId: submission.id
+                submissionId: submission.id,
+                orderNum: idx + 1,
               }).$promise.finally(function () { asyncReq.end(); });
             })
             .value(),
@@ -188,6 +202,8 @@ angular
           $state.go('app.protected.conference.submission.list', {
             conferenceId: conferenceId
           }, {reload: true});
+        }, function (err) {
+          // TODO: rollback (some of the above relations could not be created)
         });
       })
       .finally(function () { asyncReq.end(); });
