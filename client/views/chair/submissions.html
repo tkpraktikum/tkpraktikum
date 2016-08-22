@@ -1,17 +1,27 @@
 <div class="row content-no-header">
   <div class="col-md-10 col-md-offset-1">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group col-xs-12">
+          <label class="sr-only" for="filterSubmission">Filter By Title</label>
+          <div class="input-group">
+            <input type="text" class="form-control" name="fitlerSubmission" id="filterSubmission" ng-model="filterSubmission" placeholder="Filter By Title">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="card-columns">
-      <div class="col-xs-12" ng-repeat="s in submissions">
+      <div class="col-xs-12" ng-repeat="s in submissions | filter:{title: filterSubmission} track by $index ">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">{{s.title}}</h3>
           </div>
           <div class="panel-body">
-            <p><b>Tags:</b><span ng-repeat="t in s.tags"> {{t}}</span></p>
-            <p><b>Authors:</b><span ng-repeat="a in s.authors"> {{a}}</span></p>
-            <p><b>Reviewer:</b><span ng-repeat="r in s.reviewer"> {{r}}</span></p>
-            <a ui-sref="app.protected.conference.admin.submissionsDetails" class="btn btn-primary btn-sm col-xs-5">Details</a>
-            <a ui-sref="app.protected.conference.admin.submissionsDetails" class="btn btn-primary btn-sm col-xs-5 col-xs-offset-2">Reviews</a>
+            <p><b>Tags:</b><span ng-repeat="t in s.tags"> {{t.name}}</span></p>
+            <p><b>Authors:</b><span ng-repeat="a in s.authors"> {{a.fullName}}</span></p>
+            <a ui-sref="app.protected.conference.admin.submissionsDetails({submissionId: s.id})" class="btn btn-primary btn-sm col-xs-5">Details</a>
+            <a class="btn btn-primary btn-sm col-xs-5 col-xs-offset-2" disabled="disabled">Reviews</a>
           </div>
         </div>
       </div>

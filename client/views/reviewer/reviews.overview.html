@@ -1,0 +1,19 @@
+<div class="row content-no-header">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card-columns">
+      <div class="col-xs-12" ng-repeat="r in reviews">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">{{r.submission.title}}</h2>
+          </div>
+          <div class="panel-body">
+            <p><b>Tags:</b> <span ng-repeat="t in r.submission.tags track by $index"><span ng-show="!$first">, </span>{{t.name}}</span></p>
+            <a class="btn btn-primary btn-sm col-xs-6" ui-sref="app.protected.conference.review.submission({submissionId: r.submission.id})">Show Submission</a>
+            <a ui-sref="app.protected.conference.review.edit({reviewId: r.id})" class="btn btn-primary btn-sm col-xs-6">Review</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
