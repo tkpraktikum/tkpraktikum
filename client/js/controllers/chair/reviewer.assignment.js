@@ -56,10 +56,6 @@ angular
 
       Conference.reviewer({id: ConferenceService.getCurrentConferenceId()}).$promise
         .then(function(r) {
-          r = r.map(function(r) {
-            r.fullName = r.firstname + ' ' + r.lastname;
-            return r;
-          });
           $scope.reviewer = r;
 
           var filter = {
@@ -75,10 +71,6 @@ angular
             Review.find(idFilter).$promise.then(function (reviews) {
               s = s.map(function(s) {
                 var reviewer = reviews.filter(function(r) { return r.submissionId == s.id}).map(function(r) { return r.reviewerId; });
-                s.authors = s.authors.map(function(a) {
-                  a.fullName = a.firstname + ' ' + a.lastname;
-                  return a;
-                });
                 s.reviewers = $scope.reviewer.filter(function(r) { return reviewer.indexOf(r.id) !== -1;});
                 return s;
               });

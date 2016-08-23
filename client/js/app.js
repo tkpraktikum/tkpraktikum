@@ -8,7 +8,8 @@ angular
     'ui.bootstrap.showErrors',
     'ui.select',
     'ngSanitize',
-    'btford.markdown'
+    'btford.markdown',
+    'simplemde'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -137,7 +138,6 @@ angular
         url: 'admin',
         abstract: true,
         template: '<div ui-view></div>',
-        controller: 'SubmissionController',
         data: { permissions: { only: ['CHAIR'] }}
       })
       .state('app.protected.conference.admin.reviews', {
@@ -178,12 +178,12 @@ angular
       })
       .state('app.protected.conference.submission.create', {
         url: '/create',
-        controller: 'SubmissionCreateController',
+        controller: 'SubmissionController',
         templateUrl: 'views/author/submissions.create.html'
       })
       .state('app.protected.conference.submission.edit', {
         url: '/edit/:submissionId',
-        controller: 'SubmissionCreateController',
+        controller: 'SubmissionController',
         templateUrl: 'views/author/submissions.create.html'
       })
       .state('app.protected.conference.review', {
@@ -300,9 +300,20 @@ angular
     hasRole: hasRole,
     getUser: function () { return user; },
     getUserId: function () { return user.then(function (user) { return user.id; }); },
+    getAccessTokenId: function () { return LoopBackAuth.accessTokenId; },
     isAuthenticated: isAuthenticated
   };
 }])
+// https://gist.github.com/thomseddon/3511330
+.filter('bytes', function() {
+  return function(bytes, precision) {
+    if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
+    if (typeof precision === 'undefined') precision = 1;
+    var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+      number = Math.floor(Math.log(bytes) / Math.log(1024));
+    return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
+  }
+})
 .run(function($rootScope, $q, PermissionStore, RoleStore, AuthService) {
   PermissionStore.definePermission('hasValidSession', function () {
     return AuthService.isAuthenticated();

@@ -7,7 +7,9 @@
         <div class="alert alert-danger" role="alert">Please fix the form errors below</div>
       </div>
     </div>
-    <form name="form" enctype="multipart/form-data" ng-submit="createSubmission($event, form)" novalidate>
+
+    <form name="form" enctype="multipart/form-data" ng-submit="edit ? updateSubmission(form) : createSubmission(form)" novalidate>
+
       <div class="row">
         <div class="form-group col-xs-12" ng-class="{ 'has-error': hasInputError(form.title) }">
           <label class="control-label" for="submission-title">Title</label>
@@ -20,9 +22,11 @@
             placeholder="The title of your paper"
             required
             minlength="8">
+
           <p ng-show="hasInputError(form.title)" class="help-block">Title must be at least 8 characters long.</p>
         </div>
       </div>
+
       <div class="row">
         <div class="form-group col-xs-12" ng-repeat="author in submission.authors track by $index">
           <label for="submission-author-{{$index}}">{{$index + 1}}. Author</label>
@@ -44,19 +48,21 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="form-group col-xs-12">
-          <label for="submission-abstract" class="control-label">Abstract</label>
-          <textarea id="submission-abstract"
-              name="abstract"
-              class="form-control"
-              ng-model-options="{ updateOn: 'blur' }"
-              placeholder="The abstract of your paper"
-              rows="5"
-              required
-              minlength="20"></textarea>
 
-            <p class="help-block">Abstract must be at least 20 characters long.</p>
+      <div class="row">
+        <div class="form-group col-xs-12" ng-class="{ 'has-error': hasInputError(form.abstract) }">
+          <label for="submission-abstract" class="control-label">Abstract</label>
+          <textarea simplemde="simpleMdeOptions"
+            id="submission-abstract"
+            name="abstract"
+            class="form-control"
+            ng-model="submission.abstract"
+            placeholder="The abstract of your paper"
+            rows="5"
+            required
+            minlength="20"></textarea>
+
+          <p ng-show="hasInputError(form.abstract)" class="help-block">Abstract must be at least 20 characters long.</p>
         </div>
       </div>
 
@@ -70,6 +76,7 @@
               <span ng-if="tag.id < 0" ng-bind-html="'<small>(new)</small>'"></span>
             </ui-select-choices>
           </ui-select>
+
           <p class="help-block">Enter any numbers of keywords. Press ENTER to confirm each of them.</p>
         </div>
       </div>
@@ -78,6 +85,10 @@
         <div class="form-group col-xs-12">
           <label for="submission-file" class="control-label">Paper (PDF)</label>
           <div id="submission-file" class="dropzone"></div>
+
+          <p ng-show="edit && oldFile" class="help-block">
+            Upload a new file to replace the existing file: <a ng-href="{{oldFile.url}}">{{ oldFile.originalFilename }}</a> ({{ oldFile.size | bytes }})
+          </p>
         </div>
       </div>
 
@@ -85,7 +96,7 @@
         <div class="form-group col-xs-12">
           <button type="submit" class="btn btn-primary col-xs-12" ng-disabled="pendingRequest">
             <span ng-show="!edit">Submit Paper</span>
-            <span ng-show="edit">Edit Submission</span>
+            <span ng-show="edit">Update Submission</span>
             <i class="fa fa-circle-o-notch rotate" ng-show="pendingRequest"></i>
           </button>
         </div>
