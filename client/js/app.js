@@ -87,6 +87,11 @@ angular
         url: '/delete',
         templateUrl: 'views/user/profile.delete.html',
       })
+      .state('app.protected.user.view', {
+        url: '/users/:userId',
+        templateUrl: 'views/user/profile.view.html',
+        controller: 'ProfileViewController'
+      })
       .state('app.protected.user.conference', {
         url: '/conference',
         abstract: true,
