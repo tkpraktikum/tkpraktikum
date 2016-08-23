@@ -15,9 +15,6 @@
       "type": "string",
       "required": false
     },
-    "file": {
-      "type": "buffer"
-    },
     "status": {
       "type": "number",
       "required": true,
@@ -50,6 +47,11 @@
       "type": "belongsTo",
       "model": "conference",
       "foreignKey": "conferenceId"
+    },
+    "documents": {
+      "type": "hasMany",
+      "model": "fileUpload",
+      "foreignKey": "submissionId"
     }
   },
   "acls": [

@@ -1,28 +1,30 @@
 {
-  "name": "review",
-  "plural": "reviews",
+  "name": "fileUpload",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "expertise": {
+    "container": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "originalFilename": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "string"
+    },
+    "size": {
       "type": "number"
     },
-    "evaluation": {
-      "type": "number"
-    },
-    "summary": {
-      "type": "string"
-    },
-    "strong": {
-      "type": "string"
-    },
-    "weak": {
-      "type": "string"
-    },
-    "comment": {
+    "url": {
       "type": "string"
     }
   },
@@ -32,11 +34,6 @@
       "type": "belongsTo",
       "model": "submission",
       "foreignKey": "submissionId"
-    },
-    "reviewer": {
-      "type": "belongsTo",
-      "model": "user",
-      "foreignKey": "reviewerId"
     }
   },
   "acls": [],

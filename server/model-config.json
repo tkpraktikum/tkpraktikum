@@ -82,7 +82,7 @@
     "dataSource": "postgres",
     "public": true
   },
-  "file": {
+  "fileUpload": {
     "dataSource": "postgres",
     "public": true
   },
