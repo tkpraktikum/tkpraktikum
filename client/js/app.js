@@ -9,7 +9,7 @@ angular
     'ui.select',
     'ngSanitize',
     'btford.markdown',
-    'simplemde'
+    'simplemde',
     'uiGmapgoogle-maps'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
