@@ -236,10 +236,19 @@ angular
     }
   };
 }])
-.factory('AuthService', ['$q', 'LoopBackAuth', 'User', 'ConferenceService',
-    function ($q, LoopBackAuth, User, ConferenceService) {
+.factory('SessionService', [function () {
+  var flashMessage = null;
+
+  return {
+    hasFlash: function () { return !!flashMessage; },
+    getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
+    setFlash: function (msg) { flashMessage = msg; },
+    destroy: function () { flashMessage = null; }
+  };
+}])
+.factory('AuthService', ['$q', 'LoopBackAuth', 'User', 'ConferenceService', 'SessionService',
+    function ($q, LoopBackAuth, User, ConferenceService, SessionService) {
   var user,
-    flashMessage = null,
     login = function (username, password, rememberMe) {
       return user = User.login({
           username: username,
@@ -254,7 +263,7 @@ angular
         // LoopBackAuth.clearUser();
         // LoopBackAuth.clearStorage();
         ConferenceService.setCurrentConferenceId(null);
-        flashMessage = null;
+        SessionService.destroy();
         user = $q.reject();
       });
     },
@@ -291,10 +300,7 @@ angular
     hasRole: hasRole,
     getUser: function () { return user; },
     getUserId: function () { return user.then(function (user) { return user.id; }); },
-    isAuthenticated: isAuthenticated,
-    hasFlash: function () { return !!flashMessage; },
-    getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
-    setFlash: function (msg) { flashMessage = msg; }
+    isAuthenticated: isAuthenticated
   };
 }])
 .run(function($rootScope, $q, PermissionStore, RoleStore, AuthService) {

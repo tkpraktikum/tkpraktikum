@@ -2,9 +2,9 @@ angular
   .module('app')
   .controller('SubmissionCreateController',
       ['$q', '$scope', '$anchorScroll', '$state', '$stateParams', 'Submission', 'Tag',
-       'AuthService', 'Submissiontag', 'Authorship', 'User', 'Conference',
+       'AuthService', 'SessionService', 'Submissiontag', 'Authorship', 'User', 'Conference',
       function($q, $scope, $anchorScroll, $state, $stateParams, Submission, Tag,
-        AuthService, Submissiontag, Authorship, User, Conference) {
+        AuthService, SessionService, Submissiontag, Authorship, User, Conference) {
 
     var edit = !!$stateParams.submissionId;
     $scope.edit = edit;
@@ -183,7 +183,7 @@ angular
 
             // On success: Redirect user to submission overview
             $q.all(submissiontags.concat(authorships)).then(function () {
-              AuthService.setFlash('Submission was created successfully!');
+              SessionService.setFlash('Submission was created successfully!');
               $state.go('app.protected.conference.submission.list', {
                 conferenceId: conferenceId
               }, {reload: true});
