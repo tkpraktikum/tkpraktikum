@@ -33,6 +33,40 @@
              class="form-control" required ng-model="changeUserProfile.username"/>
     </div>
   </div>
+  <div class="row">
+    <div class="form-group col-md-12" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="street">Street</label>
+      <input type="text" autocomplete="off" name="street" id="street" placeholder="Street"
+             class="form-control" required ng-model="changeUserProfile.street" ng-change="triggerRefresh()"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="zipcode">Postal Code</label>
+      <input type="number" autocomplete="off" name="zipcode" id="zipcode" placeholder="Postal Code"
+             class="form-control" required ng-model="changeUserProfile.zip" ng-change="triggerRefresh()"/>
+    </div>
+    <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="city">City</label>
+      <input type="text" autocomplete="off" name="city" id="city" placeholder="City"
+             class="form-control" required ng-model="changeUserProfile.city" ng-change="triggerRefresh()"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="state">State</label>
+      <input type="text" autocomplete="off" name="state" id="state" placeholder="State"
+             class="form-control" required ng-model="changeUserProfile.state" ng-change="triggerRefresh()"/>
+    </div>
+    <div class="form-group col-md-6" show-errors='{showSuccess: true}'>
+      <label class="control-label" for="country">Country</label>
+      <input type="text" autocomplete="off" name="country" id="country" placeholder="Country"
+             class="form-control" required ng-model="changeUserProfile.country" ng-change="triggerRefresh()"/>
+    </div>
+  </div>
+  <ui-gmap-google-map center='map.center' zoom='map.zoom' control="map.control">
+    <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+  </ui-gmap-google-map>
   <div class="form-group">
     <label class="control-label" for="email">Affiliation</label>
     <ui-select theme="bootstrap" ng-model="selected.selectedAffiliation">

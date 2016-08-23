@@ -8,7 +8,8 @@ angular
     'ui.bootstrap.showErrors',
     'ui.select',
     'ngSanitize',
-    'btford.markdown'
+    'btford.markdown',
+    'uiGmapgoogle-maps'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -357,11 +358,16 @@ angular
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
 }).config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
   showErrorsConfigProvider.showSuccess(true);
-}]).
-config(['markdownConverterProvider', function (markdownConverterProvider) {
+}]).config(['markdownConverterProvider', function (markdownConverterProvider) {
   // options to be passed to Showdown
   // see: https://github.com/coreyti/showdown#extensions
   markdownConverterProvider.config({
     extensions: []
   });
-}]);
+}]).config(function(uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyA3SaBcz7amu_EeQekF4QHmixkf71tFyrE',
+    v: '3',
+    libraries: 'weather,geometry,visualization'
+  });
+});
