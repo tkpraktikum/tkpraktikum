@@ -1,0 +1,41 @@
+{
+  "name": "fileUpload",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "container": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "originalFilename": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "string"
+    },
+    "size": {
+      "type": "number"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "submission": {
+      "type": "belongsTo",
+      "model": "submission",
+      "foreignKey": "submissionId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
