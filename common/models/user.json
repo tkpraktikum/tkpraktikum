@@ -20,8 +20,8 @@
   },
   "validations": [],
   "relations": {
-    "affiliations": {
-      "type": "hasOne",
+    "affiliation": {
+      "type": "belongsTo",
       "model": "affiliation",
       "foreignKey": "affiliationId"
     },

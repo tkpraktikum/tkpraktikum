@@ -10,13 +10,11 @@
           <p><b>Firstname: </b>{{user.firstname}}</p>
           <p><b>Lastname: </b>{{user.lastname}}</p>
           <p><b>Profession: </b>{{user.profession}}</p>
-          <span ng-repeat="a in user.affiliations">
-            <p><b>Affiliation: </b>{{a.name}}</p>
-            <p><b>ZIP: </b>{{a.zip}}</p>
-            <p><b>City: </b>{{a.city}}</p>
-            <p><b>State: </b>{{a.state}}</p>
-            <p><b>Country: </b>{{a.country}}</p>
-          </span>
+          <div ng-show="user.affiliation">
+            <p><b>Affiliation: </b>{{user.affiliation.name}}</p>
+            <p><b>City: </b>{{user.affiliation.city}}</p>
+            <p><b>Country: </b>{{user.affiliation.country}}</p>
+          </div>
         </div>
       </div>
     </div>

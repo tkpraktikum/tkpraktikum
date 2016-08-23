@@ -5,16 +5,16 @@ var router = require('express').Router();
 module.exports = router;
 
 router.post('/signup', function(req, res) {
-  var User = req.app.models.user;
+  var User = req.app.models.user,
+    affiliationId =  parseInt(req.body.affiliation, 10),
+    newUser = {
+      email: req.body.email.toLowerCase(),
+      username: req.body.username.toLowerCase(),
+      password: req.body.password,
+      emailVerified: true,
+      affiliationId: affiliationId
+    };
 
-  var newUser = {
-    email: req.body.email.toLowerCase(),
-    username: req.body.username.toLowerCase(),
-    password: req.body.password,
-    emailVerified: true
-  };
-
-  var affiliation = parseInt(req.body.affiliation, 10);
 
   logger.debug('create user ', {email: newUser.email , username: newUser.username});
 
@@ -26,25 +26,17 @@ router.post('/signup', function(req, res) {
     } else {
       logger.info('user', newUser.username, 'has been created');
 
-      req.app.models.useraffiliation.create({
-        userId: user.id,
-        affiliationId: affiliation
-      }, function(err, model) {
+      // Passport exposes a login() function on req (also aliased as logIn())
+      // that can be used to establish a login session. This function is
+      // primarily used when users sign up, during which req.login() can
+      // be invoked to log in the newly registered user.
+      req.login(user, function (err) {
         if (err) {
-          logger.warn(err);
+          logger.warn('cloud not login user:', user.username, err.message);
+          req.flash('error', err.message);
+          return res.redirect('back');
         }
-         // Passport exposes a login() function on req (also aliased as logIn())
-        // that can be used to establish a login session. This function is
-        // primarily used when users sign up, during which req.login() can
-        // be invoked to log in the newly registered user.
-        req.login(user, function (err) {
-          if (err) {
-            logger.warn('cloud not login user:', user.username, err.message);
-            req.flash('error', err.message);
-            return res.redirect('back');
-          }
-          return res.redirect('/auth/check');
-        });
+        return res.redirect('/auth/check');
       });
     }
   });
