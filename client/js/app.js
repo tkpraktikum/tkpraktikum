@@ -288,11 +288,14 @@ angular
       });
 
       return user;
+    },
+    init = function () {
+      return user = isAuthenticated() ?
+        retrieveUserWithRoles(LoopBackAuth.currentUserId) :
+        $q.reject();
     };
 
-  user = isAuthenticated() ?
-    retrieveUserWithRoles(LoopBackAuth.currentUserId) :
-    $q.reject();
+  init();
 
   return {
     login: login,
@@ -301,7 +304,8 @@ angular
     getUser: function () { return user; },
     getUserId: function () { return user.then(function (user) { return user.id; }); },
     getAccessTokenId: function () { return LoopBackAuth.accessTokenId; },
-    isAuthenticated: isAuthenticated
+    isAuthenticated: isAuthenticated,
+    invalidate : init
   };
 }])
 // https://gist.github.com/thomseddon/3511330
