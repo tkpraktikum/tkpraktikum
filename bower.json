@@ -33,8 +33,7 @@
     "angular-markdown-directive": "^0.3.1",
     "showdown": "^1.4.3",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
-    "angular-google-maps": "^2.3.4"
-    "showdown": "^1.4.3",
+    "angular-google-maps": "^2.3.4",
     "simplemde-angular": "^0.0.3"
   },
   "resolutions": {
