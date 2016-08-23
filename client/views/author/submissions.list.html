@@ -9,9 +9,12 @@
           <p><b>Tags:</b> <span ng-repeat="t in s.tags track by $index"><span ng-show="!$first">, </span>{{t.name}}</span></p>
           <p><b>Authors:</b> <span ng-repeat="a in s.authors track by $index"><span ng-show="!$first">, </span>{{a.fullName}}</span></p>
           <div btf-markdown="s.abstract"></div>
+          <div ng-repeat="d in s.documents track by $idx">
+            Linked document: <a ng-href="{{d.url}}">{{ d.originalFilename }}</a> ({{ d.size | bytes }})
+          </div>
           <div>
             <a class="btn btn-primary btn-sm col-xs-6" ui-sref="app.protected.conference.submission.edit({submissionId: s.id})">Edit</a>
-            <button class="btn btn-default btn-sm col-xs-2 col-xs-offset-4" ng-click="deleteSubmission(s)">Withdraw</button>
+            <button class="btn btn-default btn-sm col-xs-2 col-xs-offset-4" ng-click="deleteSubmission(s.id)">Withdraw</button>
           </div>
         </div>
       </div>
