@@ -1,8 +1,8 @@
 angular
   .module('app')
   .controller('StatisticsController',
-    ['$q', '$scope', '$state', '$stateParams', '$http', '$timeout', 'AuthService', 'Submission', 'User', 'Conference', 'Review',
-      function($q, $scope, $state, $stateParams, $http, $timeout, AuthService, Submission, User, Conference, Review) {
+    ['$q', '$scope', '$state', '$stateParams', '$http', '$timeout', 'ConferenceService', 'Submission', 'User', 'Conference', 'Review',
+      function($q, $scope, $state, $stateParams, $http, $timeout, ConferenceService, Submission, User, Conference, Review) {
 
         var authorVsSubmissions = function() {
           $scope.labels = ['Submissions'];
@@ -22,11 +22,11 @@ angular
 
           $scope.data = [[],[]];
 
-          Conference.authors.count({id: AuthService.getCurrentConferenceId()}).$promise.then(function(result) {
+          Conference.authors.count({id: ConferenceService.getCurrentConferenceId()}).$promise.then(function(result) {
             $scope.data[0].push(result.count);
           });
 
-          Submission.count({filter: {where: { conferenceId: AuthService.getCurrentConferenceId()}}}).$promise.then(function(result) {
+          Submission.count({filter: {where: { conferenceId: ConferenceService.getCurrentConferenceId()}}}).$promise.then(function(result) {
             $scope.data[1].push(result.count);
           });
         };
@@ -39,7 +39,7 @@ angular
             legend: {display: true}
           };
 
-          Submission.find({filter: {where: { conferenceId: AuthService.getCurrentConferenceId()}}}).$promise
+          Submission.find({filter: {where: { conferenceId: ConferenceService.getCurrentConferenceId()}}}).$promise
             .then(function(submission) {
               var ids = submission.map(function(s) { return {submissionId: s.id}; });
               Review.find({filter: {where: { or: ids}}}).$promise.then(function(r) {

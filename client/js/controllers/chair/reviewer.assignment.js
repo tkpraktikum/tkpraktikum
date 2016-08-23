@@ -1,7 +1,7 @@
 angular
   .module('app')
-  .controller('ReviewerAssignmentController', ['$q', '$scope', '$state', 'Submission', 'Review', 'AuthService', 'Conference', 'User', '$stateParams',
-    function($q, $scope, $state, Submission, Review, AuthService, Conference, User, $stateParams) {
+  .controller('ReviewerAssignmentController', ['$q', '$scope', '$state', 'Submission', 'Review', 'ConferenceService', 'Conference', 'User', '$stateParams',
+    function($q, $scope, $state, Submission, Review, ConferenceService, Conference, User, $stateParams) {
 
       var isSet = function(x) {return !!x; };
 
@@ -54,7 +54,7 @@ angular
         });
       };
 
-      Conference.reviewer({id: AuthService.getCurrentConferenceId()}).$promise
+      Conference.reviewer({id: ConferenceService.getCurrentConferenceId()}).$promise
         .then(function(r) {
           r = r.map(function(r) {
             r.fullName = r.firstname + ' ' + r.lastname;
@@ -64,7 +64,7 @@ angular
 
           var filter = {
             filter: {
-              where: {conferenceId: AuthService.getCurrentConferenceId()},
+              where: {conferenceId: ConferenceService.getCurrentConferenceId()},
               include: ['authors']
             }
           };
