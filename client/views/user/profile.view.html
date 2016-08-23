@@ -1,0 +1,24 @@
+<div class="row content-no-header">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">{{user.username}}</h2>
+        </div>
+        <div class="panel-body">
+          <p><b>Title: </b>{{user.title}}</p>
+          <p><b>Firstname: </b>{{user.firstname}}</p>
+          <p><b>Lastname: </b>{{user.lastname}}</p>
+          <p><b>Profession: </b>{{user.profession}}</p>
+          <span ng-repeat="a in user.affiliations">
+            <p><b>Affiliation: </b>{{a.name}}</p>
+            <p><b>ZIP: </b>{{a.zip}}</p>
+            <p><b>City: </b>{{a.city}}</p>
+            <p><b>State: </b>{{a.state}}</p>
+            <p><b>Country: </b>{{a.country}}</p>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
