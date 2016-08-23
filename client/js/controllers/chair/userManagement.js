@@ -1,13 +1,13 @@
 angular
   .module('app')
   .controller('ChairUserManagementController',
-      ['$q', '$scope', '$stateParams', 'AuthService', 'User', 'Conference',
-      function($q, $scope, $stateParams, AuthService, User, Conference) {
+      ['$q', '$scope', '$state', 'AuthService', 'User', 'Conference',
+      function($q, $scope, $state, AuthService, User, Conference) {
     var userList = [],
       getUsers = function () {
         AuthService.getUserId().then(function(userId) {
           Conference.findById({
-            id: $stateParams.conferenceId,
+            id: $state.params.conferenceId,
             filter: { include: [
               { relation: 'attendees', scope : { fields: ['id', 'lastname', 'firstname'] }},
               { relation: 'chairs', scope: { fields: ['id'] } },
@@ -42,7 +42,15 @@ angular
           }
 
           var linkFn = user[hasRoleProp] ? User[role].link : User[role].unlink;
-          linkFn({ id: user.id, fk: $stateParams.conferenceId }, {}).$promise.then(getUsers);
+          linkFn({ id: user.id, fk: $state.params.conferenceId }, {}).$promise.then(function () {
+            if (user.isMe) {
+              AuthService.invalidate().finally(function () {
+                $state.go($state.current.name, $state.params, { reload: true });
+              });
+            } else {
+              getUsers();
+            }
+          });
         };
       };
 
