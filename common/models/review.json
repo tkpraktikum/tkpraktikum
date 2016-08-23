@@ -39,7 +39,6 @@
       "foreignKey": "reviewerId"
     }
   },
-  "acls": [
-  ],
+  "acls": [],
   "methods": {}
 }
