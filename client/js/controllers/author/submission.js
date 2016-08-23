@@ -1,13 +1,13 @@
 angular
   .module('app')
-  .controller('SubmissionCreateController',
-      ['$q', '$scope', '$anchorScroll', '$state', '$stateParams', 'Submission', 'Tag',
+  .controller('SubmissionController',
+      ['$q', '$scope', '$anchorScroll', '$state', 'Submission', 'Tag',
        'AuthService', 'Submissiontag', 'Authorship', 'User', 'Conference', 'FileUpload',
-      function($q, $scope, $anchorScroll, $state, $stateParams, Submission, Tag,
+      function($q, $scope, $anchorScroll, $state, Submission, Tag,
         AuthService, Submissiontag, Authorship, User, Conference, FileUpload) {
 
-    var submissionId = parseInt($stateParams.submissionId, 10),
-      conferenceId = $stateParams.conferenceId,
+    var submissionId = parseInt($state.params.submissionId, 10),
+      conferenceId = $state.params.conferenceId,
       asyncReq = (function () {
         var pendingRequests = 0;
 
@@ -24,6 +24,16 @@ angular
       })(),
       oldTagIds = [],
       oldAuthorIds = [],
+      deleteSubmission = function (submissionId) {
+        asyncReq.start(); asyncReq.start(); asyncReq.start();
+        var p1 = Submission.tags.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end),
+          p2 = Submission.authors.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end),
+          p3 = Submission.documents.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end);
+
+        return $q.all([p1, p2, p3]).then(function () {
+          return Submission.deleteById({ id: submissionId }).$promise;
+        });
+      },
       loadSubmission = function (submissionId) {
         asyncReq.start();
 
@@ -52,6 +62,15 @@ angular
           return submission;
         })
         .finally(asyncReq.end);
+      },
+      loadAllSubmissions = function () {
+        return AuthService.getUserId().then(function(userId) {
+          return User.submissions({
+            id: userId,
+            filter: { where: { conferenceId: conferenceId },
+            include: ['tags', 'authors', 'documents']}
+          }).$promise;
+        });
       },
       linkTagsToSubmission = function (submissionId) {
         return _($scope.submission.tags).map(function (tag) {
@@ -92,55 +111,7 @@ angular
         formController.title.$setDirty();
         formController.abstract.$setDirty();
         return $anchorScroll();
-      },
-      dropzone = new Dropzone('#submission-file', {
-        paramName: 'file',
-        url: '/api/containers/submissions/upload',
-        acceptedFiles: 'application/pdf,.pdf',
-        autoProcessQueue: true,
-        addRemoveLinks: true,
-        maxFiles: 1,
-        init: function () {
-          this.on('sending', function (dz, xhr, formData) {
-            xhr.setRequestHeader('X-Access-Token', AuthService.getAccessTokenId());
-            asyncReq.start();
-            $scope.$apply();
-          });
-          this.on('complete', function () {
-            asyncReq.end();
-            $scope.$apply();
-          });
-          this.on('success', function (file, response) {
-            var result = response.result.files.file[0];
-            $scope.submission.file = result;
-            $scope.$apply();
-          });
-        }
-      });
-
-    $scope.edit = !!$stateParams.submissionId;
-    $scope.tagSuggestions = [];
-    $scope.simpleMdeOptions = {
-      hideIcons: ["guide", "fullscreen", "side-by-side"],
-      spellChecker: false
-    };
-
-    if ($scope.edit) {
-      loadSubmission(submissionId).then(function (submission) {
-        oldTagIds = _(submission.tags).map(function (t) { return t.id; });
-        oldAuthorIds = _(submission.authors).map(function (a) { return a.id; });
-
-        if (submission.documents.length >= 1) {
-          $scope.oldFile = submission.documents[0];
-          delete submission.documents;
-        }
-
-        $scope.submission = submission;
-        $scope.filterValidAuthors();
-      });
-    } else {
-      $scope.submission = { authors: [], tags: [], file: {} };
-    }
+      };
 
     $scope.populateAutoCompleteTags = function ($select) {
       $scope.tagSuggestions = [];
@@ -205,6 +176,13 @@ angular
       return input.$dirty && _(input.$error).keys().length > 0;
     };
 
+    $scope.deleteSubmission = function(submissionId) {
+      deleteSubmission(submissionId).then(function() {
+        AuthService.setFlash('Submission was deleted successfully!');
+        $state.go($state.current, $state.params, {reload: true});
+      });
+    };
+
     $scope.createSubmission = function (formController) {
       if ($scope.hasFormError(formController)) {
         return showFormErrors(formController);
@@ -226,12 +204,13 @@ angular
         // On success: Redirect user to submission overview
         $q.all(submissiontags.concat(authorships).concat([file])).then(function () {
           AuthService.setFlash('Submission was created successfully!');
+        }, function (err) {
+          AuthService.setFlash('ERROR: Submission could not be created!');
+          return deleteSubmission(submission.id);
+        }).finally(function () {
           $state.go('app.protected.conference.submission.list', {
             conferenceId: conferenceId
           }, {reload: true});
-        }, function (err) {
-          // TODO: rollback (some of the above relations could not be created)
-          // e.g. via local deleteSubmission(id) function
         });
       })
       .finally(asyncReq.end);
@@ -286,12 +265,12 @@ angular
 
       $q.all(pendingPromises).then(function() {
         AuthService.setFlash('Submission was updated successfully!');
+      }, function (err) {
+        AuthService.setFlash('ERROR: Submission could not be updated!');
+      }).finally(function () {
         $state.go('app.protected.conference.submission.list', {
           conferenceId: conferenceId
         }, {reload: true});
-      }, function (err) {
-        // TODO: rollback (some of the above relations could not be created)
-        // e.g. via local deleteSubmission(id) function
       });
     };
 
@@ -307,25 +286,90 @@ angular
       }
     };
 
-    Conference.findById({
-      id: conferenceId,
-      filter: {include: ['authors']
-    }})
-    .$promise
-    .then(function (conference) {
-      // Auto suggestion lookup table
-      $scope.allAuthors = _(conference.authors).map(function (author) {
-        return _(author).pick('id', 'firstname', 'lastname', 'fullName', 'email');
+    // --------------
+    // Initialization
+    // --------------
+    if ($state.current.name.endsWith('submission.list')) {
+      loadAllSubmissions().then(function(submissions) {
+        $scope.submissions = submissions;
+        // TODO: SHOW UPLOADED DOCUMENTS
+      });
+    }
+
+    if ($state.current.name.endsWith('submission.create') ||
+        $state.current.name.endsWith('submission.edit')
+    ) {
+      new Dropzone('#submission-file', {
+        paramName: 'file',
+        url: '/api/containers/submissions/upload',
+        acceptedFiles: 'application/pdf,.pdf',
+        autoProcessQueue: true,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        init: function () {
+          this.on('sending', function (dz, xhr, formData) {
+            xhr.setRequestHeader('X-Access-Token', AuthService.getAccessTokenId());
+            asyncReq.start();
+            $scope.$apply();
+          });
+          this.on('complete', function () {
+            asyncReq.end();
+            $scope.$apply();
+          });
+          this.on('success', function (file, response) {
+            var result = response.result.files.file[0];
+            $scope.submission.file = result;
+            $scope.$apply();
+          });
+        }
       });
 
-      if ($scope.edit) return;
+      $scope.edit = $state.current.name.endsWith('submission.edit');
+      $scope.tagSuggestions = [];
+      $scope.simpleMdeOptions = {
+        hideIcons: ["guide", "fullscreen", "side-by-side"],
+        spellChecker: false
+      };
 
-      // Prefill current user as author
-      AuthService.getUserId().then(function (userId) {
-        $scope.authors = $scope.allAuthors.filter(function(a) { return a.id != userId });
-        var author = _($scope.allAuthors).findWhere({id: userId});
-        $scope.addAuthorField(author);
-        $scope.filterValidAuthors();
+      if ($scope.edit) {
+        loadSubmission(submissionId).then(function (submission) {
+          oldTagIds = _(submission.tags).map(function (t) { return t.id; });
+          oldAuthorIds = _(submission.authors).map(function (a) { return a.id; });
+
+          if (submission.documents.length >= 1) {
+            $scope.oldFile = submission.documents[0];
+            delete submission.documents;
+          }
+
+          $scope.submission = submission;
+          $scope.filterValidAuthors();
+        });
+      }
+
+      if (!$scope.edit) {
+        $scope.submission = { authors: [], tags: [], file: {} };
+      }
+
+      Conference.findById({
+        id: conferenceId,
+        filter: {include: ['authors']
+      }})
+      .$promise
+      .then(function (conference) {
+        // Auto suggestion lookup table
+        $scope.allAuthors = _(conference.authors).map(function (author) {
+          return _(author).pick('id', 'firstname', 'lastname', 'fullName', 'email');
+        });
+
+        if ($scope.edit) return;
+
+        // Prefill current user as author
+        AuthService.getUserId().then(function (userId) {
+          $scope.authors = $scope.allAuthors.filter(function(a) { return a.id != userId });
+          var author = _($scope.allAuthors).findWhere({id: userId});
+          $scope.addAuthorField(author);
+          $scope.filterValidAuthors();
+        });
       });
-    });
+    }
   }]);

@@ -138,7 +138,6 @@ angular
         url: 'admin',
         abstract: true,
         template: '<div ui-view></div>',
-        controller: 'SubmissionController',
         data: { permissions: { only: ['CHAIR'] }}
       })
       .state('app.protected.conference.admin.reviews', {
@@ -179,12 +178,12 @@ angular
       })
       .state('app.protected.conference.submission.create', {
         url: '/create',
-        controller: 'SubmissionCreateController',
+        controller: 'SubmissionController',
         templateUrl: 'views/author/submissions.create.html'
       })
       .state('app.protected.conference.submission.edit', {
         url: '/edit/:submissionId',
-        controller: 'SubmissionCreateController',
+        controller: 'SubmissionController',
         templateUrl: 'views/author/submissions.create.html'
       })
       .state('app.protected.conference.review', {
