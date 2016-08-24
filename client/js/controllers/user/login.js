@@ -1,12 +1,17 @@
 angular
   .module('app')
-  .controller('LoginController', ['$scope', '$state', 'AuthService',
-    function ($scope, $state, AuthService) {
+  .controller('LoginController', ['$scope', '$state', 'AuthService', 'ConferenceService',
+    function ($scope, $state, AuthService, ConferenceService) {
       $scope.login = function () {
         AuthService
-          .login($scope.user.username, $scope.user.password)
+          .login($scope.user.username.toLowerCase(), $scope.user.password)
           .then(function (user) {
-            $state.go('app.protected.home', {}, {reload: true});
+            var cId = ConferenceService.getCurrentConferenceId();
+            if (cId) {
+              $state.go('app.protected.conference.home', { conferenceId: cId }, {reload: true});
+            } else {
+              $state.go('app.protected.home', {}, {reload: true});
+            }
           });
       }
     }])

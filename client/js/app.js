@@ -273,11 +273,7 @@ angular
     },
     setCurrentConferenceId: function (conferenceId) {
       currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
-    },
-    refreshConferenceInfo: function() {
-      if (currentConferenceId) {
-        currentConference = Conference.findById({id: currentConferenceId}).$promise;
-      }
+      currentConference = conferenceId ? Conference.findById({id: currentConferenceId}).$promise : null;
     },
     isSubmissionPhase: function() {
       if (!currentConference) {
