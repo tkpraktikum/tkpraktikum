@@ -33,6 +33,10 @@ angular
       $scope.create = function() {
         $scope.conference.submissionDeadline = subDeadline.data("DateTimePicker").date().valueOf();
         $scope.conference.reviewDeadline = revDeadline.data("DateTimePicker").date().valueOf();
+        if ($scope.conference.reviewDeadline < $scope.conference.submissionDeadline) {
+          $scope.reviewDeadlineError = true;
+          return;
+        }
         $scope.conference.description = $scope.conferenceDescriptionEditor.value();
         if ($scope.editMode) {
           Conference.prototype$updateAttributes({id: $stateParams.conferenceId}, $scope.conference).$promise
