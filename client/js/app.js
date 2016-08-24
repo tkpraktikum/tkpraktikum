@@ -9,7 +9,8 @@ angular
     'ui.select',
     'ngSanitize',
     'btford.markdown',
-    'simplemde'
+    'simplemde',
+    'uiGmapgoogle-maps'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -103,10 +104,20 @@ angular
         templateUrl: 'views/user/joinConference.html',
         controller: 'JoinConferenceController',
       })
-      .state('app.protected.user.conference.create', {
-        url: '/create',
-        templateUrl: 'views/user/createConference.html',
+      .state('app.protected.user.conference.manage', {
+        url: '/manage',
+        template: '<div ui-view></div>',
+        abstract: true
+      })
+      .state('app.protected.user.conference.manage.create', {
+        templateUrl: 'views/user/manageConference.html',
         controller: 'CreateConferenceController',
+        url: '/create',
+      })
+      .state('app.protected.user.conference.manage.edit', {
+        templateUrl: 'views/user/manageConference.html',
+        controller: 'CreateConferenceController',
+        url: '/:conferenceId',
       })
       .state('app.protected.user.conference.my', {
         url: '/my',
@@ -157,6 +168,18 @@ angular
         controller: 'ReviewerAssignmentController',
         data: { permissions: { only: ['CHAIR'] }}
       })
+      .state('app.protected.conference.admin.reviews.submissionList', {
+        url: '/submission/:submissionId',
+        templateUrl: 'views/shared/reviews.list.html',
+        controller: 'SubmissionReviewListController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
+      .state('app.protected.conference.admin.reviews.list', {
+        url: '/reviews',
+        templateUrl: 'views/shared/reviews.list.html',
+        controller: 'ChairReviewListController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
       .state('app.protected.conference.admin.submissions', {
         url: '/submissions',
         templateUrl: 'views/chair/submissions.html',
@@ -179,6 +202,18 @@ angular
         url: '/list',
         templateUrl: 'views/author/submissions.list.html',
         controller: 'SubmissionController',
+        data: { permissions: { only: ['AUTHOR'] }}
+      })
+      .state('app.protected.conference.submission.reviews', {
+        url: '/reviews',
+        abstract: true,
+        template: '<div ui-view></div>',
+        data: { permissions: { only: ['AUTHOR'] }}
+      })
+      .state('app.protected.conference.submission.reviews.list', {
+        url: '/:submissionId',
+        templateUrl: 'views/shared/reviews.list.html',
+        controller: 'SubmissionReviewListController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
       .state('app.protected.conference.submission.create', {
@@ -212,7 +247,7 @@ angular
       })
       .state('app.protected.conference.review.list', {
         url: '/list',
-        templateUrl: 'views/reviewer/reviews.list.html',
+        templateUrl: 'views/shared/reviews.list.html',
         controller: 'ReviewListController',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
@@ -229,8 +264,8 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
   }])
-.factory('ConferenceService', [function () {
-  var currentConferenceId = null;
+.factory('ConferenceService', ['$q', 'Conference', function ($q, Conference) {
+  var currentConferenceId = null, currentConference = null;
 
   return {
     getCurrentConferenceId: function () {
@@ -238,8 +273,38 @@ angular
     },
     setCurrentConferenceId: function (conferenceId) {
       currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
+    },
+    refreshConferenceInfo: function() {
+      if (currentConferenceId) {
+        currentConference = Conference.findById({id: currentConferenceId}).$promise;
+      }
+    },
+    isSubmissionPhase: function() {
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now());
+      });
+    },
+    isReviewPhase: function() {
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now())
+          && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
+      });
+    },
+    reviewsDone: function() {
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() < Date.now());
+      });
     }
-  };
+  }
 }])
 .factory('SessionService', [function () {
   var flashMessage = null;
@@ -337,13 +402,21 @@ angular
   RoleStore.defineRole('AUTHOR', ['hasValidSession', 'author']);
   RoleStore.defineRole('REVIEWER', ['hasValidSession', 'reviewer']);
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
-}).config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
+})
+.config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
   showErrorsConfigProvider.showSuccess(true);
-}]).
-config(['markdownConverterProvider', function (markdownConverterProvider) {
+}])
+.config(['markdownConverterProvider', function (markdownConverterProvider) {
   // options to be passed to Showdown
   // see: https://github.com/coreyti/showdown#extensions
   markdownConverterProvider.config({
     extensions: []
   });
-}]);
+}])
+.config(function(uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyA3SaBcz7amu_EeQekF4QHmixkf71tFyrE',
+    v: '3',
+    libraries: 'weather,geometry,visualization'
+  });
+});

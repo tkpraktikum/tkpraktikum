@@ -1,10 +1,17 @@
 angular
   .module('app')
   .controller('SubmissionController',
-      ['$q', '$scope', '$anchorScroll', '$state', 'Submission', 'Tag', 'AuthService',
+      ['$q', '$scope', '$anchorScroll', '$state', 'Submission', 'Tag', 'AuthService', 'ConferenceService',
       'SessionService', 'Submissiontag', 'Authorship', 'User', 'Conference', 'FileUpload',
-      function($q, $scope, $anchorScroll, $state, Submission, Tag, AuthService,
+      function($q, $scope, $anchorScroll, $state, Submission, Tag, AuthService, ConferenceService,
         SessionService, Submissiontag, Authorship, User, Conference, FileUpload) {
+
+    ConferenceService.isSubmissionPhase().then(function(b) {
+      $scope.isSubmissionPhase = b;
+    });
+    ConferenceService.reviewsDone().then(function(b) {
+      $scope.reviewsDone = b;
+    });
 
     var submissionId = parseInt($state.params.submissionId, 10),
       conferenceId = $state.params.conferenceId,

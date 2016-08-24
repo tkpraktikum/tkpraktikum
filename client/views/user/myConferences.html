@@ -12,10 +12,11 @@
               <span ng-show="c.isAuthor">Author, </span>
               <span ng-show="c.isReviewer">Reviewer, </span>
               Attendee</b>
-            <p>{{c.description}}</p>
+            <div btf-markdown="c.description"></div>
             <div ng-show="!c.isDefault" class="conference-link" ng-click="setDefault(c.id)"><a>Set Default</a></div>
             <div ng-show="c.isAuthor" class="conference-link"><a>Submissions</a></div>
             <div ng-show="c.isChair" class="conference-link"><a>Manage Users</a></div>
+            <div ng-show="c.isChair" ui-sref="app.protected.user.conference.manage.edit({conferenceId: c.id})" class="conference-link"><a>Manage Conference</a></div>
           </div>
         </div>
       </div>

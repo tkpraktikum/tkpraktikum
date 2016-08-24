@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="vendor/dropzone/dist/dropzone.css">
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="vendor/simplemde/dist/simplemde.min.css">
+  <link rel="stylesheet" href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="css/switch.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
@@ -28,13 +29,16 @@
 <body ng-app="app">
 
 <div ui-view></div>
-
 <script src="vendor/underscore/underscore-min.js"></script>
 <script src="vendor/simplemde/dist/simplemde.min.js"></script>
 <script src="vendor/dropzone/dist/dropzone.js"></script>
 <script src="vendor/jquery/dist/jquery.js"></script>
 <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+<script src="vendor/moment/min/moment-with-locales.min.js"></script>
+<script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <script src="vendor/angular/angular.js"></script>
+<script src='vendor/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
+<script src='vendor/angular-google-maps/dist/angular-google-maps.min.js'></script>
 <script src="vendor/angular-resource/angular-resource.js"></script>
 <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
 <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
@@ -55,7 +59,7 @@
 <script src="js/controllers/chair/statistics.js"></script>
 <script src="js/controllers/user/homeController.js"></script>
 <script src="js/controllers/user/profile.js"></script>
-<script src="js/controllers/user/createConference.js"></script>
+<script src="js/controllers/user/manageConference.js"></script>
 <script src="js/controllers/user/joinConference.js"></script>
 <script src="js/controllers/user/myConferences.js"></script>
 <script src="js/controllers/user/login.js"></script>
@@ -64,9 +68,11 @@
 <script src="js/controllers/reviewer/reviews.js"></script>
 <script src="js/controllers/reviewer/review.overview.js"></script>
 <script src="js/controllers/shared/submission.view.js"></script>
+<script src="js/controllers/shared/submission.reviews.js"></script>
 <script src="js/controllers/chair/userManagement.js"></script>
 <script src="js/controllers/chair/submissions.js"></script>
 <script src="js/controllers/chair/reviewer.assignment.js"></script>
+<script src="js/controllers/chair/reviews.list.js"></script>
 <script src="js/controllers/conference.js"></script>
 <script src="js/controllers/user/conferenceLanding.js"></script>
 <script src="js/controllers/header.js"></script>

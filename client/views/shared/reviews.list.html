@@ -1,0 +1,28 @@
+<div class="row content-no-header">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="col-xs-12" ng-repeat="r in reviews">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">{{r.submission.title}}</h2>
+        </div>
+        <div class="panel-body">
+          <span class="expertise">Expertise: <b>{{r.expertise}}</b></span><span>Overall: <b>{{r.overall}}</b></span>
+          <div class="markdown"><h3>Summary</h3>
+            <div btf-markdown="r.summary"></div>
+          </div>
+          <div class="markdown"><h3>Strong Points</h3>
+            <div btf-markdown="r.strong"></div>
+          </div>
+          <div class="markdown"><h3>Weak Points</h3>
+            <div btf-markdown="r.weak"></div>
+          </div>
+          <div class="markdown"><h3>Detailed Comment</h3>
+            <div btf-markdown="r.detailed"></div>
+          </div>
+          <a ng-show="isReviewer" ui-sref="app.protected.conference.review.edit({reviewId: r.id})" class="btn btn-primary col-xs-12">Edit Review</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
