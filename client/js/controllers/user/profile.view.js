@@ -20,9 +20,7 @@ angular
 
     User.findById({id: $stateParams.userId, filter: { include: ['affiliation'] } }).$promise.then(function(u) {
       $scope.user = u;
-      if (u.lat && u.lng) {
-        refreshMap();
-      }
+      refreshMap();
     });
 
     IsReady.promise().then(function (maps) {
