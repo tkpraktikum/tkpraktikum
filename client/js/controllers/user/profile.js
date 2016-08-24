@@ -1,10 +1,11 @@
 angular
   .module('app')
-  .controller('ProfileController', ['$scope', '$state', 'AuthService', 'Affiliation', 'User', 'uiGmapGoogleMapApi', function ($scope, $state, AuthService, Affiliation, User, uiGmapGoogleMapApi) {
+  .controller('ProfileController', ['$scope', '$state', 'AuthService', 'Affiliation', 'User', 'uiGmapGoogleMapApi', 'uiGmapIsReady', function ($scope, $state, AuthService, Affiliation, User, uiGmapGoogleMapApi, IsReady) {
 
     var refreshMap = function(address) {
+      IsReady.promise().then(function() {
         if ($scope.geocoder) {
-          $scope.geocoder.geocode({'address': address}, function(results, status) {
+          $scope.geocoder.geocode({'address': address}, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
               $scope.changeUserProfile.lat = results[0].geometry.location.lat();
               $scope.changeUserProfile.lng = results[0].geometry.location.lng();
@@ -15,15 +16,16 @@ angular
                   longitude: results[0].geometry.location.lng()
                 }
               }];
-              var ll = new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng());
+              var ll = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
               $scope.map.control.getGMap().panTo(ll);
             } else {
               console.log('Geocode was not successful for the following reason: ' + status);
             }
           });
         }
-      },
-      attributes = ['title', 'email', 'lng', 'lat', 'username', 'firstname', 'lastname', 'profession', 'affiliationId', 'street', 'zip', 'city', 'state', 'country'];
+      });
+    },
+    attributes = ['title', 'email', 'lng', 'lat', 'username', 'firstname', 'lastname', 'profession', 'affiliationId', 'street', 'zip', 'city', 'state', 'country'];
 
     $scope.lastTrigger = 0;
     $scope.triggerRefresh = function() {
@@ -32,11 +34,11 @@ angular
         var myTrigger = $scope.lastTrigger;
         return function() {
           if (myTrigger == $scope.lastTrigger) {
-            var address = $scope.changeUserProfile.street
-              + ' ' + $scope.changeUserProfile.zipcode
-              + ' ' + $scope.changeUserProfile.city
-              + ' ' + $scope.changeUserProfile.state
-              + ' ' + $scope.changeUserProfile.country;
+            var address = ($scope.changeUserProfile.street || '')
+              + ' ' + ($scope.changeUserProfile.zipcode || '')
+              + ' ' + ($scope.changeUserProfile.city || '')
+              + ' ' + ($scope.changeUserProfile.state || '')
+              + ' ' + ($scope.changeUserProfile.country || '');
 
             refreshMap(address);
           }
