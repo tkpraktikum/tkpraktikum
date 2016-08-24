@@ -10,6 +10,8 @@ router.post('/signup', function(req, res) {
     newUser = {
       email: req.body.email.toLowerCase(),
       username: req.body.username.toLowerCase(),
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
       password: req.body.password,
       emailVerified: true,
       affiliationId: affiliationId

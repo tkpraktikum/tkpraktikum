@@ -7,16 +7,31 @@
             <h3 class="panel-title"><span class="highlight">{{c.name}}</span> <span ng-show="c.isDefault" class="conference-title-default">Default</span></h3>
           </div>
           <div class="panel-body">
-            <b>You are:
-              <span ng-show="c.isChair">Chair, </span>
-              <span ng-show="c.isAuthor">Author, </span>
-              <span ng-show="c.isReviewer">Reviewer, </span>
-              Attendee</b>
+            <b ng-show="c.isChair || c.isAuthor || c.isReviewer">You are:
+              <span ng-show="c.isChair">Chair<span ng-show="c.isAuthor || c.isReviewer">, </span></span>
+              <span ng-show="c.isAuthor">Author<span ng-show="c.isReviewer">, </span></span>
+              <span ng-show="c.isReviewer">Reviewer</span>
+            </b>
             <div btf-markdown="c.description"></div>
             <div ng-show="!c.isDefault" class="conference-link" ng-click="setDefault(c.id)"><a>Set Default</a></div>
             <div ng-show="c.isAuthor" class="conference-link"><a>Submissions</a></div>
             <div ng-show="c.isChair" class="conference-link"><a>Manage Users</a></div>
             <div ng-show="c.isChair" ui-sref="app.protected.user.conference.manage.edit({conferenceId: c.id})" class="conference-link"><a>Manage Conference</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-show="!conferences || conferences.length == 0">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title text-center">Please join or create a conference to see your conferences here.</h2>
+          </div>
+          <div class="panel-body">
+            <div class="button-nav col-xs-12">
+              <div class="row"><a class="btn btn-default col-xs-12" ui-sref="app.protected.user.conference.join">Join a Conference</a></div>
+              <div class="row"><a class="btn btn-default col-xs-12" ui-sref="app.protected.user.conference.manage.create">Create a Conference</a></div>
+            </div>
           </div>
         </div>
       </div>

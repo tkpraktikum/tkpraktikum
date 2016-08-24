@@ -5,6 +5,14 @@ angular
     $scope.user = {};
     $scope.currentConferenceId = ConferenceService.getCurrentConferenceId();
 
+    ConferenceService.isSubmissionPhase().then(function(b) {
+      $scope.isSubmissionPhase = b;
+    });
+
+    ConferenceService.isReviewPhase().then(function(b) {
+      $scope.isReviewPhase = b;
+    });
+
     AuthService.getUser().then(function (userData) {
       $scope.user = userData;
     });

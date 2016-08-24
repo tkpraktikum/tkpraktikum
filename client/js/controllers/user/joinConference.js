@@ -4,7 +4,7 @@ angular
     function($scope, $state, $http, AuthService, User, Conference) {
 
       $scope.conference = {};
-      $scope.allConferences = {};
+      $scope.allConferences = [];
       $scope.selected = {};
       $scope.conferenceInput = "";
 

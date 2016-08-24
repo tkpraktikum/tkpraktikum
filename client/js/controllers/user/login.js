@@ -4,9 +4,13 @@ angular
     function ($scope, $state, AuthService) {
       $scope.login = function () {
         AuthService
-          .login($scope.user.username, $scope.user.password)
+          .login($scope.user.username.toLowerCase(), $scope.user.password)
           .then(function (user) {
-            $state.go('app.protected.home', {}, {reload: true});
+            if (user.defaultConferenceId && parseInt(user.defaultConferenceId, 10) !== 0) {
+              $state.go('app.protected.conference.home', { conferenceId: user.defaultConferenceId }, {reload: true});
+            } else {
+              $state.go('app.protected.home', {}, {reload: true});
+            }
           });
       }
     }])

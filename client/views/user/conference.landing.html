@@ -11,14 +11,19 @@
       </div>
     </div>
     <div class="button-nav">
-      <div class="row" permission permission-only="'AUTHOR'">
+      <div class="row" ng-show="isSubmissionPhase" permission permission-only="'AUTHOR'">
         <div class="col-xs-12">
           <a ui-sref="app.protected.conference.submission.create({conferenceId: currentConferenceId})" class="btn btn-primary col-xs-12">Submit Paper</a>
         </div>
       </div>
-      <div class="row" permission permission-only="'REVIEWER'">
+      <div class="row" ng-show="isReviewPhase" permission permission-only="'REVIEWER'">
         <div class="col-xs-12">
           <a ui-sref="app.protected.conference.review.list({conferenceId: currentConferenceId})" class="btn btn-primary col-xs-12">Open Reviews</a>
+        </div>
+      </div>
+      <div class="row" permission permission-only="'CHAIR'">
+        <div class="col-xs-12">
+          <a ui-sref="app.protected.user.conference.manage.edit({conferenceId: currentConferenceId})" class="btn btn-primary col-xs-12">Manage Conference</a>
         </div>
       </div>
       <div class="row" permission permission-only="'CHAIR'">

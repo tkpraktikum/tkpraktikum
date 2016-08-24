@@ -20,5 +20,19 @@
         </div>
       </div>
     </div>
+    <div ng-show="!submissions || submissions.length == 0">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title text-center">You haven't created a submission, yet.</h2>
+          </div>
+          <div class="panel-body">
+            <div class="button-nav col-xs-12" ng-show="isSubmissionPhase">
+              <div class="row"><a class="btn btn-default col-xs-12" ui-sref="app.protected.conference.submission.edit({submissionId: s.id})">Create a Submission</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

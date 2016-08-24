@@ -1,10 +1,20 @@
-<h1>
-  Welcome To TKonf
-</h1>
-
-
-<!--
-<a href="/link/facebook" class="btn btn-primary">Link Facebook</a>
-<a href="/link/google" class="btn btn-primary">Link Google</a>
-<a href="/link/github" class="btn btn-primary">Link GitHub</a>
--->
+<div class="row content-no-header">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title text-center">Welcome {{user.firstname}} to TK-Conference</h2>
+        </div>
+        <div class="panel-body">
+          <div class="button-nav col-xs-12">
+            <div class="row" ng-repeat="c in conferences"><a class="btn btn-default col-xs-12" ng-click="changeConference(c.id)">Go To {{c.name}}</a></div>
+            <div class="row"><a class="btn btn-default col-xs-12" ui-sref="app.protected.user.conference.my">See Your Conferences</a></div>
+            <div class="row"><a class="btn btn-default col-xs-12" ui-sref="app.protected.user.conference.join">Join a Conference</a></div>
+            <div class="row"><a class="btn btn-default col-xs-12" ui-sref="app.protected.user.conference.manage.create">Create a Conference</a></div>
+            <div class="row"><a class="btn btn-default col-xs-12" ui-sref="app.protected.user.profile.edit">Edit Your Profile</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
