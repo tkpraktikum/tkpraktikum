@@ -89,6 +89,11 @@ angular
         url: '/delete',
         templateUrl: 'views/user/profile.delete.html',
       })
+      .state('app.protected.user.view', {
+        url: '/users/:userId',
+        templateUrl: 'views/user/profile.view.html',
+        controller: 'ProfileViewController'
+      })
       .state('app.protected.user.conference', {
         url: '/conference',
         abstract: true,
@@ -259,11 +264,61 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
   }])
-.factory('AuthService', ['$q', 'LoopBackAuth', 'User', 'Conference', function ($q, LoopBackAuth, User, Conference) {
+.factory('ConferenceService', ['$q', 'Conference', function ($q, Conference) {
+  var currentConferenceId = null, currentConference = null;
+
+  return {
+    getCurrentConferenceId: function () {
+      return currentConferenceId;
+    },
+    setCurrentConferenceId: function (conferenceId) {
+      currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
+    },
+    refreshConferenceInfo: function() {
+      if (currentConferenceId) {
+        currentConference = Conference.findById({id: currentConferenceId}).$promise;
+      }
+    },
+    isSubmissionPhase: function() {
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now());
+      });
+    },
+    isReviewPhase: function() {
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now())
+          && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
+      });
+    },
+    reviewsDone: function() {
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() < Date.now());
+      });
+    }
+  }
+}])
+.factory('SessionService', [function () {
+  var flashMessage = null;
+
+  return {
+    hasFlash: function () { return !!flashMessage; },
+    getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
+    setFlash: function (msg) { flashMessage = msg; },
+    destroy: function () { flashMessage = null; }
+  };
+}])
+.factory('AuthService', ['$q', 'LoopBackAuth', 'User', 'ConferenceService', 'SessionService',
+    function ($q, LoopBackAuth, User, ConferenceService, SessionService) {
   var user,
-    currentConference = null,
-    currentConferenceId = null,
-    flashMessage = null,
     login = function (username, password, rememberMe) {
       return user = User.login({
           username: username,
@@ -277,84 +332,40 @@ angular
       return User.logout().$promise.then(function () {
         // LoopBackAuth.clearUser();
         // LoopBackAuth.clearStorage();
-        currentConferenceId = null;
-        flashMessage = null;
+        ConferenceService.setCurrentConferenceId(null);
+        SessionService.destroy();
         user = $q.reject();
       });
     },
     hasRole = function (role) {
-      return user.then(
-        function (user) {
-          if (user[role]) {
-            for (idx in user[role]) {
-              if (user[role][idx].id === currentConferenceId) return $q.resolve();
-            }
-          }
-
-          return $q.reject();
-        },
-        function () { return $q.reject(); }
-      );
+      return user.then(function (user) {
+        return _(user[role]).findWhere({ id: ConferenceService.getCurrentConferenceId() }) ?
+          $q.resolve() : $q.reject();
+      }, function () {
+        return $q.reject();
+      });
     },
     isAuthenticated = User.isAuthenticated.bind(User),
     retrieveUserWithRoles = function (userId) {
-      var user = User.findById({
-          id: userId,
-          filter: {
-            include: ['reviewer', 'author', 'attendee', 'chair'].map(function (role) {
-              return { relation: role, scope: { fields: ['id'] }};
-            })
-          }
-        }).$promise;
+      var user = User.findById({id: userId, filter: {
+        include: ['reviewer', 'author', 'attendee', 'chair'].map(function (role) {
+          return { relation: role, scope: { fields: ['id'] }};
+        })
+      }}).$promise;
 
       user.then(function (model) {
-        setCurrentConferenceId(model.defaultConferenceId);
+        ConferenceService.setCurrentConferenceId(model.defaultConferenceId);
       });
 
       return user;
     },
-    refreshConferenceInfo = function() {
-      if (currentConferenceId) {
-        currentConference = Conference.findById({id: currentConferenceId}).$promise;
-      }
-    },
-    getCurrentConferenceId = function () {
-      return currentConferenceId;
-    },
-    setCurrentConferenceId = function (conferenceId) {
-      if (conferenceId) {
-        currentConferenceId = parseInt(conferenceId, 10);
-        refreshConferenceInfo();
-      } else {
-        currentConferenceId = null;
-      }
-    }, isSubmissionPhase = function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
-      return currentConference.then(function(c) {
-        return (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now());
-      });
-    }, isReviewPhase = function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
-      return currentConference.then(function(c) {
-        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now())
-          && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
-      });
-    }, reviewsDone = function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
-      return currentConference.then(function(c) {
-        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() < Date.now());
-      });
+    init = function () {
+      return user = isAuthenticated() ?
+        retrieveUserWithRoles(LoopBackAuth.currentUserId) :
+        $q.reject();
     };
 
-  user = isAuthenticated() ?
-    retrieveUserWithRoles(LoopBackAuth.currentUserId) :
-    $q.reject();
+  init();
 
   return {
     login: login,
@@ -364,14 +375,7 @@ angular
     getUserId: function () { return user.then(function (user) { return user.id; }); },
     getAccessTokenId: function () { return LoopBackAuth.accessTokenId; },
     isAuthenticated: isAuthenticated,
-    getCurrentConferenceId: getCurrentConferenceId,
-    setCurrentConferenceId: setCurrentConferenceId,
-    hasFlash: function () { return !!flashMessage; },
-    getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
-    setFlash: function (msg) { flashMessage = msg; },
-    isSubmissionPhase: isSubmissionPhase,
-    isReviewPhase: isReviewPhase,
-    reviewsDone: reviewsDone
+    invalidate : init
   };
 }])
 // https://gist.github.com/thomseddon/3511330
@@ -398,15 +402,18 @@ angular
   RoleStore.defineRole('AUTHOR', ['hasValidSession', 'author']);
   RoleStore.defineRole('REVIEWER', ['hasValidSession', 'reviewer']);
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
-}).config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
+})
+.config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
   showErrorsConfigProvider.showSuccess(true);
-}]).config(['markdownConverterProvider', function (markdownConverterProvider) {
+}])
+.config(['markdownConverterProvider', function (markdownConverterProvider) {
   // options to be passed to Showdown
   // see: https://github.com/coreyti/showdown#extensions
   markdownConverterProvider.config({
     extensions: []
   });
-}]).config(function(uiGmapGoogleMapApiProvider) {
+}])
+.config(function(uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyA3SaBcz7amu_EeQekF4QHmixkf71tFyrE',
     v: '3',

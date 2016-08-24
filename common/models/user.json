@@ -20,11 +20,10 @@
   },
   "validations": [],
   "relations": {
-    "affiliations": {
-      "type": "hasMany",
+    "affiliation": {
+      "type": "belongsTo",
       "model": "affiliation",
-      "foreignKey": "affiliationId",
-      "through": "useraffiliation"
+      "foreignKey": "affiliationId"
     },
     "accessTokens": {
       "type": "hasMany",
@@ -42,10 +41,10 @@
       "foreignKey": "userId"
     },
     "roles": {
-       "type": "hasMany",
-       "model": "Role",
-       "through": "roleMapping",
-       "foreignKey": "principalId"
+      "type": "hasMany",
+      "model": "Role",
+      "foreignKey": "principalId",
+      "through": "roleMapping"
     },
     "submissions": {
       "type": "hasMany",
@@ -90,11 +89,11 @@
   },
   "acls": [
     {
+      "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "*",
-      "accessType": "*"
+      "property": "*"
     },
     {
       "principalType": "ROLE",
@@ -108,8 +107,8 @@
       ]
     },
     {
-      "principalId": "chair",
       "principalType": "ROLE",
+      "principalId": "chair",
       "permission": "ALLOW",
       "property": [
         "find",

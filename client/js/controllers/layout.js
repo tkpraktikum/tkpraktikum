@@ -1,8 +1,8 @@
 angular
   .module('app')
-  .controller('LayoutController', ['$scope', 'AuthService', function ($scope, AuthService) {
-    if (AuthService.hasFlash()) {
-      $scope.flashMessage = AuthService.getFlash();
+  .controller('LayoutController', ['$scope', 'SessionService', function ($scope, SessionService) {
+    if (SessionService.hasFlash()) {
+      $scope.flashMessage = SessionService.getFlash();
     }
 
     $scope.dismissFlash = function ($e) {

@@ -1,127 +1,71 @@
 angular
   .module('app')
   .controller('ChairUserManagementController',
-      ['$q', '$scope', '$stateParams', 'AuthService', 'User', 'Conference',
-      function($q, $scope, $stateParams, AuthService, User, Conference) {
+      ['$q', '$scope', '$state', 'AuthService', 'User', 'Conference',
+      function($q, $scope, $state, AuthService, User, Conference) {
+    var userList = [],
+      getUsers = function () {
+        AuthService.getUserId().then(function(userId) {
+          Conference.findById({
+            id: $state.params.conferenceId,
+            filter: { include: [
+              { relation: 'attendees', scope : { fields: ['id', 'lastname', 'firstname'] }},
+              { relation: 'chairs', scope: { fields: ['id'] } },
+              { relation: 'authors', scope: { fields: ['id'] } },
+              { relation: 'reviewer', scope: { fields: ['id'] } },
+            ]}
+          }).$promise.then(function (conference) {
+            conference.chairs = _(conference.chairs).pluck('id');
+            conference.authors = _(conference.authors).pluck('id');
+            conference.reviewer = _(conference.reviewer).pluck('id');
 
-        // sort by https://scotch.io/tutorials/sort-and-filter-a-table-using-angular
-        $scope.sortType     = 'name'; // set the default sort type
-        $scope.sortReverse  = false;  // set the default sort order
-        $scope.searchUser   = '';     // set the default search/filter term
-        $scope.userList = [];
-        $scope.filteredUserList = [];
-        $scope.filter = {};
+            userList = conference.attendees.map(function (user) {
+              user.isChair = conference.chairs.indexOf(user.id) !== -1;
+              user.isAuthor = conference.authors.indexOf(user.id) !== -1;
+              user.isReviewer = conference.reviewer.indexOf(user.id) !== -1;
+              user.isMe = (user.id === userId);
 
-        $scope.applyFilter = function() {
-          $scope.filteredUserList =
-            $scope.userList.filter(function(u) {
-              if ($scope.filter.isAuthor) {
-                return u.isAuthor;
-              }
-              return true
-            }).filter(function(u) {
-              if ($scope.filter.isReviewer) {
-                return u.isReviewer;
-              }
-              return true
-            }).filter(function(u) {
-              if ($scope.filter.isChair) {
-                return u.isChair;
-              }
-              return true
+              return user;
             });
-        };
+            $scope.applyFilter();
+          }).catch(console.error);
+        });
+      },
+      toggleRole = function (role, denySelfRevocation) {
+        var hasRoleProp = 'is' + role.charAt(0).toUpperCase() + role.substr(1).toLowerCase();
+        denySelfRevocation = denySelfRevocation || false;
 
-        function getUsers() {
-          var toIdList = function(userList) {
-            return userList.map(function (user) {
-              return user.id;
-            });
-          };
-          AuthService.getUserId().then(function(userId) {
-            $q.all(
-              [
-                Conference.attendees({id: $stateParams.conferenceId}).$promise,
-                Conference.chairs({id: $stateParams.conferenceId}).$promise.then(toIdList),
-                Conference.authors({id: $stateParams.conferenceId}).$promise.then(toIdList),
-                Conference.reviewer({id: $stateParams.conferenceId}).$promise.then(toIdList)
-              ]
-            ).then(function (userLists) {
-              $scope.userList = userLists[0].map(function (user) {
-                user.isChair = userLists[1].indexOf(user.id) !== -1;
-                user.isAuthor = userLists[2].indexOf(user.id) !== -1;
-                user.isReviewer = userLists[3].indexOf(user.id) !== -1;
-                user.isMe = (user.id === userId);
-                return user;
-              });
-              $scope.applyFilter();
-            }).catch(console.error);
-          });
-        }
-        getUsers();
-
-        $scope.changeAuthor = function(user) {
-          if (user.isAuthor) {
-            User
-              .author
-              .link({id: user.id, fk: $stateParams.conferenceId},
-                {conferenceId: $stateParams.conferenceId})
-              .$promise.then(function () {
-                getUsers();
-            });
-          } else {
-            User
-              .author
-              .unlink({id: user.id, fk: $stateParams.conferenceId},
-                {conferenceId: $stateParams.conferenceId})
-              .$promise.then(function () {
-                getUsers();
-            })
+        return function (user) {
+          if (denySelfRevocation && user.isMe) {
+            user[hasRoleProp] = !user[hasRoleProp]
+            return;
           }
-        };
 
-        $scope.changeReviewer = function(user) {
-          if (user.isReviewer) {
-            User
-              .reviewer
-              .link({id: user.id, fk: $stateParams.conferenceId},
-                {conferenceId: $stateParams.conferenceId})
-              .$promise.then(function () {
-              getUsers();
-            });
-          } else {
-            User
-              .reviewer
-              .unlink({id: user.id, fk: $stateParams.conferenceId},
-                {conferenceId: $stateParams.conferenceId})
-              .$promise.then(function () {
-              getUsers();
-            })
-          }
-        };
-
-        $scope.changeChair = function(user) {
-          AuthService.getUserId().then(function(userId) {
-            if (user.id == userId) {
-              return;
-            }
-            if (user.isChair) {
-              User
-                .chair
-                .link({id: user.id, fk: $stateParams.conferenceId},
-                  {conferenceId: $stateParams.conferenceId})
-                .$promise.then(function () {
-                getUsers();
+          var linkFn = user[hasRoleProp] ? User[role].link : User[role].unlink;
+          linkFn({ id: user.id, fk: $state.params.conferenceId }, {}).$promise.then(function () {
+            if (user.isMe) {
+              AuthService.invalidate().finally(function () {
+                $state.go($state.current.name, $state.params, { reload: true });
               });
             } else {
-              User
-                .chair
-                .unlink({id: user.id, fk: $stateParams.conferenceId},
-                  {conferenceId: $stateParams.conferenceId})
-                .$promise.then(function () {
-                getUsers();
-              })
+              getUsers();
             }
           });
         };
+      };
+
+    $scope.filteredUserList = [];
+    $scope.filter = {};
+    $scope.toggleAuthor = toggleRole('author');
+    $scope.toggleReviewer = toggleRole('reviewer');
+    $scope.toggleChair = toggleRole('chair', true);
+
+    $scope.applyFilter = function() {
+      $scope.filteredUserList = userList
+        .filter(function(u) { return $scope.filter.isAuthor ? u.isAuthor : true; })
+        .filter(function(u) { return $scope.filter.isReviewer ? u.isReviewer : true; })
+        .filter(function(u) { return $scope.filter.isChair ? u.isChair : true; });
+    };
+
+    getUsers();
   }]);

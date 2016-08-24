@@ -1,11 +1,11 @@
 angular
   .module('app')
-  .controller('ReviewOverviewController', ['$q', '$scope', '$state', 'Review', 'AuthService', 'User', 'Submission', '$stateParams',
-    function($q, $scope, $state, Review, AuthService, User, Submission, $stateParams) {
+  .controller('ReviewOverviewController', ['$q', '$scope', '$state', 'Review', 'AuthService', 'ConferenceService', 'User', 'Submission', '$stateParams',
+    function($q, $scope, $state, Review, AuthService, ConferenceService, User, Submission, $stateParams) {
 
       $scope.reviews = [];
 
-      AuthService.isReviewPhase().then(function(b) {
+      ConferenceService.isReviewPhase().then(function(b) {
         $scope.isReviewPhase = b;
       });
 

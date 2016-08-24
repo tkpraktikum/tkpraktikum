@@ -1,0 +1,22 @@
+<div class="row content-no-header">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">{{user.username}}</h2>
+        </div>
+        <div class="panel-body">
+          <p><b>Title: </b>{{user.title}}</p>
+          <p><b>Firstname: </b>{{user.firstname}}</p>
+          <p><b>Lastname: </b>{{user.lastname}}</p>
+          <p><b>Profession: </b>{{user.profession}}</p>
+          <div ng-show="user.affiliation">
+            <p><b>Affiliation: </b>{{user.affiliation.name}}</p>
+            <p><b>City: </b>{{user.affiliation.city}}</p>
+            <p><b>Country: </b>{{user.affiliation.country}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

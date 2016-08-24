@@ -1,22 +1,22 @@
 angular
   .module('app')
-  .controller('HeaderController', ['$scope', '$stateParams', '$state', 'User', 'AuthService',
-      function($scope, $stateParams, $state, User, AuthService) {
+  .controller('HeaderController', ['$scope', '$stateParams', '$state', 'User', 'AuthService', 'ConferenceService',
+      function($scope, $stateParams, $state, User, AuthService, ConferenceService) {
     $scope.user = {};
     $scope.conferences = [];
-    $scope.currentConferenceId = AuthService.getCurrentConferenceId();
-
-    AuthService.isSubmissionPhase().then(function(b) {
-      $scope.isSubmissionPhase = b;
-    });
+    $scope.currentConferenceId = ConferenceService.getCurrentConferenceId();
 
     $scope.changeConference = function(conferenceId) {
-      AuthService.setCurrentConferenceId(conferenceId);
+      ConferenceService.setCurrentConferenceId(conferenceId);
       $scope.currentConferenceId = conferenceId;
       $state.go('app.protected.conference.home', {
         conferenceId: conferenceId
       }, {reload: true});
     };
+
+    ConferenceService.isSubmissionPhase().then(function(b) {
+      $scope.isSubmissionPhase = b;
+    });
 
     AuthService.getUser().then(function (userData) {
       $scope.user = userData;

@@ -1,15 +1,15 @@
 angular
   .module('app')
   .controller('SubmissionController',
-      ['$q', '$scope', '$anchorScroll', '$state', 'Submission', 'Tag',
-       'AuthService', 'Submissiontag', 'Authorship', 'User', 'Conference', 'FileUpload',
-      function($q, $scope, $anchorScroll, $state, Submission, Tag,
-        AuthService, Submissiontag, Authorship, User, Conference, FileUpload) {
+      ['$q', '$scope', '$anchorScroll', '$state', 'Submission', 'Tag', 'AuthService', 'ConferenceService',
+      'SessionService', 'Submissiontag', 'Authorship', 'User', 'Conference', 'FileUpload',
+      function($q, $scope, $anchorScroll, $state, Submission, Tag, AuthService, ConferenceService,
+        SessionService, Submissiontag, Authorship, User, Conference, FileUpload) {
 
-    AuthService.isSubmissionPhase().then(function(b) {
+    ConferenceService.isSubmissionPhase().then(function(b) {
       $scope.isSubmissionPhase = b;
     });
-    AuthService.reviewsDone().then(function(b) {
+    ConferenceService.reviewsDone().then(function(b) {
       $scope.reviewsDone = b;
     });
 
@@ -185,7 +185,7 @@ angular
 
     $scope.deleteSubmission = function(submissionId) {
       deleteSubmission(submissionId).then(function() {
-        AuthService.setFlash('Submission was deleted successfully!');
+        SessionService.setFlash('Submission was deleted successfully!');
         $state.go($state.current, $state.params, {reload: true});
       });
     };
@@ -210,9 +210,9 @@ angular
 
         // On success: Redirect user to submission overview
         $q.all(submissiontags.concat(authorships).concat([file])).then(function () {
-          AuthService.setFlash('Submission was created successfully!');
+          SessionService.setFlash('Submission was created successfully!');
         }, function (err) {
-          AuthService.setFlash('ERROR: Submission could not be created!');
+          SessionService.setFlash('ERROR: Submission could not be created!');
           return deleteSubmission(submission.id);
         }).finally(function () {
           $state.go('app.protected.conference.submission.list', {
@@ -271,9 +271,9 @@ angular
       }
 
       $q.all(pendingPromises).then(function() {
-        AuthService.setFlash('Submission was updated successfully!');
+        SessionService.setFlash('Submission was updated successfully!');
       }, function (err) {
-        AuthService.setFlash('ERROR: Submission could not be updated!');
+        SessionService.setFlash('ERROR: Submission could not be updated!');
       }).finally(function () {
         $state.go('app.protected.conference.submission.list', {
           conferenceId: conferenceId

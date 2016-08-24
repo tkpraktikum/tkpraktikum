@@ -2,32 +2,28 @@ angular
   .module('app')
   .controller('ProfileController', ['$scope', '$state', 'AuthService', 'Affiliation', 'User', 'uiGmapGoogleMapApi', function ($scope, $state, AuthService, Affiliation, User, uiGmapGoogleMapApi) {
 
-
-    uiGmapGoogleMapApi.then(function(maps) {
-      $scope.geocoder = new google.maps.Geocoder();
-    });
-
     var refreshMap = function(address) {
-      if ($scope.geocoder) {
-        $scope.geocoder.geocode({'address': address}, function(results, status) {
-          if (status === google.maps.GeocoderStatus.OK) {
-            $scope.changeUserProfile.lat = results[0].geometry.location.lat();
-            $scope.changeUserProfile.lng = results[0].geometry.location.lng();
-            $scope.map.markers = [{
-              id: 'home',
-              coords: {
-                latitude: results[0].geometry.location.lat(),
-                longitude: results[0].geometry.location.lng()
-              }
-            }];
-            var ll = new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng());
-            $scope.map.control.getGMap().panTo(ll);
-          } else {
-            console.log('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-    };
+        if ($scope.geocoder) {
+          $scope.geocoder.geocode({'address': address}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+              $scope.changeUserProfile.lat = results[0].geometry.location.lat();
+              $scope.changeUserProfile.lng = results[0].geometry.location.lng();
+              $scope.map.markers = [{
+                id: 'home',
+                coords: {
+                  latitude: results[0].geometry.location.lat(),
+                  longitude: results[0].geometry.location.lng()
+                }
+              }];
+              var ll = new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng());
+              $scope.map.control.getGMap().panTo(ll);
+            } else {
+              console.log('Geocode was not successful for the following reason: ' + status);
+            }
+          });
+        }
+      },
+      attributes = ['title', 'email', 'lng', 'lat', 'username', 'firstname', 'lastname', 'profession', 'affiliationId', 'street', 'zip', 'city', 'state', 'country'];
 
     $scope.lastTrigger = 0;
     $scope.triggerRefresh = function() {
@@ -41,16 +37,13 @@ angular
               + ' ' + $scope.changeUserProfile.city
               + ' ' + $scope.changeUserProfile.state
               + ' ' + $scope.changeUserProfile.country;
-            console.log(address);
+
             refreshMap(address);
           }
         };
       })(), 1500);
     };
 
-    $scope.map = { control: {}, center: { latitude: 49.877613, longitude: 8.654847 }, zoom: 14 };
-
-    var attributes = ['title', 'email', 'lng', 'lat', 'username', 'firstname', 'lastname', 'profession', 'affiliation', 'street', 'zip', 'city', 'state', 'country'];
     $scope.user = {};
     $scope.affiliations = [];
     $scope.changeUserProfile = {};
@@ -58,9 +51,11 @@ angular
     $scope.deleteUserProfile = {};
     $scope.changeCaret = false;
     $scope.selected = {};
+    $scope.map = { control: {}, center: { latitude: 49.877613, longitude: 8.654847 }, zoom: 14 };
 
     Affiliation.find().$promise.then(function (affiliations) {
       $scope.affiliations = affiliations;
+
       AuthService.getUser().then(function (userData) {
         $scope.user = userData;
         if ($scope.user.lat) {
@@ -81,8 +76,9 @@ angular
         }
         attributes.map(function(p) {
           $scope.changeUserProfile[p] = userData[p] || '';
-          if (p === 'affiliation' && userData[p]) {
-            $scope.selected.selectedAffiliation = affiliations.filter(function(a) { return a.id == userData[p]; })[0];
+
+          if (p === 'affiliationId' && userData[p]) {
+            $scope.selected.selectedAffiliation = _(affiliations).findWhere({ id: userData[p] });
           }
         });
       });
@@ -90,13 +86,13 @@ angular
 
     $scope.changeProfile = function () {
       var updates = {};
-      $scope.changeUserProfile.affiliation = $scope.selected.selectedAffiliation.id;
+      $scope.changeUserProfile.affiliationId = $scope.selected.selectedAffiliation.id;
       attributes.map(function(p) {
         if ($scope.changeUserProfile[p] !== $scope.user[p]) {
           updates[p] = $scope.changeUserProfile[p];
         }
       });
-      console.log(updates);
+
       User.prototype$updateAttributes({id: $scope.user.id}, updates).$promise.then(function() {
         $scope.showSuccess = true;
       });
@@ -118,5 +114,8 @@ angular
       }
     };
 
+    uiGmapGoogleMapApi.then(function(maps) {
+      $scope.geocoder = new google.maps.Geocoder();
+    });
   }]);
 

@@ -2,14 +2,21 @@ var logger = require('winston');
 var commonNames = require('./commonNames.json');
 
 module.exports = function(app, ds, callback) {
-  var conferences = [],
+app.models.affiliation.find({fields: ['id']}, function (err, affiliations) {
+
+  var affiliationIds = affiliations.map(function (a) { return a.id; }),
+    randomAffiliationId = function() {
+      return Math.floor(Math.random() * (affiliationIds.length));
+    },
+    conferences = [],
     author = {
       firstname: 'Anton',
       lastname: 'Autor',
       username: 'author',
       password: 'tk',
       email: 'author1@chair.de',
-      emailVerified: true
+      emailVerified: true,
+      affiliationId: randomAffiliationId()
     },
     chairs = [
       {
@@ -18,7 +25,8 @@ module.exports = function(app, ds, callback) {
         username: 'chair',
         password: 'chair',
         email: 'chairman1@chair.de',
-        emailVerified: true
+        emailVerified: true,
+        affiliationId: randomAffiliationId()
       },
       {
         firstname: 'Max',
@@ -26,23 +34,26 @@ module.exports = function(app, ds, callback) {
         username: 'chairman2',
         password: 'tk',
         email: 'chairman2@chair.de',
-        emailVerified: true
+        emailVerified: true,
+        affiliationId: randomAffiliationId()
       }
     ],
     attendees = new Array(100);
-    for(var i=0; i < 100; i++) {
-      var firstName = commonNames.firstNames[Math.floor(Math.random() * commonNames.firstNames.length)],
-          lastName = commonNames.lastNames[Math.floor(Math.random() * commonNames.lastNames.length)];
-      lastName = lastName.slice(0,1) + lastName.slice(1).toLowerCase();
-      attendees[i] = {
-        username: firstName + lastName,
-        firstname: firstName,
-        lastname: lastName,
-        email: firstName + '.' + lastName + '@gmail.com',
-        password: 'geheim',
-        emailVerified: true
-      }
+
+  for(var i=0; i < 100; i++) {
+    var firstName = commonNames.firstNames[Math.floor(Math.random() * commonNames.firstNames.length)],
+        lastName = commonNames.lastNames[Math.floor(Math.random() * commonNames.lastNames.length)];
+    lastName = lastName.slice(0,1) + lastName.slice(1).toLowerCase();
+    attendees[i] = {
+      username: firstName + lastName,
+      firstname: firstName,
+      lastname: lastName,
+      email: firstName + '.' + lastName + '@gmail.com',
+      password: 'geheim',
+      emailVerified: true,
+      affiliationId: randomAffiliationId()
     }
+  }
 
   app.models.conference.find({}, function (err, results) {
     results.map(function (conference, idx) {
@@ -113,4 +124,6 @@ module.exports = function(app, ds, callback) {
       });
     });
   });
+
+});
 };
