@@ -33,17 +33,17 @@
           <div class="row">
             <div class="col-xs-4" style="text-align: center">
               <span>Author</span>
-              <input id="author-{{u.id}}" ng-model="u.isAuthor" type="checkbox" class="tgl tgl-ios" ng-change="changeAuthor(u)"/>
+              <input id="author-{{u.id}}" ng-model="u.isAuthor" type="checkbox" class="tgl tgl-ios" ng-change="toggleAuthor(u)"/>
               <label for="author-{{u.id}}" class="tgl-btn"></label>
             </div>
             <div class="col-xs-4" style="text-align: center">
               <span>Reviewer</span>
-              <input id="reviewer-{{u.id}}" ng-model="u.isReviewer" type="checkbox" class="tgl tgl-ios" ng-change="changeReviewer(u)"/>
+              <input id="reviewer-{{u.id}}" ng-model="u.isReviewer" type="checkbox" class="tgl tgl-ios" ng-change="toggleReviewer(u)"/>
               <label for="reviewer-{{u.id}}" class="tgl-btn"></label>
             </div>
             <div class="col-xs-4" style="text-align: center">
               <span>Chair</span>
-              <input id="chair-{{u.id}}" ng-model="u.isChair" type="checkbox" class="tgl tgl-ios" ng-change="changeChair(u)"/>
+              <input id="chair-{{u.id}}" ng-model="u.isChair" type="checkbox" class="tgl tgl-ios" ng-change="toggleChair(u)"/>
               <label for="chair-{{u.id}}" class="tgl-btn"></label>
             </div>
           </div>

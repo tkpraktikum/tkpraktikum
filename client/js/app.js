@@ -229,10 +229,31 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
   }])
-.factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
+.factory('ConferenceService', [function () {
+  var currentConferenceId = null;
+
+  return {
+    getCurrentConferenceId: function () {
+      return currentConferenceId;
+    },
+    setCurrentConferenceId: function (conferenceId) {
+      currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
+    }
+  };
+}])
+.factory('SessionService', [function () {
+  var flashMessage = null;
+
+  return {
+    hasFlash: function () { return !!flashMessage; },
+    getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
+    setFlash: function (msg) { flashMessage = msg; },
+    destroy: function () { flashMessage = null; }
+  };
+}])
+.factory('AuthService', ['$q', 'LoopBackAuth', 'User', 'ConferenceService', 'SessionService',
+    function ($q, LoopBackAuth, User, ConferenceService, SessionService) {
   var user,
-    currentConferenceId = null,
-    flashMessage = null,
     login = function (username, password, rememberMe) {
       return user = User.login({
           username: username,
@@ -246,56 +267,40 @@ angular
       return User.logout().$promise.then(function () {
         // LoopBackAuth.clearUser();
         // LoopBackAuth.clearStorage();
-        currentConferenceId = null;
-        flashMessage = null;
+        ConferenceService.setCurrentConferenceId(null);
+        SessionService.destroy();
         user = $q.reject();
       });
     },
     hasRole = function (role) {
-      return user.then(
-        function (user) {
-          if (user[role]) {
-            for (idx in user[role]) {
-              if (user[role][idx].id === currentConferenceId) return $q.resolve();
-            }
-          }
-
-          return $q.reject();
-        },
-        function () { return $q.reject(); }
-      );
+      return user.then(function (user) {
+        return _(user[role]).findWhere({ id: ConferenceService.getCurrentConferenceId() }) ?
+          $q.resolve() : $q.reject();
+      }, function () {
+        return $q.reject();
+      });
     },
     isAuthenticated = User.isAuthenticated.bind(User),
     retrieveUserWithRoles = function (userId) {
-      var user = User.findById({
-          id: userId,
-          filter: {
-            include: ['reviewer', 'author', 'attendee', 'chair'].map(function (role) {
-              return { relation: role, scope: { fields: ['id'] }};
-            })
-          }
-        }).$promise;
+      var user = User.findById({id: userId, filter: {
+        include: ['reviewer', 'author', 'attendee', 'chair'].map(function (role) {
+          return { relation: role, scope: { fields: ['id'] }};
+        })
+      }}).$promise;
 
       user.then(function (model) {
-        setCurrentConferenceId(model.defaultConferenceId);
+        ConferenceService.setCurrentConferenceId(model.defaultConferenceId);
       });
 
       return user;
     },
-    getCurrentConferenceId = function () {
-      return currentConferenceId;
-    },
-    setCurrentConferenceId = function (conferenceId) {
-      if (conferenceId) {
-        currentConferenceId = parseInt(conferenceId, 10);
-      } else {
-        currentConferenceId = null;
-      }
+    init = function () {
+      return user = isAuthenticated() ?
+        retrieveUserWithRoles(LoopBackAuth.currentUserId) :
+        $q.reject();
     };
 
-  user = isAuthenticated() ?
-    retrieveUserWithRoles(LoopBackAuth.currentUserId) :
-    $q.reject();
+  init();
 
   return {
     login: login,
@@ -305,11 +310,7 @@ angular
     getUserId: function () { return user.then(function (user) { return user.id; }); },
     getAccessTokenId: function () { return LoopBackAuth.accessTokenId; },
     isAuthenticated: isAuthenticated,
-    getCurrentConferenceId: getCurrentConferenceId,
-    setCurrentConferenceId: setCurrentConferenceId,
-    hasFlash: function () { return !!flashMessage; },
-    getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
-    setFlash: function (msg) { flashMessage = msg; }
+    invalidate : init
   };
 }])
 // https://gist.github.com/thomseddon/3511330

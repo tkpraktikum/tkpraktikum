@@ -1,13 +1,13 @@
 angular
   .module('app')
-  .controller('HeaderController', ['$scope', '$stateParams', '$state', 'User', 'AuthService',
-      function($scope, $stateParams, $state, User, AuthService) {
+  .controller('HeaderController', ['$scope', '$stateParams', '$state', 'User', 'AuthService', 'ConferenceService',
+      function($scope, $stateParams, $state, User, AuthService, ConferenceService) {
     $scope.user = {};
     $scope.conferences = [];
-    $scope.currentConferenceId = AuthService.getCurrentConferenceId();
+    $scope.currentConferenceId = ConferenceService.getCurrentConferenceId();
 
     $scope.changeConference = function(conferenceId) {
-      AuthService.setCurrentConferenceId(conferenceId);
+      ConferenceService.setCurrentConferenceId(conferenceId);
       $scope.currentConferenceId = conferenceId;
       $state.go('app.protected.conference.home', {
         conferenceId: conferenceId
