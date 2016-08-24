@@ -32,9 +32,9 @@
     "authors": {
       "type": "hasMany",
       "model": "user",
+      "foreignKey": "submissionId",
       "through": "authorship",
-      "keyThrough": "authorId",
-      "foreignKey": "submissionId"
+      "keyThrough": "authorId"
     },
     "reviewers": {
       "type": "hasMany",
@@ -54,8 +54,6 @@
       "foreignKey": "submissionId"
     }
   },
-  "acls": [
-
-  ],
+  "acls": [],
   "methods": {}
 }

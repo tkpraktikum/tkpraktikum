@@ -27,7 +27,7 @@
     <div class="col-md-4" ng-repeat="u in filteredUserList | filter:filterUser">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><span class="highlight">{{u.lastname}}, {{u.firstname}}</span></h3>
+          <h3 class="panel-title"><a ui-sref="app.protected.user.view({userId: u.id})"><span class="highlight">{{u.lastname}}, {{u.firstname}}</span></a></h3>
         </div>
         <div class="panel-body">
           <div class="row">

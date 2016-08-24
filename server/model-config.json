@@ -54,10 +54,6 @@
     "dataSource": "postgres",
     "public": true
   },
-  "useraffiliation": {
-    "dataSource": "postgres",
-    "public": false
-  },
   "conference": {
     "dataSource": "postgres",
     "public": true

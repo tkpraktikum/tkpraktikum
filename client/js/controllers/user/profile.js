@@ -2,7 +2,7 @@ angular
   .module('app')
   .controller('ProfileController', ['$scope', '$state', 'AuthService', 'Affiliation', 'User', function ($scope, $state, AuthService, Affiliation, User) {
 
-    var attributes = ['title', 'email', 'username', 'firstname', 'lastname', 'profession', 'affiliation', 'zip', 'city', 'state', 'country'];
+    var attributes = ['title', 'email', 'username', 'firstname', 'lastname', 'profession', 'affiliationId', 'zip', 'city', 'state', 'country'];
     $scope.user = {};
     $scope.affiliations = [];
     $scope.changeUserProfile = {};
@@ -13,12 +13,14 @@ angular
 
     Affiliation.find().$promise.then(function (affiliations) {
       $scope.affiliations = affiliations;
+
       AuthService.getUser().then(function (userData) {
         $scope.user = userData;
         attributes.map(function(p) {
           $scope.changeUserProfile[p] = userData[p] || '';
-          if (p === 'affiliation' && userData[p]) {
-            $scope.selected.selectedAffiliation = affiliations.filter(function(a) { return a.id == userData[p]; })[0];
+
+          if (p === 'affiliationId' && userData[p]) {
+            $scope.selected.selectedAffiliation = _(affiliations).findWhere({ id: userData[p] });
           }
         });
       });
@@ -26,13 +28,13 @@ angular
 
     $scope.changeProfile = function () {
       var updates = {};
-      $scope.changeUserProfile.affiliation = $scope.selected.selectedAffiliation.id;
+      $scope.changeUserProfile.affiliationId = $scope.selected.selectedAffiliation.id;
       attributes.map(function(p) {
         if ($scope.changeUserProfile[p] !== $scope.user[p]) {
           updates[p] = $scope.changeUserProfile[p];
         }
       });
-      console.log(updates);
+
       User.prototype$updateAttributes({id: $scope.user.id}, updates).$promise.then(function() {
         $scope.showSuccess = true;
       });
