@@ -9,6 +9,21 @@ angular
       subDeadline.datetimepicker();
       revDeadline.datetimepicker();
 
+      var updateMinMaxSub = function() {
+        if (revDeadline.data("DateTimePicker").date()) {
+          subDeadline.data("DateTimePicker").maxDate(revDeadline.data("DateTimePicker").date().add(-1, 'days').endOf('day'));
+        }
+      };
+
+      var updateMinMaxRev = function() {
+        if (subDeadline.data("DateTimePicker").date()) {
+          revDeadline.data("DateTimePicker").minDate(subDeadline.data("DateTimePicker").date().add(1, 'days').startOf('day'));
+        }
+      };
+
+      subDeadline.on('dp.change', updateMinMaxRev);
+      revDeadline.on('dp.change', updateMinMaxSub);
+
       var hideIcons = ["guide", "fullscreen", "side-by-side"];
       $scope.conferenceDescriptionEditor = new SimpleMDE({ hideIcons: hideIcons, element: document.getElementById("conferenceDescription") });
 
@@ -29,6 +44,9 @@ angular
         subDeadline.data("DateTimePicker").date(moment(Date.now()));
         revDeadline.data("DateTimePicker").date(moment(Date.now() + 3600000 * 24));
       }
+
+      updateMinMaxSub();
+      updateMinMaxRev();
 
       $scope.create = function() {
         $scope.conference.submissionDeadline = subDeadline.data("DateTimePicker").date().valueOf();
