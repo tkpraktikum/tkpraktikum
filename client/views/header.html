@@ -17,7 +17,7 @@
         <li class="dropdown" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Submissions <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.conference.submission.create({conferenceId: currentConferenceId})">Create</a></li>
+            <li ng-show="isSubmissionPhase" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.conference.submission.create({conferenceId: currentConferenceId})">Create</a></li>
             <li ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.conference.submission.list({conferenceId: currentConferenceId})">Show</a></li>
           </ul>
         </li>

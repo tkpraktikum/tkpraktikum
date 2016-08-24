@@ -6,8 +6,12 @@ angular
       function($q, $scope, $anchorScroll, $state, Submission, Tag,
         AuthService, Submissiontag, Authorship, User, Conference, FileUpload) {
 
-    $scope.isSubmissionPhase = AuthService.isSubmissionPhase();
-    $scope.reviewsDone = AuthService.reviewsDone();
+    AuthService.isSubmissionPhase().then(function(b) {
+      $scope.isSubmissionPhase = b;
+    });
+    AuthService.reviewsDone().then(function(b) {
+      $scope.reviewsDone = b;
+    });
 
     var submissionId = parseInt($state.params.submissionId, 10),
       conferenceId = $state.params.conferenceId,

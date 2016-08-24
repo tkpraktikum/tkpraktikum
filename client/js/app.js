@@ -315,9 +315,7 @@ angular
     },
     refreshConferenceInfo = function() {
       if (currentConferenceId) {
-        Conference.findById({id: currentConferenceId}).$promise.then(function (c) {
-          currentConference = c;
-        });
+        currentConference = Conference.findById({id: currentConferenceId}).$promise;
       }
     },
     getCurrentConferenceId = function () {
@@ -331,15 +329,27 @@ angular
         currentConferenceId = null;
       }
     }, isSubmissionPhase = function() {
-      return  (currentConference &&
-        (currentConference.forceSubmission || (new Date(currentConference.submissionDeadline)).getTime() > Date.now()));
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now());
+      });
     }, isReviewPhase = function() {
-      return  (currentConference &&
-      (currentConference.forceReview || (new Date(currentConference.reviewDeadline)).getTime() > Date.now())
-      && (currentConference.forceSubmission || (new Date(currentConference.submissionDeadline)).getTime() < Date.now()));
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now())
+          && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
+      });
     }, reviewsDone = function() {
-      return  (currentConference &&
-      (currentConference.forceReview || (new Date(currentConference.reviewDeadline)).getTime() < Date.now()));
+      if (!currentConference) {
+        return $q.reject();
+      }
+      return currentConference.then(function(c) {
+        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() < Date.now());
+      });
     };
 
   user = isAuthenticated() ?

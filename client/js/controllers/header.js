@@ -6,6 +6,10 @@ angular
     $scope.conferences = [];
     $scope.currentConferenceId = AuthService.getCurrentConferenceId();
 
+    AuthService.isSubmissionPhase().then(function(b) {
+      $scope.isSubmissionPhase = b;
+    });
+
     $scope.changeConference = function(conferenceId) {
       AuthService.setCurrentConferenceId(conferenceId);
       $scope.currentConferenceId = conferenceId;
