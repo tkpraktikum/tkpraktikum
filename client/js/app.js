@@ -259,8 +259,9 @@ angular
         data: { permissions: { only: ['CHAIR'] }}
       })
   }])
-.factory('AuthService', ['$q', 'LoopBackAuth', 'User', function ($q, LoopBackAuth, User) {
+.factory('AuthService', ['$q', 'LoopBackAuth', 'User', 'Conference', function ($q, LoopBackAuth, User, Conference) {
   var user,
+    currentConference = null,
     currentConferenceId = null,
     flashMessage = null,
     login = function (username, password, rememberMe) {
@@ -312,15 +313,33 @@ angular
 
       return user;
     },
+    refreshConferenceInfo = function() {
+      if (currentConferenceId) {
+        Conference.findById({id: currentConferenceId}).$promise.then(function (c) {
+          currentConference = c;
+        });
+      }
+    },
     getCurrentConferenceId = function () {
       return currentConferenceId;
     },
     setCurrentConferenceId = function (conferenceId) {
       if (conferenceId) {
         currentConferenceId = parseInt(conferenceId, 10);
+        refreshConferenceInfo();
       } else {
         currentConferenceId = null;
       }
+    }, isSubmissionPhase = function() {
+      return  (currentConference &&
+        (currentConference.forceSubmission || (new Date(currentConference.submissionDeadline)).getTime() > Date.now()));
+    }, isReviewPhase = function() {
+      return  (currentConference &&
+      (currentConference.forceReview || (new Date(currentConference.reviewDeadline)).getTime() > Date.now())
+      && (currentConference.forceSubmission || (new Date(currentConference.submissionDeadline)).getTime() < Date.now()));
+    }, reviewsDone = function() {
+      return  (currentConference &&
+      (currentConference.forceReview || (new Date(currentConference.reviewDeadline)).getTime() < Date.now()));
     };
 
   user = isAuthenticated() ?
@@ -339,7 +358,10 @@ angular
     setCurrentConferenceId: setCurrentConferenceId,
     hasFlash: function () { return !!flashMessage; },
     getFlash: function () { var m = flashMessage; flashMessage = null; return m || ''; },
-    setFlash: function (msg) { flashMessage = msg; }
+    setFlash: function (msg) { flashMessage = msg; },
+    isSubmissionPhase: isSubmissionPhase,
+    isReviewPhase: isReviewPhase,
+    reviewsDone: reviewsDone
   };
 }])
 // https://gist.github.com/thomseddon/3511330
