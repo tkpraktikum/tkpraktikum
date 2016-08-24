@@ -14,6 +14,10 @@ angular
       }, {reload: true});
     };
 
+    ConferenceService.isSubmissionPhase().then(function(b) {
+      $scope.isSubmissionPhase = b;
+    });
+
     AuthService.getUser().then(function (userData) {
       $scope.user = userData;
       User.attendee({id: $scope.user.id}).$promise.then(function(conferences) {
