@@ -12,8 +12,8 @@
       <div class='col-xs-12'>
         <div class="form-group">
           <label class="control-label" for="sharedSecret">Submission Deadline</label>
-          <div class='input-group date' id='submissionDeadline'>
-            <input type='text' class="form-control"/>
+          <div class='input-group date'>
+            <input type='text' class="form-control" id='submissionDeadline'/>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -23,14 +23,16 @@
     </div>
     <div class="row">
       <div class='col-xs-12'>
-        <div class="form-group">
+        <div class="form-group"
+             ng-class="{ 'has-error': reviewDeadlineError }">
           <label class="control-label" for="sharedSecret">Review Deadline</label>
-          <div class='input-group date' id='reviewDeadline'>
-            <input type='text' class="form-control" />
+          <div class='input-group date'>
+            <input type='text' class="form-control" id='reviewDeadline' name="reviewDeadline"/>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
+          <div ng-show="reviewDeadlineError">Review date must be later than submission date</div>
         </div>
       </div>
     </div>
