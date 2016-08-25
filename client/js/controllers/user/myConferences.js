@@ -1,7 +1,7 @@
 angular
   .module('app')
-  .controller('MyConferencesController', ['$q', '$scope', '$state', '$http' , 'AuthService', 'User', 'Conference',
-    function($q, $scope, $state, $http, AuthService, User, Conference) {
+  .controller('MyConferencesController', ['$q', '$scope', '$state', '$http' , 'AuthService', 'User', 'Conference', 'ConferenceService',
+    function($q, $scope, $state, $http, AuthService, User, Conference, ConferenceService) {
 
       $scope.conferences = [];
 
@@ -24,6 +24,8 @@ angular
               conference.isAuthor = conferenceLists[2].indexOf(conference.id) !== -1;
               conference.isReviewer = conferenceLists[3].indexOf(conference.id) !== -1;
               conference.isDefault = conference.id == user.defaultConferenceId;
+              conference.submissionDeadline = moment(conference.submissionDeadline).format('MMMM Do YYYY, h:mm a');
+              conference.reviewDeadline = moment(conference.reviewDeadline).format('MMMM Do YYYY, h:mm a');
               return conference;
             });
           });
@@ -35,6 +37,14 @@ angular
         AuthService.getUser().then(function(user) {
           User.prototype$updateAttributes({id: user.id}, {defaultConferenceId: id});
         });
+      };
+
+      $scope.changeConference = function(conferenceId) {
+        ConferenceService.setCurrentConferenceId(conferenceId);
+        $scope.currentConferenceId = conferenceId;
+        $state.go('app.protected.conference.home', {
+          conferenceId: conferenceId
+        }, {reload: true});
       };
 
     }]);
