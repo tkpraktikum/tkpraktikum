@@ -41,6 +41,8 @@
           </ul>
         </li>
       </ul>
+      <span class="navbar-text">Submission Deadline: {{submissionDeadline | date:'dd.MM.yyyy'}}</span>
+      <span class="navbar-text">Review Deadline: {{reviewDeadline | date:'dd.MM.yyyy'}}</span>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" ui-sref-active="active" permission permission-only="'USER'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>{{user.firstname}} {{user.lastname}}</span> <span class="caret"></span></a>

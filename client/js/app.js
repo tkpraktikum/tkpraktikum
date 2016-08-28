@@ -296,6 +296,16 @@ angular
     },
     invalidate: function () {
       return setCurrentConferenceId(currentConferenceId);
+    },
+    getSubmissionDeadline: function() {
+      return currentConference.then(function(c) {
+        return new Date(c.submissionDeadline);
+      });
+    },
+    getReviewDeadline: function() {
+      return currentConference.then(function(c) {
+        return new Date(c.reviewDeadline);
+      });
     }
   }
 }])
