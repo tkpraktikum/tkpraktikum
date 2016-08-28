@@ -325,13 +325,9 @@ angular
         });
     },
     logout = function () {
-      return User.logout().$promise.then(function () {
-        // LoopBackAuth.clearUser();
-        // LoopBackAuth.clearStorage();
-        ConferenceService.setCurrentConferenceId(null);
-        SessionService.destroy();
-        user = $q.reject();
-      });
+      LoopBackAuth.clearUser();
+      LoopBackAuth.clearStorage();
+      return $q.resolve();
     },
     hasRole = function (role) {
       return user.then(function (user) {
