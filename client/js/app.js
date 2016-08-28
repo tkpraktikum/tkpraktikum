@@ -380,7 +380,24 @@ angular
     return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
   }
 })
-.run(function($rootScope, $q, PermissionStore, RoleStore, AuthService) {
+.config(function(uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyA3SaBcz7amu_EeQekF4QHmixkf71tFyrE',
+    v: '3',
+    libraries: 'weather,geometry,visualization'
+  })
+})
+.config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
+  showErrorsConfigProvider.showSuccess(true);
+}])
+.config(['markdownConverterProvider', function (markdownConverterProvider) {
+  // options to be passed to Showdown
+  // see: https://github.com/coreyti/showdown#extensions
+  markdownConverterProvider.config({
+    extensions: []
+  });
+}])
+.run(function($rootScope, $q, $stateParams, PermissionStore, RoleStore, AuthService) {
   PermissionStore.definePermission('hasValidSession', function () {
     return AuthService.isAuthenticated();
   });
@@ -394,21 +411,4 @@ angular
   RoleStore.defineRole('AUTHOR', ['hasValidSession', 'author']);
   RoleStore.defineRole('REVIEWER', ['hasValidSession', 'reviewer']);
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
-})
-.config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
-  showErrorsConfigProvider.showSuccess(true);
-}])
-.config(['markdownConverterProvider', function (markdownConverterProvider) {
-  // options to be passed to Showdown
-  // see: https://github.com/coreyti/showdown#extensions
-  markdownConverterProvider.config({
-    extensions: []
-  });
-}])
-.config(function(uiGmapGoogleMapApiProvider) {
-  uiGmapGoogleMapApiProvider.configure({
-    key: 'AIzaSyA3SaBcz7amu_EeQekF4QHmixkf71tFyrE',
-    v: '3',
-    libraries: 'weather,geometry,visualization'
-  });
 });
