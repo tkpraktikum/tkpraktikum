@@ -367,6 +367,17 @@ angular
     invalidate : init
   };
 }])
+.factory('SubmissionStatus', [function () {
+  return {
+    // This flag is set by the author of the submission if he is ready to accept
+    // reviews for his submission. Once set the submission become uneditable for
+    // the author. If not set: Submission is a draft.
+    Final: parseInt('1', 2),
+    // This flag is set by the chair when the submission is approved to be
+    // reviewed.
+    Approved: parseInt('10', 2)
+  }
+}])
 // https://gist.github.com/thomseddon/3511330
 .filter('bytes', function() {
   return function(bytes, precision) {
