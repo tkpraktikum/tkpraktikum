@@ -2,9 +2,9 @@ angular
   .module('app')
   .controller('SubmissionController',
       ['$q', '$scope', '$anchorScroll', '$state', 'Submission', 'Tag', 'AuthService', 'ConferenceService',
-      'SessionService', 'Submissiontag', 'Authorship', 'User', 'Conference', 'FileUpload',
+      'SessionService', 'Submissiontag', 'Authorship', 'User', 'Conference', 'FileUpload', 'SubmissionStatus',
       function($q, $scope, $anchorScroll, $state, Submission, Tag, AuthService, ConferenceService,
-        SessionService, Submissiontag, Authorship, User, Conference, FileUpload) {
+        SessionService, Submissiontag, Authorship, User, Conference, FileUpload, SubmissionStatus) {
 
     ConferenceService.isSubmissionPhase().then(function(b) {
       $scope.isSubmissionPhase = b;
@@ -76,7 +76,13 @@ angular
             id: userId,
             filter: { where: { conferenceId: conferenceId },
             include: ['tags', 'authors', 'documents']}
-          }).$promise;
+          }).$promise.then(function (submissions) {
+            _(submissions).each(function (submission) {
+              submission.isFinal = !!(submission.status & SubmissionStatus.Final);
+            });
+
+            return $scope.submissions = submissions;
+          });
         });
       },
       linkTagsToSubmission = function (submissionId) {
@@ -293,14 +299,27 @@ angular
       }
     };
 
+    $scope.finalize = function (submission) {
+      if (submission.isFinal &&
+          confirm('Once final, your submission cannot be edited anymore. Are you sure to finalize it?')
+      ) {
+        Submission.patchAttributes({
+          id: submission.id,
+          status: submission.status | SubmissionStatus.Final
+        }).$promise.finally(function () {
+          loadAllSubmissions();
+        });
+      } else {
+        // revert checkbox value
+        submission.isFinal = !submission.isFinal;
+      }
+    };
+
     // --------------
     // Initialization
     // --------------
     if ($state.current.name.endsWith('submission.list')) {
-      loadAllSubmissions().then(function(submissions) {
-        $scope.submissions = submissions;
-        // TODO: SHOW UPLOADED DOCUMENTS
-      });
+      loadAllSubmissions();
     }
 
     if ($state.current.name.endsWith('submission.create') ||
