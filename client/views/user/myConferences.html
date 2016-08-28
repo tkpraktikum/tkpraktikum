@@ -7,19 +7,19 @@
             <h3 class="panel-title"><span class="highlight">{{c.name}}</span> <span ng-show="c.isDefault" class="conference-title-default">Default</span></h3>
           </div>
           <div class="panel-body">
-            <b ng-show="c.isChair || c.isAuthor || c.isReviewer">You are:
-              <span ng-show="c.isChair">Chair<span ng-show="c.isAuthor || c.isReviewer">, </span></span>
-              <span ng-show="c.isAuthor">Author<span ng-show="c.isReviewer">, </span></span>
-              <span ng-show="c.isReviewer">Reviewer</span>
+            <b permission permission-only="['CHAIR', 'AUTHOR', 'REVIEWER']">You are:
+              <span permission permission-only="'CHAIR'">Chair<span permission permission-only="['AUTHOR', 'REVIEWER']">, </span></span>
+              <span permission permission-only="'AUTHOR'">Author<span permission permission-only="'REVIEWER'">, </span></span>
+              <span permission permission-only="'REVIEWER'">Reviewer</span>
             </b>
             <div><b>Submission Deadline: </b>{{c.submissionDeadline}}</div>
             <div><b>Review Deadline: </b>{{c.reviewDeadline}}</div>
             <div btf-markdown="c.description"></div>
             <div ng-show="!c.isDefault" class="conference-link" ng-click="setDefault(c.id)"><a>Set Default</a></div>
             <div class="conference-link" ng-click="changeConference(c.id)"><a>Switch to {{c.name}}</a></div>
-            <div ng-show="c.isAuthor" class="conference-link" ui-sref="app.protected.conference.submission.list({conferenceId: c.id})"><a>Show Submissions</a></div>
-            <div ng-show="c.isChair" class="conference-link" ui-sref="app.protected.conference.users({conferenceId: c.id})"><a>Manage Users</a></div>
-            <div ng-show="c.isChair" ui-sref="app.protected.user.conference.manage.edit({conferenceId: c.id})" class="conference-link"><a>Manage Conference</a></div>
+            <div permission permission-only="'AUTHOR'" class="conference-link" ui-sref="app.protected.conference.submission.list({conferenceId: c.id})"><a>Show Submissions</a></div>
+            <div permission permission-only="'CHAIR'" class="conference-link" ui-sref="app.protected.conference.users({conferenceId: c.id})"><a>Manage Users</a></div>
+            <div permission permission-only="'CHAIR'" ui-sref="app.protected.user.conference.manage.edit({conferenceId: c.id})" class="conference-link"><a>Manage Conference</a></div>
           </div>
         </div>
       </div>

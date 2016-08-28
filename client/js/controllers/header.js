@@ -8,8 +8,6 @@ angular
     $scope.submissionDeadline = {};
     $scope.reviewDeadline = {};
 
-        console.log($scope.submissionDeadline);
-
     $scope.changeConference = function(conferenceId) {
       ConferenceService.setCurrentConferenceId(conferenceId);
       $scope.currentConferenceId = conferenceId;

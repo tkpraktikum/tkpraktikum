@@ -12,6 +12,7 @@ app.models.affiliation.find({fields: ['id']}, function (err, affiliations) {
     author = {
       firstname: 'Anton',
       lastname: 'Autor',
+      fullName: 'Anton Author',
       username: 'author',
       password: 'tk',
       email: 'author1@chair.de',
@@ -22,6 +23,7 @@ app.models.affiliation.find({fields: ['id']}, function (err, affiliations) {
       {
         firstname: 'Charlie',
         lastname: 'Chair',
+        fullName: 'Charlie Chair',
         username: 'chair',
         password: 'chair',
         email: 'chairman1@chair.de',
@@ -31,6 +33,7 @@ app.models.affiliation.find({fields: ['id']}, function (err, affiliations) {
       {
         firstname: 'Max',
         lastname: 'Example',
+        fullName: 'Max Example',
         username: 'chairman2',
         password: 'tk',
         email: 'chairman2@chair.de',
@@ -48,6 +51,7 @@ app.models.affiliation.find({fields: ['id']}, function (err, affiliations) {
       username: firstName.toLowerCase() + lastName.toLowerCase(),
       firstname: firstName,
       lastname: lastName,
+      fullName: firstName + ' ' + lastName,
       email: firstName + '.' + lastName + '@gmail.com',
       password: 'geheim',
       emailVerified: true,
