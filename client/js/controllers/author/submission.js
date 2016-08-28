@@ -301,7 +301,7 @@ angular
 
     $scope.finalize = function (submission) {
       if (submission.isFinal &&
-          confirm('Once final, your submission cannot be edited anymore. Are you sure to finalize it?')
+          confirm('Once final, your submission cannot be edited anymore. Finalize it?')
       ) {
         Submission.patchAttributes({
           id: submission.id,

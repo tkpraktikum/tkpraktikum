@@ -388,6 +388,24 @@ angular
     return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
   }
 })
+.filter('submissionStatus', ['SubmissionStatus', function (SubmissionStatus) {
+  return function (number) {
+    var map = {};
+    if (!!(number & SubmissionStatus.Final)) {
+      map.Final = 'label-success';
+    } else {
+      map.Draft = 'label-warning';
+    }
+
+    if (!!(number & SubmissionStatus.Approved)) {
+      map.Approved = 'label-success';
+    } else {
+      map.Unapproved = 'label-warning';
+    }
+
+    return map;
+  };
+}])
 .config(function(uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyA3SaBcz7amu_EeQekF4QHmixkf71tFyrE',

@@ -24,6 +24,13 @@
             <div class="col-md-10"><span ng-repeat="a in s.authors track by $index"><span ng-show="!$first">, </span>{{a.fullName}}</span></div>
           </div>
           <div class="row">
+            <div class="col-md-2"><b>Status:</b></div>
+            <div class="col-md-10">
+              <span class="label" ng-repeat-start="(label, class) in s.status | submissionStatus" ng-class="class" ng-bind="label"></span>
+              <span ng-repeat-end></span><!-- required for spacing between labels -->
+            </div>
+          </div>
+          <div class="row">
             <div class="col-md-2"><b>Abstract:</b></div>
             <div class="col-md-10"><div btf-markdown="s.abstract"></div></div>
           </div>
