@@ -265,40 +265,37 @@ angular
       })
   }])
 .factory('ConferenceService', ['$q', 'Conference', function ($q, Conference) {
-  var currentConferenceId = null, currentConference = null;
+  var currentConferenceId = null, currentConference = null,
+    setCurrentConferenceId = function (conferenceId) {
+      currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
+      currentConference = conferenceId ? Conference.findById({id: currentConferenceId}).$promise : $q.reject();
+
+      return currentConference;
+    };
 
   return {
     getCurrentConferenceId: function () {
       return currentConferenceId;
     },
-    setCurrentConferenceId: function (conferenceId) {
-      currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
-      currentConference = conferenceId ? Conference.findById({id: currentConferenceId}).$promise : null;
-    },
+    setCurrentConferenceId: setCurrentConferenceId,
     isSubmissionPhase: function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
       return currentConference.then(function(c) {
         return (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now());
       });
     },
     isReviewPhase: function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
       return currentConference.then(function(c) {
         return (c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now())
           && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
       });
     },
     reviewsDone: function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
       return currentConference.then(function(c) {
         return (c.forceReview || (new Date(c.reviewDeadline)).getTime() < Date.now());
       });
+    },
+    invalidate: function () {
+      return setCurrentConferenceId(currentConferenceId);
     }
   }
 }])
