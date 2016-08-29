@@ -41,19 +41,19 @@
           </ul>
         </li>
       </ul>
-      <span class="navbar-text" permission permission-only="'USER'">Submission Deadline: {{submissionDeadline | date:'dd.MM.yyyy'}}</span>
-      <span class="navbar-text" permission permission-only="'USER'">Review Deadline: {{reviewDeadline | date:'dd.MM.yyyy'}}</span>
-      <ul class="nav navbar-nav navbar-right">
+      <span class="navbar-text" permission permission-only="'USER'">Submission Deadline: {{submissionDeadline | date:'dd.MM.yyyy - HH:mm'}}</span>
+      <span class="navbar-text" permission permission-only="'USER'">Review Deadline: {{reviewDeadline | date:'dd.MM.yyyy - HH:mm'}}</span>
+      <ul class="nav navbar-nav navbar-right" permission-only="'USER'">
         <li class="dropdown" ui-sref-active="active" permission permission-only="'USER'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>{{user.firstname}} {{user.lastname}}</span> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.profile.edit">Manage Profile</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.profile.edit">Manage Profile</a></li>
             <li role="separator" class="divider"></li>
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.conference.my">My Conferences</a></li>
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.conference.join">Join Conference</a></li>
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.conference.manage.create">Create Conference</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.conference.my">My Conferences</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.conference.join">Join Conference</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.conference.manage.create">Create Conference</a></li>
             <li role="separator" class="divider" ng-show="conferences.length > 0"></li>
-            <li ng-repeat="c in conferences" ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a class="conference-link" ng-click="changeConference(c.id)">{{c.name}}</a></li>
+            <li ng-repeat="c in conferences" ui-sref-active="active" ng-cloak><a class="conference-link" ng-click="changeConference(c.id)">{{c.name}}</a></li>
             <li role="separator" class="divider"></li>
             <li ui-sref-active="active" permission permission-only="'hasValidSession'" ng-cloak><a ui-sref="app.logout">Logout</a></li>
           </ul>
@@ -61,5 +61,4 @@
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
-  </div>
 </nav>

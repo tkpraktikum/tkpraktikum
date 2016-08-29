@@ -52,7 +52,7 @@ angular
       })
       .state('app.about', {
         url: 'about',
-        templateUrl: 'views/about.html',
+        templateUrl: 'views/about.html'
       })
 
       // User area
@@ -75,19 +75,19 @@ angular
         abstract: true,
         url: '/profile',
         templateUrl: 'views/user/profile.html',
-        controller: 'ProfileController',
+        controller: 'ProfileController'
       })
       .state('app.protected.user.profile.edit', {
         url: '/edit',
-        templateUrl: 'views/user/profile.edit.html',
+        templateUrl: 'views/user/profile.edit.html'
       })
       .state('app.protected.user.profile.changePassword', {
         url: '/changePassword',
-        templateUrl: 'views/user/profile.changePassword.html',
+        templateUrl: 'views/user/profile.changePassword.html'
       })
       .state('app.protected.user.profile.delete', {
         url: '/delete',
-        templateUrl: 'views/user/profile.delete.html',
+        templateUrl: 'views/user/profile.delete.html'
       })
       .state('app.protected.user.view', {
         url: '/users/:userId',
@@ -97,12 +97,12 @@ angular
       .state('app.protected.user.conference', {
         url: '/conference',
         abstract: true,
-        template: '<div ui-view></div>',
+        template: '<div ui-view></div>'
       })
       .state('app.protected.user.conference.join', {
         url: '/join',
         templateUrl: 'views/user/joinConference.html',
-        controller: 'JoinConferenceController',
+        controller: 'JoinConferenceController'
       })
       .state('app.protected.user.conference.manage', {
         url: '/manage',
@@ -112,17 +112,17 @@ angular
       .state('app.protected.user.conference.manage.create', {
         templateUrl: 'views/user/manageConference.html',
         controller: 'CreateConferenceController',
-        url: '/create',
+        url: '/create'
       })
       .state('app.protected.user.conference.manage.edit', {
         templateUrl: 'views/user/manageConference.html',
         controller: 'CreateConferenceController',
-        url: '/:conferenceId',
+        url: '/:conferenceId'
       })
       .state('app.protected.user.conference.my', {
         url: '/my',
         templateUrl: 'views/user/myConferences.html',
-        controller: 'MyConferencesController',
+        controller: 'MyConferencesController'
       })
       .state('app.protected.conference', {
         url: 'conference/:conferenceId/',
@@ -272,6 +272,8 @@ angular
 
       return currentConference;
     };
+
+    setCurrentConferenceId();
 
   return {
     getCurrentConferenceId: function () {
