@@ -5,8 +5,8 @@ angular
     $scope.user = {};
     $scope.conferences = [];
     $scope.currentConferenceId = ConferenceService.getCurrentConferenceId();
-    $scope.submissionDeadline = {};
-    $scope.reviewDeadline = {};
+    $scope.submissionDeadline = null;
+    $scope.reviewDeadline = null;
 
     $scope.changeConference = function(conferenceId) {
       ConferenceService.setCurrentConferenceId(conferenceId);

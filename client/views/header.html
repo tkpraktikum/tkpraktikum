@@ -41,8 +41,8 @@
           </ul>
         </li>
       </ul>
-      <span class="navbar-text" permission permission-only="'USER'">Submission Deadline: {{submissionDeadline | date:'dd.MM.yyyy - HH:mm'}}</span>
-      <span class="navbar-text" permission permission-only="'USER'">Review Deadline: {{reviewDeadline | date:'dd.MM.yyyy - HH:mm'}}</span>
+      <span class="navbar-text" permission permission-only="'USER'" ng-if="submissionDeadline != null">Submission Deadline: {{submissionDeadline | date:'dd.MM.yyyy - HH:mm'}}</span>
+      <span class="navbar-text" permission permission-only="'USER'" ng-if="submissionDeadline != null">Review Deadline: {{reviewDeadline | date:'dd.MM.yyyy - HH:mm'}}</span>
       <ul class="nav navbar-nav navbar-right" permission-only="'USER'">
         <li class="dropdown" ui-sref-active="active" permission permission-only="'USER'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>{{user.firstname}} {{user.lastname}}</span> <span class="caret"></span></a>
