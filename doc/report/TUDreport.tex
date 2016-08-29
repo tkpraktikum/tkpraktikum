@@ -37,29 +37,18 @@
 \addtolength{\longtablewidth}{-\marginparsep}
 \addtolength{\longtablewidth}{-\marginparwidth}
 
-
-% \settitlepicture{tudreport-pic}
-% \printpicturesize
-
 \title{Internet Praktikum TK 2016\\ Conference Management System\\ Team Whisky}
 \subtitle{Auel, Tarek,\\ Sahin, Huzeyfe\\ Schanz, Markus}
-%\setinstitutionlogo[width]{TUD_sublogo}
-%\uppertitleback{(\textaccent{\textbackslash uppertitleback})}
-%\lowertitleback{(\textaccent{\textbackslash lowertitleback})\hfill\today}
-%\sponsor{\hfill\includegraphics[height=6ex]{tud_logo}\hspace{1em}\includegraphics[height=6ex]{TUD_chaos}}
 
 
 \begin{document}
 \maketitle
-
-%\begin{abstract}
-%    Some text to be displayed as abstract before the TOC.
-%\end{abstract}
-
 \tableofcontents
-
 \listoffigures
 \addcontentsline{toc}{chapter}{\listfigurename}
+
+
+
 
 \part{Technical Documentation}
 \label{part:tech}
@@ -67,69 +56,48 @@
   \chapter{Introduction}
   \label{ch:tech:intro}
 
-    Praesent justo augue, consequat ac, placerat gravida, ornare vitae, libero. Aliquam erat volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec sodales, odio in volutpat consectetuer, neque neque lobortis mi, quis sagittis felis neque ut ipsum. Nullam nonummy, ligula eget fermentum lobortis, dui dolor congue est, scelerisque cursus pede nibh sit amet felis. Proin malesuada placerat libero. Aliquam bibendum sollicitudin quam. In quis risus quis leo pretium luctus. Vestibulum enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin vitae metus a dui venenatis commodo. Sed eu lacus. Pellentesque et lorem. Ut ut libero vel tellus rutrum varius.
-      \begin{eqnarray}
-        K_{fl}&=&\frac{\lambda\tau}{2(-\chi'\tau)}(1+R)\label{eqn.Kfl}\\
-        K_{ho}&=&\frac{\lambda\tau}{2(-\chi'\tau)}(1+R)
-          \left(1+\left(\frac{\Delta\Omega_{ho}\tau}{\lambda\tau}\right)^2\right)
-          \label{eqn.Kho}\\
-        \lambda\tau&=&
-          \frac{\Delta\Omega_{ho}\,\tau}{\tan\left(\frac{\Delta\Omega_{ho}\,\tau}{2}
-          \right)}\cdot\frac{(1+R)}{(1-R)}\label{eqn.lambda}
-      \end{eqnarray}
-
-    Praesent pharetra erat porta magna. Nulla vestibulum eleifend velit (\ref{eqn.Kfl}). Integer odio. Nam ac dui. Sed auctor, arcu id pharetra pulvinar, dui purus imperdiet tortor, ut egestas ipsum augue nec justo. Cras eu nisl eu urna euismod faucibus. Quisque interdum rhoncus ipsum. Ut libero. Cras ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam imperdiet nisl ac eros. Suspendisse hendrerit, pede nec condimentum ultricies, turpis elit fermentum dui, quis cursus magna nunc eget nisi. Cras porta nulla non ligula. Maecenas orci felis, ultrices quis, scelerisque nec, mollis at, libero. Mauris lectus urna, lacinia eu, tincidunt non, vehicula a, mi. Sed euismod faucibus ligula. Mauris eu libero. Duis ante lectus, pulvinar in, gravida a, sagittis in, odio.
-
-    Maecenas et mi nec elit ornare euismod. Mauris elit nisi, faucibus ac, semper quis, ullamcorper vel, augue. Nunc ligula. Duis eu nibh. Vestibulum egestas, nisi sed pharetra pellentesque, elit nibh aliquet arcu, eu lacinia massa lectus id mi. Nulla diam. Vestibulum fermentum rutrum augue. Vestibulum nunc sapien, euismod vitae, lacinia eget, accumsan id, lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Duis nec mauris eget urna cursus dapibus. Donec sed neque at metus pretium tincidunt. Integer eget enim eget est interdum dignissim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut erat. Vivamus fringilla justo non libero. Donec lectus est, porttitor nec, posuere et, convallis ac, pede. Cras mi mauris, aliquam a, aliquet eget, elementum ut, velit. Morbi posuere blandit turpis. Aenean cursus.
-             \begin{figure}
-                 \centering
-                 \includegraphics[clip,width=0.48\textwidth]{TUDreport-fig}
-                 \caption[Lorem ipsum dolor sit amet]{Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed vitae ligula. Integer pharetra ornare eros. Phasellus vitae magna eget metus iaculis consectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.}
-             \end{figure}
-
-    Praesent feugiat, urna eu laoreet porttitor, odio dolor blandit erat, vitae facilisis orci massa sit amet tortor. Donec orci. Ut fringilla ultricies nisl. Aliquam eu dui ut erat bibendum molestie. Maecenas porttitor. Nam ut mauris. Etiam egestas elit a neque. Proin sed eros. Nullam et ipsum. Mauris ut lectus. Quisque tristique ipsum auctor ligula. Pellentesque semper sagittis neque. Nullam sed enim.%
-    \footnote{T.\ Pratchett: ''A guess? Well, that's good enough for physics!{``}}
+    A conference management system...
 
   \section{Application Directory Structure}
   \label{sec:tech:intro:dirs}
 
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed vitae ligula. Integer pharetra ornare eros. Phasellus vitae magna eget metus iaculis consectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut fringilla, elit id bibendum pharetra, enim nunc commodo lacus, vel consequat pede elit et massa. Nullam ac neque vel dui sodales malesuada. Phasellus sit amet magna. Nulla nisl metus, dictum et, ultricies vel, vestibulum ut, sem. Nulla nulla felis, gravida non, feugiat eget, interdum non, urna. Nunc nulla nunc, placerat pretium, varius in, dignissim a, eros. Quisque consequat, leo sit amet adipiscing pellentesque, nisl elit iaculis ipsum, quis tincidunt purus risus pulvinar enim. Nulla laoreet. Cras ullamcorper libero eget velit. Nam vel enim id tortor dignissim egestas. Pellentesque mi quam, porttitor sed, nonummy in, semper vitae, nisl. Duis ut dolor ut sem auctor dapibus. Nulla urna pede, facilisis a, hendrerit non, tincidunt vitae, orci. Mauris tincidunt posuere magna. Fusce blandit.%
+    Mauris tincidunt posuere magna. Fusce blandit.%
     \footnote{If UNIX isn't the solution, you've got the wrong problem.}
-
-    Proin mattis. Maecenas egestas. Nunc id justo non pede ornare molestie. Aliquam egestas tincidunt magna. Sed tempus tincidunt erat. Cras pharetra varius libero. Curabitur porttitor. Suspendisse potenti. Donec bibendum. Curabitur dignissim neque. Nam sit amet odio. Nulla ligula tortor, fermentum vel, ornare nec, vulputate vel, enim. Nullam sit amet nisl eget dui placerat porta. Donec leo. Nullam dignissim ullamcorper felis. Cras vulputate urna vehicula nibh.
 
   \subsection{Some subsection}
   \label{sec:tech:intro:dirs:subsection}
 
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed vitae ligula. Integer pharetra ornare eros. Phasellus vitae magna eget metus iaculis consectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut fringilla, elit id bibendum pharetra, enim nunc commodo lacus, vel consequat pede elit et massa. Nullam ac neque vel dui sodales malesuada. Phasellus sit amet magna. Nulla nisl metus, dictum et, ultricies vel, vestibulum ut, sem. Nulla nulla felis, gravida non, feugiat eget, interdum non, urna. Nunc nulla nunc, placerat pretium, varius in, dignissim a, eros. Quisque consequat, leo sit amet adipiscing pellentesque, nisl elit iaculis ipsum, quis tincidunt purus risus pulvinar enim. Nulla laoreet. Cras ullamcorper libero eget velit. Nam vel enim id tortor dignissim egestas. Pellentesque mi quam, porttitor sed, nonummy in, semper vitae, nisl. Duis ut dolor ut sem auctor dapibus. Nulla urna pede, facilisis a, hendrerit non, tincidunt vitae, orci. Mauris tincidunt posuere magna. Fusce blandit.
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 
   \subsubsection{Some subsubsection}
   \label{sec:tech:intro:dirs:subsection:subsubsection}
 
-    Sed ac sapien. Phasellus diam pede, facilisis at, faucibus vel, semper eu, diam. Morbi eleifend. Curabitur mattis ipsum sit amet purus. Fusce vel dui non ante sagittis consequat. Aliquam eget elit sed tellus euismod fermentum. Nullam sit amet dui vulputate ipsum volutpat molestie. Fusce vehicula tincidunt diam. Sed in nisi. Proin sit amet sem ut lacus mollis laoreet. Proin adipiscing dignissim justo. Sed id eros sit amet metus pretium rutrum. Etiam ultrices orci vitae lectus. Nullam auctor dignissim diam. Nullam mattis dictum tortor.
+    Sed ac sapien. Phasellus diam pede, facilisis at, faucibus vel, semper eu, diam. Morbi eleifend.
 
   \paragraph{A Paragraph without label}
 
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed vitae ligula. Integer pharetra ornare eros. Phasellus vitae magna eget metus iaculis consectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut fringilla, elit id bibendum pharetra, enim nunc commodo lacus, vel consequat pede elit et massa. Nullam ac neque vel dui sodales malesuada. Phasellus sit amet magna. Nulla nisl metus, dictum et, ultricies vel, vestibulum ut, sem. Nulla nulla felis, gravida non, feugiat eget, interdum non, urna. Nunc nulla nunc, placerat pretium, varius in, dignissim a, eros. Quisque consequat, leo sit amet adipiscing pellentesque, nisl elit iaculis ipsum, quis tincidunt purus risus pulvinar enim. Nulla laoreet. Cras ullamcorper libero eget velit. Nam vel enim id tortor dignissim egestas. Pellentesque mi quam, porttitor sed, nonummy in, semper vitae, nisl. Duis ut dolor ut sem auctor dapibus. Nulla urna pede, facilisis a, hendrerit non, tincidunt vitae, orci. Mauris tincidunt posuere magna. Fusce blandit.
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 
   \subparagraph{Subparagraph}
 
-    This one does not have a label either.Praesent justo augue, consequat ac, placerat gravida, ornare vitae, libero. Aliquam erat volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec sodales, odio in volutpat consectetuer, neque neque lobortis mi, quis sagittis felis neque ut ipsum. Nullam nonummy, ligula eget fermentum lobortis, dui dolor congue est, scelerisque cursus pede nibh sit amet felis. Proin malesuada placerat libero. Aliquam bibendum sollicitudin quam. In quis risus quis leo pretium luctus. Vestibulum enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin vitae metus a dui venenatis commodo. Sed eu lacus. Pellentesque et lorem. Ut ut libero vel tellus rutrum varius.
-
-  \chapter*{Danksagung (\textbackslash chapter*)}\addcontentsline{toc}{chapter}{Danksagung (\textbackslash chapter*)}    \noindent
-      Danke, danke, danke --- Danke vielmals --- Danke, sie k"onnen aufh"oren zu klatschen ---
-      Wirklich --- Ach bitte setzen Sie sich doch --- Ja danke , danke\dots
+    This one does not have a label either.
 
 
 
-\part{User Documentation \label{part:user-doc}}
+
+\part{User Documentation}
+\label{part:user-doc}
 
   \chapter{Attendee}
   \chapter{Author}
   \chapter{Reviewer}
   \chapter{Chair}
 
-\part{Appendix \label{part:appendix}}
+
+
+
+\part{Appendix}
+\label{part:appendix}
 
   \chapter*{Database Entity Relationship Model}
   \addcontentsline{toc}{chapter}{A\quad Database Entity Relationship Model}
