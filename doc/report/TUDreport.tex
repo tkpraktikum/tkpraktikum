@@ -67,9 +67,9 @@
   \chapter{Introduction}
   \label{ch:tech:intro}
 
-    This part of the documentation is intended for server administrators and/or developers who want to setup the project on their local machine. The documentation is written such that the individual chapters can be read in arbitrary order. Each chapter is a self-contained piece of documentation. However, the software tools listed in section~\ref{sec:tech:architecture:3rd-party} are heavily used throughout the application. Therefore, the reader is advised to read this section before proceeding with the rest of the documentation. For further information on these tools please refer to the individual project sites. Appendix~\hyperref[ch:appendix:setup]{A} hold the instructions on how to setup the application on a local machine.
+    This part of the documentation is intended for developers who want to setup the project on their local machine and contribute changes to the source code. The documentation is written such that the individual chapters can be read in arbitrary order. Each chapter is a self-contained piece of documentation. However, the software tools listed in section~\ref{sec:tech:architecture:3rd-party} are heavily used throughout the application. Therefore, the reader is advised to take a look at them before proceeding with the rest of the documentation. For further information on these tools please refer to the individual project sites. Appendix~\hyperref[ch:appendix:setup]{A} hold the instructions on how to setup the application on a local machine.
 
-    The remainder of this documentation is structured as follows: Chapter~\ref{ch:tech:architecture} gives an insight of how the application works conceptually and provides an overview of the used software libraries. Implementation details such as authentication, authorization, etc. are covered in chapter~\ref{ch:tech:implementation}. This also includes the directory structure of the project as well as important files that are involved in bootstrapping the application. Eventually, chapter~\ref{ch:tech:handson} describes the process of extending the application, i.e., how to extend the navigation, add a new page, etc.
+    The remainder of this documentation is structured as follows: Chapter~\ref{ch:tech:architecture} gives an insight of how the application works conceptually and provides an overview of the used software libraries. Implementation details such as authentication, authorization, etc. are covered in chapter~\ref{ch:tech:implementation}. This chapter also covers the directory structure of the project as well as important files that are involved in bootstrapping the application. Eventually, chapter~\ref{ch:tech:handson} describes the process of extending the application, i.e., how to extend the navigation bar, add a new page, etc.
 
   \chapter{Architecture}
   \label{ch:tech:architecture}
@@ -142,7 +142,7 @@
         \end{multicols}
 
   \paragraph{/}
-    Besides the listed directories above, the root directory \emph{/} does also contain several files worth mentioning. \emph{bower.json} and \emph{.bowerrc} are the configuration files that are automatically found and loaded by \emph{Bower}. They contain the list of dependencies and corresponding version constraints to be installed by \emph{Bower}. By renaming the \emph{db.json.default} file to \emph{db.json}, the application can be tested with some predefined seed data. The \emph{package.json} file is to \emph{npm} what \emph{bower.json} is to \emph{Bower}. The other files in the directory are either self-explaining or irrelevant for this part of the documentation.
+    Besides the listed directories above, the root directory \emph{/} does contain several files worth mentioning. \emph{bower.json} and \emph{.bowerrc} are the configuration files that are automatically found and loaded by \emph{Bower}. They contain the list of dependencies and corresponding version constraints to be installed by \emph{Bower}. By renaming the \emph{db.json.default} file to \emph{db.json}, the application can be tested with some predefined seed data. The \emph{package.json} file is to \emph{npm} what \emph{bower.json} is to \emph{Bower}. The other files in the directory are either self-explaining or irrelevant for this part of the documentation.
 
   \paragraph{/bin}
     Contains executable scripts that are used to initialize the application database with dummy data.
@@ -151,7 +151,7 @@
     Resembles the root directory that is publicly accessible through the HTTP web server, i.e., it contains all the code that is relevant for the client application.
 
   \paragraph{/common}
-    Holds the models that describe the application database schema. These models are taken into account by \emph{StrongLoop} when generating the client- and server code files. The files inside this directory can either be edited manually (according to a specified standard) or through the \emph{StrongLoop} console line interface.
+    Holds the models that describe the application database schema. These models are taken into account by \emph{StrongLoop} when generating the client- and server code files. The files inside this directory can either be edited manually (according to a specified standard) or through the \emph{StrongLoop} console line interface (see~\ref{sec:tech:implementation:strongloop:models}).
 
   \paragraph{/doc}
     Contains all documentation relevant files such as the documentation at hand.
@@ -163,7 +163,7 @@
     Contains the code that is executed inside the Node.js environment on the server side. It provides the logic to manipulate data, handles authentication and access control and also provides the public REST API.
 
   \paragraph{/storage}
-    \emph{LoopBack}\footnote{The framework provided by \emph{StrongLoop}} manages file uploads in so-called containers. This directory contains one directory for each container and each of these hold in turn a list of files that were uploaded to the corresponding container. This directory is initially empty when the repository is checked out cleanly. It gets filled once the conference users start to submit their papers.
+    \emph{LoopBack}\footnote{The framework provided by \emph{StrongLoop}} manages file uploads in so-called containers. This directory contains one directory for each container and each of these hold in turn a list of files that were uploaded to the corresponding container. The directory is initially empty when the repository is checked out cleanly. It gets filled once the conference users start to submit their papers.
 
   \section{Entry Scripts}
   \label{sec:tech:implementation:bootstrapping}
@@ -174,7 +174,7 @@
   \label{sec:tech:implementation:bootstrapping:server}
 
     As described in section~\ref{sec:tech:implementation:dirs}, the server part of the application resides inside \emph{/server}. When \emph{Node.js} is started inside the project root directory via \texttt{node .}, it executes the script \emph{server/server.js}, as defined in \emph{package.json}. Like most of the files inside \emph{server/}, this file is in large parts the unmodified version of the \emph{LoopBack} example application.%
-    \footnote{\url{https://github.com/strongloop/loopback-example-passport}}. It setups some preliminary routes for \emph{Express.js} as well as configuring some middleware components, e.g. to parse form data. Eventually, the start-up routine runs and forwards all requests to \emph{LoopBack} which than handles the request accordingly.
+    \footnote{\url{https://github.com/strongloop/loopback-example-passport}}. It setups some preliminary routes for \emph{Express.js} as well as configuring some middleware components, e.g., to parse form data. Eventually, the start-up routine is invoked and forwards all requests to \emph{LoopBack} which than handles the request accordingly.
 
     The purpose of \emph{StrongLoop} is to provide a REST API to do basic CRUD\footnote{Create/Read/Update/Delete operations on a persistent storage} operations on a predefined database schema. Since all the magic is done by \emph{StrongLoop}, a developer usually does not need to dive further into the topic of request handling etc. Everything that a developer needs to do is defining and/or extending the models inside \emph{/common/models} and \emph{StrongLoop} will take care of the rest. The process of model creation and modification is described later in section~\ref{sec:tech:implementation:strongloop:models}.
 
@@ -183,17 +183,17 @@
 
     As previously mentioned~(\ref{sec:tech:implementation:dirs}), the \emph{/client} directory is exposed through the HTTP web server. In particular, the client is eventually sending an HTTP request to the root of this directory. Because no particular file is requested by the client, the server will respond with the contents of the \emph{index.html} file.
 
-    The \emph{index.html} file consists of a simple HTML5 skeleton which basically includes lots of CSS and JavaScript files. Besides a lot of other scripts, the \emph{AngularJS} library is loaded. Once the browser is done with parsing the page and loading all embedded JavaScript files, the \emph{AngularJS} framework is scanning for an \texttt{ng-app} attribute inside the DOM. When found, AngularJS automatically starts its bootstrap routine and eventually executes the application, which happens to be defined inside \emph{js/app.js}. Section~\ref{sec:tech:implementation:angularjs} covers the contents of this file.
+    The \emph{index.html} file consists of a simple HTML5 skeleton which basically includes lots of CSS and JavaScript files. One of the libraries that gets included by the file is \emph{AngularJS}. Once the browser is done with parsing the page and loading all embedded JavaScript files, the \emph{AngularJS} framework is scanning for an \texttt{ng-app} attribute inside the DOM. When found, AngularJS automatically starts its bootstrap routine and eventually executes the application, which is happen to be defined inside \emph{js/app.js}. Section~\ref{sec:tech:implementation:angularjs} covers the contents of this file.
 
   \section{StrongLoop}
   \label{sec:tech:implementation:strongloop}
 
-    As explained in section~\ref{sec:tech:architecture:3rd-party}, \emph{StrongLoop} is the tool that the application uses to abstract the manipulation operations on the database. Besides serving as an ORM, the application makes also use of its other features such as authentication, access control and file upload support. The application is mainly managed by the command line tool, \texttt{slc}, that comes together with \emph{StrongLoop}. It allows to generate and extend models, define access control rules and many more things. For an exhaustive description of the tool please refer to the documentation.\footnote{\url{https://docs.strongloop.com/display/public/LB/Command-line+reference}}
+    As explained in section~\ref{sec:tech:architecture:3rd-party}, \emph{StrongLoop} is the tool that the application uses to execute CRUD operations on the database. Besides utilizing \emph{StrongLoop} as an ORM, the application makes also use of its other features such as authentication- \& session management, access control and file upload support. The application is mainly managed by the command line tool, \texttt{slc}, that comes together with \emph{StrongLoop}. It allows to generate and extend models, define access control rules and more things. For an exhaustive description of the tool please refer to the official documentation.\footnote{\url{https://docs.strongloop.com/display/public/LB/Command-line+reference}}
 
   \subsection{Creating and Updating Models}
   \label{sec:tech:implementation:strongloop:models}
 
-    \emph{StrongLoop} does represent database tables in terms of models. A model does represent a collection of data with a given schema, e.g., a collection of users that have properties like a name, an email, a password, etc. Besides the sheer representation of data, the developer can define access rules in the model that define which data can be accessed by whom. In particular, this feature allows to restrict data access to the owner of the data. That said, a model does also provide the methods required to retrieve, store, update and delete items of a collections.
+    \emph{StrongLoop} does represent database tables in terms of models. A model does represent a collection of data with a given schema, e.g., a collection of users that have properties like a name, an email, a password, etc. Besides the sheer representation of data, the developer can define access rules in the model that define which data can be accessed by whom. In particular, this feature allows to restrict data access {} the data (see~\ref{sec:tech:implementation:acl:strongloop-acl}). That said, a model does also provide the methods required to retrieve, store, update and delete items of a collections.
 
     To update or create a model, one has to decide between two basic approaches, i.e., a guided and a manual one. The advantages and disadvantages of both approaches are described next.
 
@@ -206,21 +206,21 @@
   \subsection{File Upload}
   \label{sec:tech:implementation:strongloop:container}
 
-    The \emph{LoopBack} framework that comes with \emph{StrongLoop} does provide the ability to persist uploaded files from users. It does so by managing a set of so-called \emph{containers}. Basically, a container corresponds to a directory on a typical file system. When uploading a file, the user (or the application) has to define the container in which he wishes to upload it. The REST API generated by \emph{StrongLoop} does provide a special endpoint in order to download and upload files from a container.
+    The \emph{LoopBack} framework that comes with \emph{StrongLoop} does provide the ability to persist uploaded files from users. It does so by managing a set of so-called \emph{containers}. Basically, a container corresponds to a directory on a file system. When uploading a file, the user (or the application) has to define the container in which he wishes to upload it. The REST API generated by \emph{StrongLoop} does provide special endpoints in order to download/upload files from/to a container.
 
     Containers must be defined inside the \emph{server/datasources.js} file. The application at hand does define a single container that is configured to store uploaded files on the local file system inside the \emph{storage/} directory. It does also rename the files according to a unique naming schema which ensures that files, once uploaded, cannot be overridden anymore. The defined container is used to store the PDF documents that are uploaded by the authors during the submission phase.
 
   \subsection{Generate AngularJS Services}
   \label{sec:tech:implementation:strongloop:genlib}
 
-    It is important to remember that the application is distributed into a client and a server part. When adding or changing a model definition inside the \emph{common/models/} directory, the server part of the application just needs a restart in order to load the new model definitions. However, the part of the application that runs in the browser has no access to that directory. Instead, \emph{StrongLoop} is able to generate a set of AngularJS services, one for each model, that can be used inside the client. Whenever a model is added or changed, \emph{StrongLoop} has to re-generate that services. This is done by executing the following command inside the root of the project directory:
+    It is important to remember that the application is distributed into a client and a server part. When adding or changing a model definition inside the \emph{common/models/} directory, the server part of the application just needs a restart in order to load the new model definitions. However, the part of the application that runs in the browser has no access to that directory. Instead, \emph{StrongLoop} is able to generate a set of AngularJS services, one for each model, that can be used inside the client. Whenever a model is added or changed, \emph{StrongLoop} has to re-generate the services. This is done by executing the following command inside the root directory of the project:
         \begin{lstlisting}[language=bash]
     $ lb-ng server/server.js client/js/services/lb-services.js
         \end{lstlisting}
-    Please refer to the official documentation on more information about the command and automatic service generation.\footnote{\url{https://docs.strongloop.com/display/public/LB/AngularJS+JavaScript+SDK\#AngularJSJavaScriptSDK-GeneratingAngularservices}}
+    Please refer to the official documentation for more information about the command and automatic service generation.\footnote{\url{https://docs.strongloop.com/display/public/LB/AngularJS+JavaScript+SDK\#AngularJSJavaScriptSDK-GeneratingAngularservices}}
 
   \paragraph{Side Note}
-    When starting to write code and using models, note that the usage of model classes on the server differs from that of the client. While the methods basically remain the same, the accepted arguments usually differ. For new developers this can be a confusing fact which is why this disclaimer has been placed here.
+    When starting to write code and using models, note that the usage of model classes on the server differs from that on the client. While the methods basically remain the same, the accepted arguments usually differ. For new developers this can be a confusing fact which is why this disclaimer has been placed here.
 
   \section{The AngularJS Client Application}
   \label{sec:tech:implementation:angularjs}
@@ -235,8 +235,8 @@
             \setlength\itemsep{0em}
             \item Setup the routes, i.e., the different "pages" that the user can visit. A route does not only consist of a location (URL address) but also of a view\footnote{A view is basically an HTML template that is embedded in the layout} and a controller that provides the logic behind the view.
             \item Define services that can be used by the controllers. Put simply, a service is a component with a single responsibility that can be accessed application-wide as a singleton instance. Services are most commonly used to abstract the communication between the application and the backend, e.g. to fetch or update data from an REST API. Services are identified by a unique name and can be accessed by controllers (see section~\ref{sec:tech:implementation:angularjs:controllers}) through that name.
-            \item Define custom filters to transform raw data inside views into an appropriate representation. For example, a custom filter could be applied to the value 4\,239\,283 in order to interpret it as a file size, i.e., 4.04 MB. Filters help with sticking to the DRY programming principle and also to keep logic and complex statements separate from views.
-            \item Configure third party services and modules. For example, the application uses the \emph{angular-permission}\footnote{\url{https://github.com/Narzerus/angular-permission}} library to handle access control inside the application according to the users competence (see section~\ref{sec:tech:implementation:acl:angular-permission}).
+            \item Define custom filters to transform raw data inside views into an appropriate representation. For example, a custom filter could be applied to the value 4\,239\,283 in order to interpret it as a file size, e.g., 4.04 MB. Filters help to stick to the DRY programming principle and also keep logic and complex statements separate from views.
+            \item Configure third party services and modules. For example, the application uses the \texttt{angular-permission}\footnote{\url{https://github.com/Narzerus/angular-permission}} library to handle access control inside the application according to the users competence (see~\ref{sec:tech:implementation:acl:angular-permission}).
         \end{itemize}
     For further information on the concepts of AngularJS, please refer to their official documentation.\footnote{\url{https://docs.angularjs.org/guide/concepts}}
 
@@ -248,37 +248,54 @@
 
     Controllers are defined inside the \emph{client/js/controllers/} directory.
 
-  % TODO: Documentation is finished until here! (besides the TODO's)
-  % The parts until the Hands On chapter require a revision
-  \subsection{Layout and Templates}
-  \label{sec:tech:implementation:angularjs:layout}
+  %\subsection{Layout and Templates}
+  %\label{sec:tech:implementation:angularjs:layout}
 
-    Some more stuff.
+    % TODO: Make a figure that describes the layout template and its embedded parts
 
   \section{Role Based Access Control (RBAC)}
   \label{sec:tech:implementation:rbac}
 
-    There are user roles and access control
+    Access control has to happen in both parts of the application, server and client. On the server side, the application needs to ensure that data can only be accessed and manipulated by users that are actually authorized to do so, i.e., a user should not be able to edit the submission of someone else, unless he is chair of the corresponding conference. On the client side, permissions also need to be checked, e.g., to dynamically display administration links in the navigation bar based on whether the user is chair of the conference.
 
   \subsection{Roles}
   \label{sec:tech:implementation:acl:roles}
 
-    Attendee, Author, Reviewer, Chair.
+    The above described scenario is typically modeled by assigning roles to the users of a system. In the case of this application, it makes sense to define the following roles:
+        \begin{itemize}
+            \setlength\itemsep{0em}
+            \item \texttt{User}: This role is implicitly assigned to every authenticated user. This is particularly useful to check whether a user is logged into the system.\\
+            The following roles are assigned to users conference-wise, i.e., a user can be chair in one conference, but only an attendee in another conference.
+            \item \texttt{Attendee}: This role is assigned to users who attend a conference. Since the system is able to manage multiple conferences, this role is useful in order to check whether a user attends a given conference.
+            \item \texttt{Author}: This role is assigned to users who have permission to submit papers to a conference.
+            \item \texttt{Reviewer}: This role is assigned to users who are allowed to review (assigned) submissions of authors.
+            \item \texttt{Chair}: This role is assigned to the chair of a conference. A chair is able to assign roles to attendees of the conference, including this role. The chair is also allowed to edit conference details and deadlines as well as assign submitted paper to reviewers.
+        \end{itemize}
+    Part~(\ref{part:user}) of this documentation further explains the permissions and accessible features of the particular roles.
 
   \subsection{The \texttt{angular-permission} library}
   \label{sec:tech:implementation:acl:angular-permission}
 
-    Describe how angular-permission is utilized to check for permissions.
+    The client part of the application utilizes the \texttt{angular-permission} library for role and permission based access control.\footnote{\url{https://github.com/Narzerus/angular-permission}} In essence, it provides two services, the \texttt{PermissionStore} and the \texttt{RoleStore}. The former service allows to define atomic permissions. A permission is defined by its name and a callback function which must return a boolean value that indicates whether the current user has the defined permission. The later service allows to define roles which are also uniquely identified by a name but consist of a set of permission names. A user is considered to have a role if he owns all permissions that are associated with that role. Each of the five roles described in~\ref{sec:tech:implementation:acl:roles} are defined inside the \emph{client/js/app.js} file within the \emph{.run()} method.
+
+    The library provides the ability to define access permissions for routes, e.g., to permit access to the conference management area to users that have the chair role. Via the \texttt{permission} and \texttt{permission-only} directives\footnote{The AngularJS term for user-defined HTML tags and attributes}, templates can display UI elements dynamically, based on the permission(s)/roles(s) of a user.
+
+  \subsection{StrongLoop Access Control List}
+  \label{sec:tech:implementation:acl:strongloop-acl}
+
+    The server part of the application relies on the \emph{StrongLoop} ACL mechanisms.\footnote{\url{https://docs.strongloop.com/display/public/LB/Authentication\%2C+authorization\%2C+and+permissions}} Similar to the previous library, \emph{StrongLoop} allows to specify custom user roles that can be assigned to particular users. Besides the custom roles, four additional built-in roles are defined: \texttt{\$authenticated}, \texttt{\$unauthenticated}, \texttt{\$everyone} and \texttt{\$owner}. The former two roles are mutually exclusive and state whether the request against the REST API came from an authenticated user. The latter two roles are assigned to every user and the owners of model instances, respectively. For example, a record that is associated with a particular user grants that user the \texttt{\$owner} role for that record.
+
+    These roles can now be used to define the access control for each of the available REST API endpoints. For example, this allows to deny access to DELETE operations to users that are not \texttt{\$owner} of a record. The individual ACL definitions are found in the model definition files, located inside the \emph{common/models/*.json} files.
 
   \chapter{Hands On: Extending the Application}
   \label{ch:tech:handson}
 
-    This chapter describes the process of extending the web application by a new page that displays the current time to the user. This process involves ~\ref{sec:tech:handson:add-vc}) the creation of a view and its corresponding controller, ~\ref{sec:tech:handson:add-route}) the creation of a route and \ref{sec:tech:handson:navlink}) the modification of the navigation bar to include a reference to the newly created route. The instructions in this chapter will help to understand the basic patterns that are used throughout the whole application. Once understood, the application can be modified and extended with ease.
+    This chapter describes the process of extending the web application by a new page that displays the current time to the user. This process involves ~\ref{sec:tech:handson:add-vc}) the creation of a view and its corresponding controller, ~\ref{sec:tech:handson:add-route}) the creation of a route and \ref{sec:tech:handson:navlink}) the modification of the navigation bar to include a link to the newly created route. The instructions in this chapter will help to understand the basic patterns that are used throughout the whole application. Once understood, the application can be modified and extended with ease.
 
   \section{Creating a View and Controller}
   \label{sec:tech:handson:add-vc}
 
-    The most natural way to start with the extension of the application is to create a new template that is going to display the current time to the user. All application templates are located inside \emph{client/views/}. Because the view is not going to require any special permission other than an authenticated user, it should be created inside \emph{client/views/user/}. While it is not required to follow any particular naming schema, it is common practice to name the view after the controller that is managing it. As our controller is going to be named \emph{TimeController}, the view file should be named \emph{time.html}. Speaking of which, the controller should reside inside the \emph{client/js/controllers/user/} directory respectively and be named \emph{time.js}.
+    The most natural way to start with the extension of the application is to create a new template that is going to display the current time to the user. All application templates are located inside \emph{client/views/}. Because the view is not going to require any special permission other than an authenticated user, it should be created inside \emph{client/views/user/}. While it is not required to follow any particular naming schema, it is common practice to name the view after the controller that is managing it. As our controller is going to be named \emph{TimeController}, the view file should be named \emph{time.html}. Speaking of which, the controller should reside inside the \emph{client/js/controllers/user/} directory and be named \emph{time.js}.
 
   \paragraph{Template Content}
     Inside the newly created template, the following lines have to be added:
@@ -289,7 +306,7 @@
         </div>
     </div>
         \end{lstlisting}
-    The two \emph{div} containers are plain HTML markup syntax. The application uses the grid system of the bootstrap CSS framework\footnote{\url{http://getbootstrap.com/css/\#grid}}. The \emph{div} containers simple reduce the width of the area in which the content is displayed in half. The curly brace syntax (\texttt{\{\{ time | date:'medium' \}\}}) is recognized and interpreted by AngularJS. It basically outputs the value of the \emph{time} variable after passing it to a filter named \emph{date}. More on AngularJS template syntax and filters can be found in the official documentation.\footnote{\url{https://docs.angularjs.org/guide/templates} and \url{https://docs.angularjs.org/guide/filter}}
+    The two \emph{div} containers are plain HTML syntax. The application uses the grid system of the bootstrap CSS framework\footnote{\url{http://getbootstrap.com/css/\#grid}}. The \emph{div} containers simply reduce the width of the content area in half. The curly brace syntax (\texttt{\{\{ time | date:'medium' \}\}}) is recognized and interpreted by AngularJS. It basically outputs the value of the \emph{time} variable after passing it to a filter named \emph{date}. More on AngularJS template syntax and filters can be found in the official documentation.\footnote{\url{https://docs.angularjs.org/guide/templates} and \url{https://docs.angularjs.org/guide/filter}}
 
   \paragraph{Controller Content}
     The controller does only require a few lines of code as well. The following is enough to assign the desired value to the \emph{time} variable:
@@ -298,14 +315,14 @@
         $scope.time = new Date();
     });
         \end{lstlisting}
-    These lines add a controller named \emph{TimeController} the the \emph{app} module that is managed by the angular framework. The second parameter of the \emph{controller()} method defines the function to be executed whenever this controller is invoked by angular. Also note the specified \emph{\$scope} parameter inside that function. This parameter will automatically be populated by AngularJS with the instance of the service with the same name. As mentioned earlier~(\ref{sec:tech:implementation:angularjs:controllers}) \emph{\$scope} is the name of a built-in service in AngularJS. It resembles the namespace that is implicitly made available to the view. More on controllers and the \emph{\$scope} service is found on the official documentation pages.\footnote{\url{https://docs.angularjs.org/guide/controller}}
+    These lines add a controller named \emph{TimeController} the \texttt{app} module that is managed by the angular framework. The second parameter of the \emph{controller()} method defines the function to be executed whenever this controller is invoked by angular. Also note the specified \emph{\$scope} parameter inside that function. This parameter will automatically be populated by AngularJS with the instance of the service with the same name. As mentioned earlier~(\ref{sec:tech:implementation:angularjs:controllers}) \emph{\$scope} is the name of a built-in service in AngularJS. It resembles the namespace that is implicitly made available to the view. More on controllers and the \emph{\$scope} service is found on the official documentation pages.\footnote{\url{https://docs.angularjs.org/guide/controller}}
 
   \section{Adding a new Route Definition}
   \label{sec:tech:handson:add-route}
 
     Now that the view and controller is created, AngularJS must be made aware of the fact that they belong together and also through which route (URL) they can be invoked.
 
-  \paragraph{Include Controller inside index.html}
+  \paragraph{Reference the New Controller Inside index.html}
     In a first step, the newly created controller must be included by the browser when loading the application. Therefore, the following line has to be added to the \emph{index.html} file, alongside with the include statements of the other controllers:
         \begin{lstlisting}[language=html]
     <script src="js/controllers/user/time.js"></script>
@@ -325,8 +342,17 @@
   \section{Add a Link to the Navigation Bar}
   \label{sec:tech:handson:navlink}
 
-    Finally, the time has come to add a link to the navigation bar.
-    extend layout where necessary (make a figure that describes the layout template and its embedded parts)
+    Finally, the time has come to add a link to the navigation bar which then leads us to the newly created page. Find the \texttt{<ul class="nav navbar-nav">} element inside \emph{client/views/header.html} and add the following content to the next line:
+        \begin{lstlisting}[language=html]
+    <li ui-sref-active="active" permission permission-only="'USER'">
+        <a ui-sref="app.protected.user.time">Show Time</a>
+    </li>
+        \end{lstlisting}
+    The \texttt{permission permission-only="'USER'"} attributes ensure that the new link is only displayed for authenticated users. The \texttt{ui-sref-active="active"} attribute automatically adds the \texttt{active} class to the \texttt{<li>} tag whenever the related state defined by \texttt{ui-sref="app.protected.user.time"} is detected to be active. The latter attribute automatically adds an appropriate \texttt{href} attribute to the \texttt{<a>} tag that refers to the url of the given state (\texttt{/user/time}).
+
+  \section{Test the new extension}
+  \label{sec:tech:handson:test}
+    Now it is time to test the created extension. Simply start the server by typing \texttt{npm start} inside the project root directory and navigate to \url{http://localhost:3000}. After logging in with a valid user account the new link will become visible and, once clicked, will lead to the newly created page which shows the current date and time, nicely formatted.
 
 \part{User Documentation}
 \label{part:user}
