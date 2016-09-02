@@ -265,7 +265,7 @@ angular
       })
   }])
 .factory('ConferenceService', ['$q', 'Conference', function ($q, Conference) {
-  var currentConferenceId = null, currentConference = null,
+  var currentConferenceId = null, currentConference = $q.reject(),
     setCurrentConferenceId = function (conferenceId) {
       currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
       currentConference = conferenceId ? Conference.findById({id: currentConferenceId}).$promise : $q.reject();

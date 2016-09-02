@@ -16,22 +16,22 @@
       <ul class="nav navbar-nav">
         <li class="dropdown" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Submissions <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" permission permission-only="'AUTHOR'">
             <li ng-show="isSubmissionPhase" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.conference.submission.create({conferenceId: currentConferenceId})">Create</a></li>
-            <li ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.conference.submission.list({conferenceId: currentConferenceId})">Show</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.submission.list({conferenceId: currentConferenceId})">Show</a></li>
           </ul>
         </li>
 
         <li class="dropdown" ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reviews <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak><a ui-sref="app.protected.conference.review.overview({conferenceId: currentConferenceId})">Overview</a></li>
-            <li ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak><a ui-sref="app.protected.conference.review.list({conferenceId: currentConferenceId})">My Reviews</a></li>
+          <ul class="dropdown-menu" permission permission-only="'REVIEWER'">
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.review.overview({conferenceId: currentConferenceId})">Overview</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.review.list({conferenceId: currentConferenceId})">My Reviews</a></li>
           </ul>
         </li>
         <li class="dropdown" ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Conference Management <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" permission permission-only="'CHAIR'">
             <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.admin.submissions({conferenceId: currentConferenceId})">Submissions</a></li>
             <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.admin.reviews.assignment({conferenceId: currentConferenceId})">Assign Reviewer</a></li>
             <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.admin.reviews.list({conferenceId: currentConferenceId})">Reviews</a></li>
@@ -44,16 +44,16 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" ui-sref-active="active" permission permission-only="'USER'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>{{user.firstname}} {{user.lastname}}</span> <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.profile.edit">Manage Profile</a></li>
+          <ul class="dropdown-menu" permission permission-only="'USER'">
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.profile.edit">Manage Profile</a></li>
             <li role="separator" class="divider"></li>
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.conference.my">My Conferences</a></li>
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.conference.join">Join Conference</a></li>
-            <li ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a ui-sref="app.protected.user.conference.manage.create">Create Conference</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.conference.my">My Conferences</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.conference.join">Join Conference</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.conference.manage.create">Create Conference</a></li>
             <li role="separator" class="divider" ng-show="conferences.length > 0"></li>
-            <li ng-repeat="c in conferences" ui-sref-active="active" permission permission-only="'USER'" ng-cloak><a class="conference-link" ng-click="changeConference(c.id)">{{c.name}}</a></li>
+            <li ng-repeat="c in conferences" ui-sref-active="active" ng-cloak><a class="conference-link" ng-click="changeConference(c.id)">{{c.name}}</a></li>
             <li role="separator" class="divider"></li>
-            <li ui-sref-active="active" permission permission-only="'hasValidSession'" ng-cloak><a ui-sref="app.logout">Logout</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.logout">Logout</a></li>
           </ul>
         </li>
       </ul>

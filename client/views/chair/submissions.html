@@ -14,16 +14,12 @@
     <div class="card-columns">
       <div class="col-xs-12" ng-repeat="s in submissions | filter:{title: filterSubmission} track by $index ">
         <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="row">
-              <div class="col-md-8">
-                <h2 class="panel-title">{{s.title}}</h2>
-              </div>
-              <div class="col-md-2 pull-right" style="text-align: center">
-                <span>Approve</span>
-                <input id="author-{{s.id}}" class="tgl tgl-ios" ng-model="s.isApproved" type="checkbox" ng-change="toggleApproval(s)" />
-                <label for="author-{{s.id}}" class="tgl-btn"></label>
-              </div>
+          <div class="panel-heading clearfix">
+            <h2 class="panel-title">{{s.title}}</h2>
+            <div class="pull-right">
+              <span>Approve</span>
+              <input id="author-{{s.id}}" class="tgl tgl-ios" ng-model="s.isApproved" type="checkbox" ng-change="toggleApproval(s)" />
+              <label for="author-{{s.id}}" class="tgl-btn"></label>
             </div>
           </div>
           <div class="panel-body">
