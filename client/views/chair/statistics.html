@@ -13,6 +13,20 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Attendess vs Authors vs Reviewers vs Chairs</h3>
+        </div>
+        <div class="panel-body">
+          <canvas id="barUser" class="chart chart-bar"
+                  chart-data="dataUser" chart-labels="labelsUser" chart-series="seriesUser" chart-options="optionsUser">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -42,37 +56,23 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Total Submissions</h3>
-        </div>
-        <div class="panel-body">
-          <canvas id="submissionTime" class="chart chart-line" chart-data="reviewsTimeData"
-                  chart-labels="reviewsTimeLabels" chart-series="reviewsTimeSeries" chart-options="reviewsTimeOptions">
-          </canvas>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Total Reviews</h3>
-        </div>
-        <div class="panel-body">
-          <canvas id="reviewTime" class="chart chart-line" chart-data="reviewsTimeData"
-                  chart-labels="reviewsTimeLabels" chart-series="reviewsTimeSeries" chart-options="reviewsTimeOptions">
-          </canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
           <h3 class="panel-title">Submissions By Affiliation</h3>
         </div>
         <div class="panel-body">
           <canvas id="submissionAffiliation" class="chart chart-bar" chart-data="subAffData"
                   chart-labels="subAffLabels" chart-series="subAffSeries" chart-options="subAffOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Submission Status</h3>
+        </div>
+        <div class="panel-body">
+          <canvas id="doughnut-status" class="chart chart-doughnut"
+                  chart-data="subStatusData" chart-labels="subStatusLabel" chart-options="subStatusOptions">
           </canvas>
         </div>
       </div>
