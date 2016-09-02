@@ -14,13 +14,22 @@
     <div class="card-columns">
       <div class="col-xs-12" ng-repeat="s in submissions | filter:{title: filterSubmission} track by $index ">
         <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{s.title}}</h3>
+          <div class="panel-heading clearfix">
+            <h2 class="panel-title">{{s.title}}</h2>
+            <div class="pull-right">
+              <span>Approve</span>
+              <input id="author-{{s.id}}" class="tgl tgl-ios" ng-model="s.isApproved" type="checkbox" ng-change="toggleApproval(s)" />
+              <label for="author-{{s.id}}" class="tgl-btn"></label>
+            </div>
           </div>
           <div class="panel-body">
             <p><b>Tags:</b><span ng-repeat="t in s.tags"><span ng-show="!$first">, </span> {{t.name}}</span></p>
             <p><b>Authors:</b><span ng-repeat="a in s.authors"><span ng-show="!$first">, </span> <a ui-sref="app.protected.user.view({userId: a.id})">{{a.fullName}}</a></span></span></p>
-            <a ui-sref="app.protected.conference.admin.submissionsDetails({submissionId: s.id})" class="btn btn-primary btn-sm col-xs-5">Details</a>
+            <p ng-repeat="d in s.documents">
+              <b>Attached file:</b> <a ng-href="{{d.url}}">{{ d.originalFilename }}</a> ({{ d.size | bytes }})
+            </p>
+
+            <a class="btn btn-primary btn-sm col-xs-5" ui-sref="app.protected.conference.admin.submissionsDetails({submissionId: s.id})">Details</a>
             <a class="btn btn-primary btn-sm col-xs-5 col-xs-offset-2" ui-sref="app.protected.conference.admin.reviews.submissionList({submissionId: s.id})">Reviews</a>
           </div>
         </div>

@@ -1,7 +1,7 @@
 angular
   .module('app')
-  .controller('CreateConferenceController', ['$scope', '$state', '$stateParams', '$http' , 'AuthService', 'User', 'Conference',
-    function($scope, $state, $stateParams, $http, AuthService, User, Conference) {
+  .controller('CreateConferenceController', ['$scope', '$state', '$stateParams', '$http' , 'AuthService', 'User', 'Conference', 'ConferenceService',
+    function($scope, $state, $stateParams, $http, AuthService, User, Conference, ConferenceService) {
 
       var subDeadline = $('#submissionDeadline');
       var revDeadline = $('#reviewDeadline');
@@ -59,7 +59,9 @@ angular
         if ($scope.editMode) {
           Conference.prototype$updateAttributes({id: $stateParams.conferenceId}, $scope.conference).$promise
             .then(function() {
-              $state.go('app.protected.user.conference.my');
+              ConferenceService.invalidate().finally(function () {
+                $state.go('app.protected.user.conference.my', $state.params, {reload: true});
+              });
             });
         } else {
           AuthService.getUserId().then(function(userId) {
@@ -74,7 +76,9 @@ angular
                     {attendeeId: userId, conferenceId: conference.id})
                   .$promise
                   .then(function () {
-                    $state.go('app.protected.user.conference.my');
+                    ConferenceService.invalidate().finally(function () {
+                      $state.go('app.protected.user.conference.my', $state.params, {reload: true});
+                    });
                   });
               });
           });

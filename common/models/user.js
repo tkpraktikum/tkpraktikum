@@ -6,12 +6,16 @@ var logger = require('./../../server/logger');
 module.exports = function(User) {
   User.observe('before save', function (ctx, next) {
     var firstname = ctx.instance && ctx.instance.firstname ||
-        ctx.data && ctx.data.firstname || 'Unknown',
+        ctx.data && ctx.data.firstname ||
+        ctx.currentInstance && ctx.currentInstance.firstname || 'Unknown',
       lastname = ctx.instance && ctx.instance.lastname ||
-        ctx.data && ctx.data.lastname || '';
+        ctx.data && ctx.data.lastname ||
+        ctx.currentInstance && ctx.currentInstance.lastname || '';
 
+    // create
     if (ctx.instance) {
       ctx.instance.fullName = firstname + ' ' + lastname
+    // update
     } else {
       ctx.data.fullName = firstname + ' ' + lastname;
     }
