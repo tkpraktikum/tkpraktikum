@@ -1,8 +1,8 @@
 angular
   .module('app')
   .controller('StatisticsController',
-      ['$q', '$scope', '$state', 'ConferenceService', 'Submission', 'Conference', 'Review',
-      function($q, $scope, $state, ConferenceService, Submission, Conference, Review) {
+      ['$q', '$scope', '$state', 'ConferenceService', 'Submission', 'Conference', 'Review', 'SubmissionStatus',
+      function($q, $scope, $state, ConferenceService, Submission, Conference, Review, SubmissionStatus) {
     var submissionPromise = Submission.find(
         {filter: {where: { conferenceId: ConferenceService.getCurrentConferenceId()},
         include: {'authors': ['affiliation']}}}).$promise,
@@ -105,25 +105,30 @@ angular
       });
     },
     submissionStatus = function() {
-      $scope.subStatusLabel = ["Draft", "Submitted", "Approved"];
-      submissionPromise.then(function(data) {
-        submissionPromise.then(function(s) {
-          $scope.subStatusData = _.pairs(_.countBy(s.map(function(s) { return s.status; }))).sort(function(p) {
-            return p[1];
-          }).map(function(x) { return x[1];});
-        });
+      $scope.subStatusLabel = ["Draft", "Final", "Approved"];
+      $scope.subStatusOptions = {
+        legend: {display: true},
+        scales: {
+          yAxes: [{
+            display: true,
+            ticks: {
+              suggestedMin: 0
+            }
+          }]
+        }
+      };
 
-        $scope.subStatusOptions = {
-          legend: {display: true},
-          scales: {
-            yAxes: [{
-              display: true,
-              ticks: {
-                suggestedMin: 0
-              }
-            }]
-          }
-        };
+      submissionPromise.then(function(s) {
+        var defaults = { 0: 0, 1: 0, 2: 0 };
+        $scope.subStatusData = _.chain(
+            _.countBy(s.map(function(s) {
+              return (s.status & SubmissionStatus.Approved) ? 2 :
+                    ((s.status & SubmissionStatus.Final)    ? 1 : 0);
+            }))
+          )
+          .defaults(defaults)
+          .values()
+          .value();
       });
     }
 
