@@ -1,6 +1,10 @@
 angular
   .module('app')
-  .controller('ProfileController', ['$scope', '$state', 'AuthService', 'Affiliation', 'User', 'uiGmapGoogleMapApi', 'uiGmapIsReady', function ($scope, $state, AuthService, Affiliation, User, uiGmapGoogleMapApi, IsReady) {
+  .controller('ProfileController', [
+      '$q', '$scope', '$state', 'AuthService', 'SessionService', 'Affiliation', 'User',
+      'Conference', 'uiGmapGoogleMapApi', 'uiGmapIsReady',
+      function ($q, $scope, $state, AuthService, SessionService, Affiliation, User,
+        Conference, uiGmapGoogleMapApi, IsReady) {
 
     var refreshMap = function(address) {
       IsReady.promise().then(function() {
@@ -24,6 +28,19 @@ angular
           });
         }
       });
+    },
+    deleteProfile = function (userId) {
+      var promises = [
+        User.reviews.destroyAll({id: userId}),
+        User.reviewer.destroyAll({id: userId}),
+        User.submissions.destroyAll({id: userId}),
+        User.attendee.destroyAll({id: userId}),
+        User.chair.destroyAll({id: userId}),
+        User.author.destroyAll({id: userId}),
+        User.deleteById({id: userId})
+      ];
+
+      return $q.all(promises);
     },
     attributes = ['title', 'email', 'lng', 'lat', 'username', 'firstname', 'lastname', 'profession', 'affiliationId', 'street', 'zip', 'city', 'state', 'country'];
 
@@ -50,7 +67,6 @@ angular
     $scope.affiliations = [];
     $scope.changeUserProfile = {};
     $scope.changeUserPassword = {};
-    $scope.deleteUserProfile = {};
     $scope.changeCaret = false;
     $scope.selected = {};
     $scope.map = { control: {}, center: { latitude: 49.877613, longitude: 8.654847 }, zoom: 14 };
@@ -101,7 +117,19 @@ angular
     };
 
     $scope.deleteProfile = function () {
-      console.log(JSON.stringify($scope.changeUserPassword));
+      deleteProfile($scope.user.id).then(function () {
+        AuthService.logout().then(function () {
+          $('#deleteProfileModal').modal('hide');
+          SessionService.setFlash('Your account was deleted permanantly!');
+          $state.go('app.login', {}, { reload: true });
+        })
+      });
+    };
+
+    $scope.isUsername = function (value) {
+      if (!$scope.user.username || !value) return false;
+
+      return value.toLowerCase() === $scope.user.username.toLowerCase();
     };
 
     $scope.changePassword = function () {

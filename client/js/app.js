@@ -265,40 +265,37 @@ angular
       })
   }])
 .factory('ConferenceService', ['$q', 'Conference', function ($q, Conference) {
-  var currentConferenceId = null, currentConference = null;
+  var currentConferenceId = null, currentConference = $q.reject(),
+    setCurrentConferenceId = function (conferenceId) {
+      currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
+      currentConference = conferenceId ? Conference.findById({id: currentConferenceId}).$promise : $q.reject();
+
+      return currentConference;
+    };
 
   return {
     getCurrentConferenceId: function () {
       return currentConferenceId;
     },
-    setCurrentConferenceId: function (conferenceId) {
-      currentConferenceId = conferenceId ? parseInt(conferenceId, 10) : null;
-      currentConference = conferenceId ? Conference.findById({id: currentConferenceId}).$promise : null;
-    },
+    setCurrentConferenceId: setCurrentConferenceId,
     isSubmissionPhase: function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
       return currentConference.then(function(c) {
         return (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now());
       });
     },
     isReviewPhase: function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
       return currentConference.then(function(c) {
         return (c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now())
           && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
       });
     },
     reviewsDone: function() {
-      if (!currentConference) {
-        return $q.reject();
-      }
       return currentConference.then(function(c) {
         return (c.forceReview || (new Date(c.reviewDeadline)).getTime() < Date.now());
       });
+    },
+    invalidate: function () {
+      return setCurrentConferenceId(currentConferenceId);
     }
   }
 }])
@@ -325,13 +322,9 @@ angular
         });
     },
     logout = function () {
-      return User.logout().$promise.then(function () {
-        // LoopBackAuth.clearUser();
-        // LoopBackAuth.clearStorage();
-        ConferenceService.setCurrentConferenceId(null);
-        SessionService.destroy();
-        user = $q.reject();
-      });
+      LoopBackAuth.clearUser();
+      LoopBackAuth.clearStorage();
+      return $q.resolve();
     },
     hasRole = function (role) {
       return user.then(function (user) {
@@ -374,6 +367,17 @@ angular
     invalidate : init
   };
 }])
+.factory('SubmissionStatus', [function () {
+  return {
+    // This flag is set by the author of the submission if he is ready to accept
+    // reviews for his submission. Once set the submission become uneditable for
+    // the author. If not set: Submission is a draft.
+    Final: parseInt('1', 2),
+    // This flag is set by the chair when the submission is approved to be
+    // reviewed.
+    Approved: parseInt('10', 2)
+  }
+}])
 // https://gist.github.com/thomseddon/3511330
 .filter('bytes', function() {
   return function(bytes, precision) {
@@ -384,7 +388,42 @@ angular
     return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
   }
 })
-.run(function($rootScope, $q, PermissionStore, RoleStore, AuthService) {
+.filter('submissionStatus', ['SubmissionStatus', function (SubmissionStatus) {
+  return function (number) {
+    var map = {};
+    if (!!(number & SubmissionStatus.Final)) {
+      map.Final = 'label-success';
+    } else {
+      map.Draft = 'label-warning';
+    }
+
+    if (!!(number & SubmissionStatus.Approved)) {
+      map.Approved = 'label-success';
+    } else {
+      map.Unapproved = 'label-warning';
+    }
+
+    return map;
+  };
+}])
+.config(function(uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyA3SaBcz7amu_EeQekF4QHmixkf71tFyrE',
+    v: '3',
+    libraries: 'weather,geometry,visualization'
+  })
+})
+.config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
+  showErrorsConfigProvider.showSuccess(true);
+}])
+.config(['markdownConverterProvider', function (markdownConverterProvider) {
+  // options to be passed to Showdown
+  // see: https://github.com/coreyti/showdown#extensions
+  markdownConverterProvider.config({
+    extensions: []
+  });
+}])
+.run(function($rootScope, $q, $stateParams, PermissionStore, RoleStore, AuthService) {
   PermissionStore.definePermission('hasValidSession', function () {
     return AuthService.isAuthenticated();
   });
@@ -398,21 +437,4 @@ angular
   RoleStore.defineRole('AUTHOR', ['hasValidSession', 'author']);
   RoleStore.defineRole('REVIEWER', ['hasValidSession', 'reviewer']);
   RoleStore.defineRole('ATTENDEE', ['hasValidSession', 'attendee']);
-})
-.config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
-  showErrorsConfigProvider.showSuccess(true);
-}])
-.config(['markdownConverterProvider', function (markdownConverterProvider) {
-  // options to be passed to Showdown
-  // see: https://github.com/coreyti/showdown#extensions
-  markdownConverterProvider.config({
-    extensions: []
-  });
-}])
-.config(function(uiGmapGoogleMapApiProvider) {
-  uiGmapGoogleMapApiProvider.configure({
-    key: 'AIzaSyA3SaBcz7amu_EeQekF4QHmixkf71tFyrE',
-    v: '3',
-    libraries: 'weather,geometry,visualization'
-  });
 });

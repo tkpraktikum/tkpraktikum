@@ -25,7 +25,7 @@ angular
                     .link({id: userId, fk: res[0].id},
                       {attendeeId: userId, conferenceId: res[0].id})
                     .$promise.then(function () {
-                    $state.go('app.protected.user.conference.my')
+                      $state.go('app.protected.user.conference.my', $state.params, { reload: true });
                   })
                 }
               })

@@ -1,7 +1,7 @@
 angular
   .module('app')
-  .controller('ReviewerAssignmentController', ['$q', '$scope', '$state', 'Submission', 'Review', 'ConferenceService', 'Conference', 'User', '$stateParams',
-    function($q, $scope, $state, Submission, Review, ConferenceService, Conference, User, $stateParams) {
+  .controller('ReviewerAssignmentController', ['$q', '$scope', '$state', 'Submission', 'Review', 'ConferenceService', 'SessionService', 'Conference', 'User', '$stateParams',
+    function($q, $scope, $state, Submission, Review, ConferenceService, SessionService, Conference, User, $stateParams) {
 
       var isSet = function(x) {return !!x; };
 
@@ -42,6 +42,8 @@ angular
           })
         ]).then(function(result) {
           console.log(result);
+          SessionService.setFlash('Updated reviewers!')
+          $state.reload();
         });
       };
 

@@ -45,7 +45,7 @@ app.models.affiliation.find({fields: ['id']}, function (err, affiliations) {
         lastName = commonNames.lastNames[Math.floor(Math.random() * commonNames.lastNames.length)];
     lastName = lastName.slice(0,1) + lastName.slice(1).toLowerCase();
     attendees[i] = {
-      username: firstName + lastName,
+      username: firstName.toLowerCase() + lastName.toLowerCase(),
       firstname: firstName,
       lastname: lastName,
       email: firstName + '.' + lastName + '@gmail.com',
