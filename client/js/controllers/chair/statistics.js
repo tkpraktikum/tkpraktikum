@@ -89,7 +89,7 @@ angular
           })), function(a) { return a.id; })).sort(function(a, b) { return b[1] - a[1]}).splice(0,3);
 
           $scope.subAffData = top3.map(function(a) { return [a[1]] });
-          $scope.subAffSeries = top3.map(function(a) { return affsById[a[0]].name});
+          $scope.subAffSeries = top3.map(function(a) { return affsById[a[0]].name.split(", ")[0]; });
 
           $scope.subAffOptions = {
             legend: {display: true},
@@ -132,9 +132,9 @@ angular
       });
     }
 
-    submissionStatus();
+    authorVsSubmissions();
     users();
     reviewsFinishedVsDraft();
     submissionsByAffs();
-    authorVsSubmissions();
+    submissionStatus();
   }]);
