@@ -1,5 +1,5 @@
 angular
   .module('app')
-  .controller('ConferenceController', ['$stateParams', '$scope', 'ConferenceService', function($stateParams, $scope, ConferenceService) {
+  .controller('ConferenceController', ['$stateParams', 'ConferenceService', function($stateParams, ConferenceService) {
     ConferenceService.setCurrentConferenceId($stateParams.conferenceId);
   }]);
