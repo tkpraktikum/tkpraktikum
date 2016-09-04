@@ -352,6 +352,7 @@
 
   \section{Test the new extension}
   \label{sec:tech:handson:test}
+
     Now it is time to test the created extension. Simply start the server by typing \texttt{npm start} inside the project root directory and navigate to \url{http://localhost:3000}. After logging in with a valid user account the new link will become visible and, once clicked, will lead to the newly created page which shows the current date and time, nicely formatted.
 
 \part{User Documentation}
@@ -360,14 +361,135 @@
   \chapter{Introduction}
   \label{ch:user:intro}
 
-    A conference management system...
+    % Begin: Huzeyfe changes
+    A conference management system is a web application for organizing and managing conferences. In such a system, users are allowed to upload submissions, review these submissions with a feedback or change the conference information itself. This implies that users have different roles during a conference such as attendee, author, reviewer and chair to be able to perform their tasks. The user documentation shows how to perform the aforementioned tasks.
+
+  \chapter{User}
+
+    User is the initial role after the registration without any joined conferences.
+
+  \section{Create an Account}
+
+    % Creating an account allows the user to be part of the conference management system. Follow the steps below to create an account.
+        \begin{enumerate}
+            \item   Click on the \textbf{Create new account} link on the main page. (see figure \ref{fig:main-page})
+            \item   Enter the first name, last name, email, username, affiliation, password and confirm password.
+            \item   Click on the \textbf{Submit} button to process the registration.
+        \end{enumerate}
+
+        %\begin{enumerate}
+        %   \item   Click on the \textbf{Create new account} link on the main page. (see figure \ref{fig:main-page})
+        %   \item   Fill out the form respectively to their labels.
+        %   \item   Click on the \textbf{Submit} button.
+        %\end{enumerate}
+
+  \section{Manage Profile}
+
+    % Editing a profile allows the user to change the personal information, changing the password and deleting the account. Follow the steps below to edit the profile.
+        \begin{enumerate}
+            \item   Log in to your account. Navigate to the drop-down box located in the top right corner and open it by clicking on \textbf{your name}. Locate \textbf{Manage Profile} and click on it. (see figure \ref{fig:user-menu}, box \#1)
+            \item   Once on \textbf{Manage Profile}, change your first name, last name, email, username, street, postal code, city, state, country or affiliation.
+            \item   Click on the \textbf{Edit Profile} button to save the changes.
+        \end{enumerate}
+
+        %\begin{enumerate}
+        %   \item   Log in to your account. Navigate to \textbf{your name}, then click on {Manage Profile}. (see figure \ref{fig:user-menu})
+        %   \item   Once on \textbf{Manage Profile}, change the desired input from the form respectively to their labels.
+        %   \item   Click on the \textbf{Edit Profile} button.
+        %\end{enumerate}
 
   \chapter{Attendee}
+
+    Attendee is a user who wants to attend a specific conference. This role is automatically granted to users when they join a conference.
+
+  \section{Join a Conference}
+    % Joining a conference allows the user to be part of a public or private conference as an attendee at time. Follow the steps below to join a conference
+        \begin{enumerate}
+            \item   Log in to your account. Navigate to the drop-down box located in the top right corner and open it by clicking on \textbf{your name}. Locate  \textbf{Join Conference} and click on it. (see figure \ref{fig:user-menu}, box \#3)
+            \item   Select a conference from the drop-down list and enter the shared secret key.
+            \item   Click on the \textbf{Join Conference} button to join the selected conference.
+        \end{enumerate}
+
   \chapter{Author}
+
+    Authors are allowed to create submissions for a conference in order to submit their papers during the submission phase.
+
+  \section{Create a Submission}
+    % Creating a submission is a functionality targeted for authors only. Authors are only allowed to submit their papers for a conference during the submission phase. Follow the steps below to create a submission.
+        \begin{enumerate}
+            \item   Log in to your account. Navigate to the drop-down box located in the top and open it by clicking on \textbf{Submissions}. Locate \textbf{Create Submission} and click on it. (see figure \ref{fig:submission-menu})
+            \item   Enter the title, abstract and keywords of the submission.
+            \item   Select multiple authors from the drop-down list if necessary.
+            \item   Either drag and drop your paper into the drop zone or click on the drop zone to select the file from your local machine. \textbf{*}
+            \item   Click on the \textbf{Submit Paper} button to create the submission.
+        \end{enumerate}
+
+        %\begin{enumerate}
+        %   \item   Log in to your account. Navigate to \textbf{Submissions}, then click on \textbf{Create Submission}.  (see figure \ref{fig:submission-menu})
+        %   \item   Fill out the form respectively to their labels.
+        %   \item   Click on the \textbf{Submit Paper} button.
+        %\end{enumerate}
+    \textbf{*Please note:} PDF format only.
+
   \chapter{Reviewer}
+
+    Reviewer are allowed to create reviews for their assigned submissions and give feedback during the review phase, which is assignable by the chair only.
+
+  \section{Create a Review}
+    % Creating a review is a functionality targeted for reviewer only. Reviewer are allowed to review assigned submissions for a conference during the review phase. Follow the steps below to create a review.
+        \begin{enumerate}
+            \item   Log in to your account. Navigate to the drop-down box located in the top and open it by clicking on \textbf{Reviews}. Locate \textbf{Overview} and click on it. (see figure \ref{fig:review-menu})
+            \item   Once in \textbf{Overview}, click on the {Review} button from a submission. (see figure \ref{fig:review-overview})
+            \item   Select only one option for both your expertise and overall evaluation.
+            \item   Enter the evaluation summary, major strong points, major weak points, detailed comments.
+            \item   Select between the draft or finished option.
+            \item   Click on the \textbf{Submit Review} button to create the review.
+        \end{enumerate}
+
+        %\begin{enumerate}
+        %   \item   Log in to your account. Navigate to \textbf{Reviews}, then click on \textbf{Overview}.  (see figure \ref{fig:review-menu})
+        %   \item   Once in \textbf{Overview}, click on the {Review} button from a submission.  (see figure \ref{fig:review-overview})
+        %   \item   Fill out the form respectively to their labels.
+        %   \item   Click on the \textbf{Submit Review} button.
+        %\end{enumerate}
+
   \chapter{Chair}
 
+    Chairs are allowed to manage the conference, users and submissions. Chairs can edit conference information such as submission deadlines, review deadlines or general information. He can also assign roles to specific users or assign reviewer to submissions, who are part of his conference.
 
+  \section{Manage Conference}
+    % Managing conferences is also a task assigned to the chair only. The chair is able to change his conference information such as the name, submission- or review deadlines. Follow the steps below to manage a conference.
+        \begin{enumerate}
+            \item   Log in to your account. Navigate to the drop-down box located in the top right corner and open it by clicking on \textbf{your name}. Locate \textbf{My Conferences} and click on it. (see figure \ref{fig:user-menu}, box \#2)
+            \item   Once in \textbf{My Conferences}, click on the Manage Conference link one of your conferences. (see figure \ref{fig:conference-overview})
+            \item   To change the conference information, enter the conference name, shared secret and conference description.
+            \item   Click on the calendar symbol next to the submission and/or review deadline to select a date from the calendar. *
+            \item   Click on the \textbf{Save Conference} button to save the conference changes.
+        \end{enumerate}
+
+  \section{Manage User Roles}
+    % Managing users from a conference is a task assigned to the chair only. The chair is able to assign roles to registered users who are part of his conference. Follow the steps below to manage users.
+        \begin{enumerate}
+            \item   Log in to your account. Navigate to the drop-down box located in the top and open it by clicking on \textbf{Conference Management}. Locate \textbf{Users} and click on it. (see figure \ref{fig:conference-menu}, box \#2)
+            \item   Enter the name of an attendee as a filter and/or select the role of the user if necessary.
+            \item   Click on the switch to assign or revoke role/s to a user.
+        \end{enumerate}
+
+        %\begin{enumerate}
+        %   \item   Log in to your account. Navigate to \textbf{your name}, then click on \textbf{My Conferences}. (see figure \ref{fig:user-menu-chair})
+        %   \item   Once in \textbf{My Conferences}, click on the Manage Conference link one of your conferences. (see figure \ref{fig:conference-overview})
+        %   \item   Make the desired change from the form respectively to their labels.
+        %   \item   Click on the \textbf{Save Conference} button.
+        %\end{enumerate}
+    \textbf{*Please note:} submission deadline is not allowed to be later than review deadline.
+
+  \section{Assign Reviewer to Submissions}
+        \begin{enumerate}
+            \item   Log in to your account. Navigate to the drop-down box located in the top and open it by clicking on \textbf{Conference Management}. Locate \textbf{Assign Reviewer} and click on it. (see figure \ref{fig:conference-menu}, box \#1)
+            \item   Enter the name of an available reviewer from the drop-down list or select directly one from the drop-down list.
+            \item   Click on the \textbf{Save Changes} button to assign the reviewer/s to the submission.
+        \end{enumerate}
+    % End: Huzeyfe changes
 
 \part{Appendix}
 \label{part:appendix}
