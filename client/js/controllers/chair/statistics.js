@@ -1,8 +1,8 @@
 angular
   .module('app')
   .controller('StatisticsController',
-    ['$q', '$scope', '$state', '$stateParams', '$http', '$timeout', 'ConferenceService', 'Submission', 'User', 'Conference', 'Review',
-      function($q, $scope, $state, $stateParams, $http, $timeout, ConferenceService, Submission, User, Conference, Review) {
+    ['$q', '$scope', '$state', 'ConferenceService', 'Submission', 'Conference', 'Review',
+      function($q, $scope, $state, ConferenceService, Submission, Conference, Review) {
 
         var submissionPromise = Submission.find(
           {filter: {where: { conferenceId: ConferenceService.getCurrentConferenceId()},
