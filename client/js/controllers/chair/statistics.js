@@ -4,7 +4,7 @@ angular
     ['$q', '$scope', '$state', '$stateParams', '$http', '$timeout', 'ConferenceService', 'Submission', 'User', 'Conference', 'Review',
       function($q, $scope, $state, $stateParams, $http, $timeout, ConferenceService, Submission, User, Conference, Review) {
 
-        $scope.submissionPromise = Submission.find(
+        var submissionPromise = Submission.find(
           {filter: {where: { conferenceId: ConferenceService.getCurrentConferenceId()},
           include: {'authors': ['affiliation']}}}).$promise;
 
@@ -79,7 +79,7 @@ angular
             legend: {display: true}
           };
 
-          $scope.submissionPromise.then(function(submission) {
+          submissionPromise.then(function(submission) {
               var ids = submission.map(function(s) { return {submissionId: s.id}; });
               Review.find({filter: {where: { or: ids}}}).$promise.then(function(r) {
                 $scope.reviewsData.push(r.filter(function(r) { return r.finished;}).length);
@@ -93,7 +93,7 @@ angular
         var submissionsByAffs = function() {
 
           $scope.subAffLabels = ['Submissions'];
-          $scope.submissionPromise.then(function(data) {
+          submissionPromise.then(function(data) {
 
               var affsById = {};
               var top3 = _.pairs(_.countBy(_.flatten(data.map(function(s) {
@@ -121,12 +121,12 @@ angular
 
         var submissionStatus = function() {
           $scope.subStatusLabel = ["Draft", "Submitted", "Approved"];
-          $scope.submissionPromise.then(function(data) {
+          submissionPromise.then(function(data) {
 
 
 
 
-            $scope.submissionPromise.then(function(s) {
+            submissionPromise.then(function(s) {
               $scope.subStatusData = _.pairs(_.countBy(s.map(function(s) { return s.status; }))).sort(function(p)
                 { return p[1];}).map(function(x) { return x[1];});
 
