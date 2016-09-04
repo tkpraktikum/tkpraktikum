@@ -48,11 +48,11 @@ angular
           }
         };
 
-        Conference.authors.count({id: ConferenceService.getCurrentConferenceId()}).$promise.then(function(result) {
+        Conference.attendees.count({id: ConferenceService.getCurrentConferenceId()}).$promise.then(function(result) {
           $scope.dataUser[0].push(result.count);
         });
 
-        Conference.attendees.count({id: ConferenceService.getCurrentConferenceId()}).$promise.then(function(result) {
+        Conference.authors.count({id: ConferenceService.getCurrentConferenceId()}).$promise.then(function(result) {
           $scope.dataUser[1].push(result.count);
         });
 
