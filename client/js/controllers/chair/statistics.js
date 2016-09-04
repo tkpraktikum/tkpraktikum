@@ -65,7 +65,7 @@ angular
         });
       },
       reviewsFinishedVsDraft = function() {
-        $scope.reviewsLabels = ["Finished", "Open", "Outstanding"];
+        $scope.reviewsLabels = ["Finished", "Open"];
         $scope.reviewsData = [];
         $scope.reviewsOptions = {
           legend: {display: true}
@@ -76,7 +76,6 @@ angular
           Review.find({filter: {where: { or: ids }}}).$promise.then(function(r) {
             $scope.reviewsData.push(r.filter(function(r) { return r.finished;}).length);
             $scope.reviewsData.push(r.filter(function(r) { return !r.finished;}).length);
-            $scope.reviewsData.push(submission.length - r.length);
           });
         });
       },
