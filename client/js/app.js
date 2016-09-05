@@ -277,6 +277,9 @@ angular
     getCurrentConferenceId: function () {
       return currentConferenceId;
     },
+    getCurrentConference: function () {
+      return currentConference;
+    },
     setCurrentConferenceId: setCurrentConferenceId,
     isSubmissionPhase: function() {
       return currentConference.then(function(c) {
@@ -324,6 +327,7 @@ angular
     logout = function () {
       LoopBackAuth.clearUser();
       LoopBackAuth.clearStorage();
+      ConferenceService.setCurrentConferenceId();
       return $q.resolve();
     },
     hasRole = function (role) {

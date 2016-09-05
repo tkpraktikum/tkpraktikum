@@ -287,3 +287,11 @@ h2.panel-title {
 }
 
 .angular-google-map-container { height: 400px; }
+
+.navbar-header .dual-line {
+  display: inline-block;
+  margin-top: 18px;
+  line-height: 1.5em;
+  font-weight: bold;
+  text-align: right;
+}

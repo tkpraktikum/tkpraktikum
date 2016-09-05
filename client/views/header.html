@@ -8,7 +8,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" ui-sref-active="active" ui-sref="app.protected.home"><span class="highlight">TK Project - Team Whisky</span></a>
+      <a class="navbar-brand" ui-sref-active="active" ui-sref="app.protected.home"><span class="highlight">{{ conferenceName }}</span></a>
+      <span class="dual-line" ng-if="deadlines">
+        Submission Deadline: {{ deadlines[0] | date:'MMM dd, HH:mm' }}<br>
+        Review Deadline: {{ deadlines[1] | date:'MMM dd, HH:mm' }}
+      </span>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
