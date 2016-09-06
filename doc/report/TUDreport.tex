@@ -322,7 +322,7 @@
   \chapter{Introduction}
   \label{ch:tech:intro}
 
-    This part of the documentation is intended for developers who want to setup the project on their local machine and contribute changes to the source code. The documentation is written such that the individual chapters can be read in arbitrary order. Each chapter is a self-contained piece of documentation. However, the software tools listed in section~\ref{sec:tech:architecture:3rd-party} are heavily used throughout the application. Therefore, the reader is advised to take a look at them before proceeding with the rest of the documentation. For further information on these tools please refer to the individual project sites. Appendix~\ref{ch:appendix:setup} hold the instructions on how to setup the application on a local machine.
+    This part of the documentation is intended for developers who want to setup the project on their local machine and contribute changes to the source code. The documentation is written such that the individual chapters can be read in arbitrary order. Each chapter is a self-contained piece of documentation. However, the software tools listed in section~\ref{sec:tech:architecture:3rd-party} are heavily used throughout the application. Therefore, the reader is advised to take a look at them before proceeding with the rest of the documentation. For further information on these tools, please refer to the individual project sites. Appendix~\ref{ch:appendix:setup} hold the instructions on how to setup the application on a local machine.
 
     The remainder of this documentation is structured as follows: Chapter~\ref{ch:tech:architecture} gives an insight of how the application works conceptually and provides an overview of the used software libraries. Implementation details such as authentication, authorization, etc. are covered in chapter~\ref{ch:tech:implementation}. This chapter also covers the directory structure of the project as well as important files that are involved in bootstrapping the application. Eventually, chapter~\ref{ch:tech:handson} describes the process of extending the application, i.e., how to extend the navigation bar, add a new page, etc.
 
@@ -448,7 +448,7 @@
   \subsection{Creating and Updating Models}
   \label{sec:tech:implementation:strongloop:models}
 
-    \emph{StrongLoop} does represent database tables in terms of models. A model does represent a collection of data with a given schema, e.g., a collection of users that have properties like a name, an email, a password, etc. Besides the sheer representation of data, the developer can define access rules in the model that define which data can be accessed by whom. In particular, this feature allows to restrict data access to the owner of the data (see~\ref{sec:tech:implementation:acl:strongloop-acl}). That said, a model does also provide the methods required to retrieve, store, update and delete items of a collections.
+    \emph{StrongLoop} does represent database tables in terms of models. A model does represent a collection of data with a given schema, e.g., a collection of users that have properties like a name, an email, a password, etc. Besides the sheer representation of data, the developer can define access rules in the model that define which data can be accessed by whom. In particular, this feature allows to restrict data-access to the owner of the data (see~\ref{sec:tech:implementation:acl:strongloop-acl}). That said, a model does also provide the methods required to retrieve, store, update and delete items of a collection.
 
     To update or create a model, one has to decide between two basic approaches, i.e., a guided and a manual one. The advantages and disadvantages of both approaches are described next.
 
@@ -608,7 +608,7 @@
   \section{Test the new extension}
   \label{sec:tech:handson:test}
 
-    Now it is time to test the created extension. Simply start the server by typing \texttt{npm start} inside the project root directory and navigate to \url{http://localhost:3000}. After logging in with a valid user account the new link will become visible and, once clicked, will lead to the newly created page which shows the current date and time, nicely formatted.
+    Now it is time to test the created extension. Simply start the server by typing \texttt{npm start} inside the project root directory and navigate to \url{http://localhost:3000}. After logging in with a valid user account, the new link will become visible and, once clicked, will lead to the newly created page which shows the current date and time, nicely formatted.
 
 \part{Appendix}
 \label{part:appendix}
