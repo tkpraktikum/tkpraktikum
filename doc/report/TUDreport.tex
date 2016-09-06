@@ -528,16 +528,112 @@
         \end{lstlisting}
     For further installation instructions, please stick to the \emph{readme.md} file which is now found inside the directory.
 
-
   \chapter*{B.\quad Database Entity Relationship Model}
   \addcontentsline{toc}{chapter}{B.\quad Database Entity Relationship Model}
-
-    % Figure of ERM goes here
 
   \chapter*{C.\quad Application Screenshots}
   \addcontentsline{toc}{chapter}{C.\quad Application Screenshots}
 
-    % Figure of ERM goes here
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-login}
+            \caption{Login page}
+            \label{fig:appendix:screenshots:ui-login}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-register}
+            \caption{Register page. Affiliation field is pre-populated with a list of known universities (\textasciitilde300).}
+            \label{fig:appendix:screenshots:ui-register}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-account-home}
+            \caption{Account overview. Provides important quick links}
+            \label{fig:appendix:screenshots:ui-account-home}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-conference-home}
+            \caption{Conference overview. Provides some quick links according to the user permissions.}
+            \label{fig:appendix:screenshots:ui-conference-home}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-manage-profile}
+            \caption{Manage profile. Allows the user to edit his profile, change his password, and delete is account.}
+            \label{fig:appendix:screenshots:ui-manage-profile}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-list-conferences}
+            \caption{List attended conferences. Provides some quick links according to the user permissions.}
+            \label{fig:appendix:screenshots:ui-list-conferences}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-conference-create}
+            \caption{Conference creation. Allows to set the name, description and deadlines of a conference. The submission and review phase can be force opened to allow submissions/reviews outside of the defined intervals. The shared secret is used by attendees to join the conference.}
+            \label{fig:appendix:screenshots:ui-conference-create}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-submission-create}
+            \caption{Submission creation. Allows to select multiple authors from the list of conference attendees. The abstract supports markdown syntax. Keywords are auto-suggested and created on-the-fly. Paper must be provided as PDF.}
+            \label{fig:appendix:screenshots:ui-submission-create}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-submission-overview}
+            \caption{Submission overview. Lists created submissions and shows a summary and the current status. The user can choose to finalize the submission which allows reviewers to review the submission early on.}
+            \label{fig:appendix:screenshots:ui-submission-overview}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-review-overview}
+            \caption{Review overview. Lists reviews of assigned submissions and allows to edit them during the review phase.}
+            \label{fig:appendix:screenshots:ui-review-overview}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-review-create}
+            \caption{Review creation. Allows for an abstract rating and textual feedback (markdown support).}
+            \label{fig:appendix:screenshots:ui-review-create}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-user-role-assignment}
+            \caption{Role Assignment. Allows the chair to manage the roles of the conference attendees. The filter on top allows to filter for attendees that have a specific role or name.}
+            \label{fig:appendix:screenshots:ui-user-role-assignment}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-reviewer-assignment}
+            \caption{Reviewer Assignment. Allows the chair to assign one or more reviewers to a submission. This can be done either manually or automatically, or in a hybrid approach.}
+            \label{fig:appendix:screenshots:ui-reviewer-assignment}
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-statistics}
+            \caption{Conference Statistics. See \ref{ch:user:chair:statistics} for more information on the different statistics.}
+            \label{fig:appendix:screenshots:ui-statistics}
+        \end{figure}
+
+    % Ensure to keep figures grouped together
+    \clearpage
 
   \chapter*{D.\quad (Un)Implemented Features}
   \addcontentsline{toc}{chapter}{D.\quad (Un)Implemented Features}
