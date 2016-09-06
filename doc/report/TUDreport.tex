@@ -63,139 +63,258 @@
 
 \part{User Documentation}
 \label{part:user}
+    % linewidth/textwidth: 17.49751cm = 497.92325pt
+    % Good screenshot ratio: 1,7066 (=> 1280×750)
 
   \chapter{Introduction}
   \label{ch:user:intro}
 
-    % Begin: Huzeyfe changes
-    A conference management system is a web application for organizing and managing conferences. In such a system, users are allowed to upload submissions, review these submissions with a feedback or change the conference information itself. This implies that users have different roles during a conference such as attendee, author, reviewer and chair to be able to perform their tasks. The user documentation shows how to perform the aforementioned tasks.
+    \texttt{TKonference} is a web-based conference management system that offers all required features for managing attendees, authors, reviewers, and chair(s) of a conference. The application is open-source and highly extendable. If you are a server administrator who wants to install this software as a self-hosted solution, please refer to appendix~\ref{ch:appendix:setup} for the required prerequisites and installation instructions. If you are a developer who wants to extend the application, please refer to part~\ref{part:tech} of this documentation which provides an overview of the software's architecture and implementation.
+
+    This part of the documentation is meant as a guide for users of the application. It describes the usage of the application and its provided features. The remainder of the guide is divided into five sections, each dedicated to one of the following user roles, respectively:
+        \begin{itemize}
+            \setlength\itemsep{0em}
+            \item \texttt{User}: Basically, a user is someone who is visiting the web application with a web browser.%
+            \footnote{Strictly speaking, a user is someone who authenticated himself against the application with a valid username and password. This distinction is only relevant if you are a developer (see~part~\ref{part:tech}, section~\ref{sec:tech:implementation:acl:roles}).}
+            This is the most restricted account type which is only allowed to perform basic actions (see chapter~\ref{ch:user:user}).
+            \item \texttt{Attendee}: An attendee is a user who is actively participating at a specific conference. A user can become an attendee of a conference by joining it (see chapter~\ref{ch:user:attendee}).
+            \item \texttt{Author}: An author is an attendee of a conference who has the permission to submit a conference-relevant paper (PDF), thus applying as a speaker (see chapter~\ref{ch:user:author}).
+            \item \texttt{Reviewer}: Reviewers are persons with great expertise in the research area that is targeted by the conference. They are responsible to review submitted papers of authors, i.e., provide them with feedback, and rate the  quality and relevance of the submitted paper (see chapter~\ref{ch:user:reviewer}).
+            \item \texttt{Chair}: The chair is responsible for managing the conference. He has the power to name authors, reviewers, and further chairs from the list of attendees. When the review phase is over, the chair decides, based on the given reviews, which papers to approve and therefore which authors to invite as a speaker (see chapter~\ref{ch:user:chair}).
+        \end{itemize}
+
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{img/ui-menus}
+            \caption{Application UI - Logged in, menus opened}
+            \label{fig:user:intro:ui-menus}
+        \end{figure}
 
   \chapter{User}
+  \label{ch:user:user}
 
-    User is the initial role after the registration without any joined conferences.
+    The basic abilities of a user comprise of \ref{ch:user:user:register}) registering of a new account, \ref{ch:user:user:login}) log in to an account, \ref{ch:user:user:profile}) manage the profile of an account, and \ref{ch:user:user:create-conference}) create own conferences.
+
+    For the remainder of this chapter, except for \ref{ch:user:user:register} and \ref{ch:user:user:login}, it is assumed that the user is logged in to the system and has already opened the start page of \texttt{TKonference} in a web browser (e.g. \url{http://localhost:3000}, when setup locally).
 
   \section{Create an Account}
+  \label{ch:user:user:register}
 
-    % Creating an account allows the user to be part of the conference management system. Follow the steps below to create an account.
         \begin{enumerate}
-            \item   Click on the \textbf{Create new account} link on the main page. (see figure \ref{fig:main-page})
-            \item   Enter the first name, last name, email, username, affiliation, password and confirm password.
-            \item   Click on the \textbf{Submit} button to process the registration.
+            \setlength\itemsep{0em}
+            \item Click on the \texttt{Create new account} link (Figure~\ref{fig:appendix:screenshots:ui-login}).
+            \item Fill out the name-, email-, username-, affiliation-, and password-fields, respectively (Figure~\ref{fig:appendix:screenshots:ui-register})
+            \item Click the \texttt{Submit} button to complete the registration process.
         \end{enumerate}
 
-        %\begin{enumerate}
-        %   \item   Click on the \textbf{Create new account} link on the main page. (see figure \ref{fig:main-page})
-        %   \item   Fill out the form respectively to their labels.
-        %   \item   Click on the \textbf{Submit} button.
-        %\end{enumerate}
+    \noindent
+    On success, the user is redirected to the login page.
+
+  \section{Application Login}
+  \label{ch:user:user:login}
+
+        \begin{enumerate}
+            \setlength\itemsep{0em}
+            \item Fill out the username-, and password-field of the login form (Figure~\ref{fig:appendix:screenshots:ui-login}).
+            \item Press the \texttt{Login} button to authenticate yourself against the system.
+        \end{enumerate}
+
+    \noindent
+    On success, the user is redirected a) to his account overview (Figure~\ref{fig:appendix:screenshots:ui-account-home}), or b) to the conference overview of his default conference, in case he has set one (Figure~\ref{fig:appendix:screenshots:ui-conference-home}).
+
+  \section{Application Logout}
+  \label{ch:user:user:logout}
+
+        \begin{enumerate}
+            \setlength\itemsep{0em}
+            \item Navigate to the drop-down menu located in the top right corner and open it by clicking on \texttt{<your name>} (Figure~\ref{fig:user:intro:ui-menus}, \#4)
+            \item Inside the newly opened menu, click on the \texttt{Logout} link (Figure~\ref{fig:user:intro:ui-menus}, \#4.6).
+        \end{enumerate}
+
+    \noindent
+    The log out operation is important whenever multiple persons have access to the computer.
 
   \section{Manage Profile}
+  \label{ch:user:user:profile}
 
-    % Editing a profile allows the user to change the personal information, changing the password and deleting the account. Follow the steps below to edit the profile.
         \begin{enumerate}
-            \item   Log in to your account. Navigate to the drop-down box located in the top right corner and open it by clicking on \textbf{your name}. Locate \textbf{Manage Profile} and click on it. (see figure \ref{fig:user-menu}, box \#1)
-            \item   Once on \textbf{Manage Profile}, change your first name, last name, email, username, street, postal code, city, state, country or affiliation.
-            \item   Click on the \textbf{Edit Profile} button to save the changes.
+            \setlength\itemsep{0em}
+            \item Navigate to the drop-down menu located in the top right corner and open it by clicking on \texttt{<your name>} (Figure~\ref{fig:user:intro:ui-menus}, \#4)
+            \item Inside the newly opened menu, click on the \texttt{Manage Profile} link (Figure~\ref{fig:user:intro:ui-menus}, \#4.1).
+            \item Choose amongst the items in the top menu according to the options below (Figure~\ref{fig:appendix:screenshots:ui-manage-profile}).
+            \begin{enumerate}
+                \item Edit your profile (default):\\
+                Adapt your profile as desired and confirm the changes by pressing the \texttt{Edit Profile} button.
+                \item Change your password:\\
+                Enter your new password in both fields to avoid misspelling and confirm it by pressing the \texttt{Change} button.
+                \item Delete your account:\\
+                Delete your account by pressing the \texttt{Delete} button. Read the displayed instructions carefully and confirm your decision by entering your username in the form field and pressing the \texttt{I understand the consequences, delete this profile} button.
+            \end{enumerate}
         \end{enumerate}
 
-        %\begin{enumerate}
-        %   \item   Log in to your account. Navigate to \textbf{your name}, then click on {Manage Profile}. (see figure \ref{fig:user-menu})
-        %   \item   Once on \textbf{Manage Profile}, change the desired input from the form respectively to their labels.
-        %   \item   Click on the \textbf{Edit Profile} button.
-        %\end{enumerate}
+  \section{List Attended Conferences}
+  \label{ch:user:user:list-conferences}
+
+        \begin{enumerate}
+            \setlength\itemsep{0em}
+            \item Navigate to the drop-down menu located in the top right corner and open it by clicking on \texttt{<your name>} (Figure~\ref{fig:user:intro:ui-menus}, \#4)
+            \item Inside the newly opened menu, click on the \texttt{My Conferences} link (Figure~\ref{fig:user:intro:ui-menus}, \#4.2).
+        \end{enumerate}
+
+    \noindent
+    This will list all conferences that the user attends, as well as some related quick links (Figure~\ref{fig:appendix:screenshots:ui-list-conferences}). In case that the user does not attend any conference, he is provided with two quick links to create a conference (\ref{ch:user:user:create-conference}), or join a conference (\ref{ch:user:attendee:join-conference}), accordingly.
+
+  \section{Create a Conference}
+  \label{ch:user:user:create-conference}
+
+    \texttt{TKonference} is able to manage multiple conferences. All users are allowed to create their own conference which automatically makes them the chair of it.
+
+        \begin{enumerate}
+            \setlength\itemsep{0em}
+            \item Navigate to the drop-down menu located in the top right corner and open it by clicking on \texttt{<your name>} (Figure~\ref{fig:user:intro:ui-menus}, \#4)
+            \item Inside the newly opened menu, click on the \texttt{Create Conference} link (Figure~\ref{fig:user:intro:ui-menus}, \#4.4).
+            \item Fill out the form with a conference name, description, important deadlines, and a shared secret (Figure~\ref{fig:appendix:screenshots:ui-conference-create}). This secret must be known by other users if they want to join your conference as an attendee.
+        \end{enumerate}
+
+  \section{Select a Conference}
+  \label{ch:user:user:select-conference}
+
+    Because a user is able to attend multiple conferences, he has to select an 'active' conference. The conference name, and links displayed in the header navigation bar are valid for the active conference only.
+
+        \begin{enumerate}
+            \setlength\itemsep{0em}
+            \item Navigate to the drop-down menu located in the top right corner and open it by clicking on \texttt{<your name>} (Figure~\ref{fig:user:intro:ui-menus}, \#4)
+            \item Inside the newly opened menu, select one of the conferences that you attend (Figure~\ref{fig:user:intro:ui-menus}, \#4.5.1, \#4.5.2, \#4.5.3).
+        \end{enumerate}
+
+    \noindent
+    You are now redirected to the conference overview (Figure~\ref{fig:appendix:screenshots:ui-conference-home}). Also, the navigation bar is updated and shows the conference name and deadlines.
 
   \chapter{Attendee}
+  \label{ch:user:attendee}
 
-    Attendee is a user who wants to attend a specific conference. This role is automatically granted to users when they join a conference.
+    An attendee is a user who is a member of a conference. In order to become an attendee, a user has to join a conference.
 
   \section{Join a Conference}
-    % Joining a conference allows the user to be part of a public or private conference as an attendee at time. Follow the steps below to join a conference
+  \label{ch:user:attendee:join-conference}
+
         \begin{enumerate}
-            \item   Log in to your account. Navigate to the drop-down box located in the top right corner and open it by clicking on \textbf{your name}. Locate  \textbf{Join Conference} and click on it. (see figure \ref{fig:user-menu}, box \#3)
-            \item   Select a conference from the drop-down list and enter the shared secret key.
-            \item   Click on the \textbf{Join Conference} button to join the selected conference.
+            \setlength\itemsep{0em}
+            \item Navigate to the drop-down menu located in the top right corner and open it by clicking on \texttt{<your name>} (Figure~\ref{fig:user:intro:ui-menus}, \#4)
+            \item Inside the newly opened menu, click on the \texttt{Join Conference} link (Figure~\ref{fig:user:intro:ui-menus}, \#4.3).
+            \item Select the conference that you want to join from the drop down list and fill out the shared secret that you received from the chair or other attendees of the conference.
+            \item Confirm by pressing the \texttt{Join Conference} button.
         \end{enumerate}
+
+    On success you are redirected to the conference overview page (Figure~\ref{fig:appendix:screenshots:ui-conference-home}) which now also displays the joined conference.
 
   \chapter{Author}
+  \label{ch:user:author}
 
-    Authors are allowed to create submissions for a conference in order to submit their papers during the submission phase.
+    Those who attend a conference can be assigned the author role by the chair of the conference. An author is allowed to submit papers for the conference during the submission phase.
 
   \section{Create a Submission}
-    % Creating a submission is a functionality targeted for authors only. Authors are only allowed to submit their papers for a conference during the submission phase. Follow the steps below to create a submission.
+  \label{ch:user:author:create-submission}
+
         \begin{enumerate}
-            \item   Log in to your account. Navigate to the drop-down box located in the top and open it by clicking on \textbf{Submissions}. Locate \textbf{Create Submission} and click on it. (see figure \ref{fig:submission-menu})
-            \item   Enter the title, abstract and keywords of the submission.
-            \item   Select multiple authors from the drop-down list if necessary.
-            \item   Either drag and drop your paper into the drop zone or click on the drop zone to select the file from your local machine. \textbf{*}
-            \item   Click on the \textbf{Submit Paper} button to create the submission.
+            \setlength\itemsep{0em}
+            \item Navigate to the submission creation page by clicking \texttt{Submissions > Create} (Figure~\ref{fig:user:intro:ui-menus}, \#1.1).
+            \item You are now presented with the submission creation page (Figure~\ref{fig:appendix:screenshots:ui-submission-create}). The provided form allows you to select multiple co-authors from the list of conference attendees. The abstract field does support markdown syntax. You may provide multiple keywords for your paper. Please note that the uploaded paper must be provided as PDF.
+            \item Confirm your submission by pressing the \texttt{Submit Paper} button.
         \end{enumerate}
 
-        %\begin{enumerate}
-        %   \item   Log in to your account. Navigate to \textbf{Submissions}, then click on \textbf{Create Submission}.  (see figure \ref{fig:submission-menu})
-        %   \item   Fill out the form respectively to their labels.
-        %   \item   Click on the \textbf{Submit Paper} button.
-        %\end{enumerate}
-    \textbf{*Please note:} PDF format only.
+    \noindent
+    The newly created submission is automatically created as draft. You may edit the submission until it is marked as final (see next)
+
+  \section{Edit and Delete a Submission}
+  \label{ch:user:author:edit-sbumission}
+
+        \begin{enumerate}
+            \setlength\itemsep{0em}
+            \item Navigate to the submission overview (Figure~\ref{fig:appendix:screenshots:ui-submission-overview}) by clicking \texttt{Submissions > Show} (Figure~\ref{fig:user:intro:ui-menus}, \#1.2).
+            \item Press the \texttt{Edit} (\texttt{Withdraw}) button to edit (delete) the corresponding submission.
+        \end{enumerate}
+
+    \noindent
+    To finalize your submission, press on the \texttt{Final} switch within the submission overview. Once a submission is final, it can not be edited anymore. This allows reviewers to start the review process early on.
 
   \chapter{Reviewer}
+  \label{ch:user:reviewer}
 
-    Reviewer are allowed to create reviews for their assigned submissions and give feedback during the review phase, which is assignable by the chair only.
+    Reviewers are allowed to create reviews for their assigned submissions during the review phase. A review consists of the expertise of the reviewer (1-5), the overall rating of the submitted paper (1-5), and a textual feedback for each of the following:
+        \begin{multicols}{2}
+        \begin{itemize}
+            \item Evaluation Summary
+            \item Detailed Comments
+            \item Major Strong Points
+            \item Major Weak Points
+        \end{itemize}
+        \end{multicols}
 
   \section{Create a Review}
-    % Creating a review is a functionality targeted for reviewer only. Reviewer are allowed to review assigned submissions for a conference during the review phase. Follow the steps below to create a review.
-        \begin{enumerate}
-            \item   Log in to your account. Navigate to the drop-down box located in the top and open it by clicking on \textbf{Reviews}. Locate \textbf{Overview} and click on it. (see figure \ref{fig:review-menu})
-            \item   Once in \textbf{Overview}, click on the {Review} button from a submission. (see figure \ref{fig:review-overview})
-            \item   Select only one option for both your expertise and overall evaluation.
-            \item   Enter the evaluation summary, major strong points, major weak points, detailed comments.
-            \item   Select between the draft or finished option.
-            \item   Click on the \textbf{Submit Review} button to create the review.
-        \end{enumerate}
+  \label{ch:user:reviewer:create-review}
 
-        %\begin{enumerate}
-        %   \item   Log in to your account. Navigate to \textbf{Reviews}, then click on \textbf{Overview}.  (see figure \ref{fig:review-menu})
-        %   \item   Once in \textbf{Overview}, click on the {Review} button from a submission.  (see figure \ref{fig:review-overview})
-        %   \item   Fill out the form respectively to their labels.
-        %   \item   Click on the \textbf{Submit Review} button.
-        %\end{enumerate}
+        \begin{enumerate}
+            \setlength\itemsep{0em}
+            \item Navigate to the review overview (Figure~\ref{fig:appendix:screenshots:ui-review-overview}) by clicking \texttt{Reviews > Overview} (Figure~\ref{fig:user:intro:ui-menus}, \#2.1).
+            \item Press the \texttt{Review} button to create/edit the corresponding review.
+            \item Fill out the form accordingly (Figure~\ref{fig:appendix:screenshots:ui-review-create}).\\
+            Note that all textual inputs on this page support markdown syntax.
+            \item Save your review by pressing the \texttt{Submit Review} button.
+        \end{enumerate}
 
   \chapter{Chair}
+  \label{ch:user:chair}
 
-    Chairs are allowed to manage the conference, users and submissions. Chairs can edit conference information such as submission deadlines, review deadlines or general information. He can also assign roles to specific users or assign reviewer to submissions, who are part of his conference.
+    The chair of the conference is responsible to manage the conference by providing the submission- and review deadlines, assign author and reviewer roles to attendees and assign submissions to reviewers. He is also able to view the conference statistic page that visualizes and aggregates useful information.
 
-  \section{Manage Conference}
-    % Managing conferences is also a task assigned to the chair only. The chair is able to change his conference information such as the name, submission- or review deadlines. Follow the steps below to manage a conference.
+    The process of listing submissions and reviews (Figure~\ref{fig:user:intro:ui-menus}, \#3.1 and \#3.3) does not require any further explanation and therefore, no dedicated section exists to explain these features. The process of managing a conference (Figure~\ref{fig:user:intro:ui-menus}, \#3.5) is equivalent to that of creating a conference which was explained previously in section~\ref{ch:user:user:create-conference}.
+
+  \section{Assign User Roles to Attendees}
+  \label{ch:user:chair:assign-roles}
+
+    By default, members who join a conference have no privileges. The chair can empower attendees of the conference to gain the privileges of an author, reviewer, or chair which allows them to execute the actions described in chapter~\ref{ch:user:author}, \ref{ch:user:reviewer}, and \ref{ch:user:chair}, respectively.
+
         \begin{enumerate}
-            \item   Log in to your account. Navigate to the drop-down box located in the top right corner and open it by clicking on \textbf{your name}. Locate \textbf{My Conferences} and click on it. (see figure \ref{fig:user-menu}, box \#2)
-            \item   Once in \textbf{My Conferences}, click on the Manage Conference link one of your conferences. (see figure \ref{fig:conference-overview})
-            \item   To change the conference information, enter the conference name, shared secret and conference description.
-            \item   Click on the calendar symbol next to the submission and/or review deadline to select a date from the calendar. *
-            \item   Click on the \textbf{Save Conference} button to save the conference changes.
+            \setlength\itemsep{0em}
+            \item Navigate to the user management (Figure~\ref{fig:appendix:screenshots:ui-user-role-assignment}) by clicking \texttt{Conference Management > Users} (Figure~\ref{fig:user:intro:ui-menus}, \#3.4).
+            \item In the list of conference attendees, each user is displayed in a separate panel. Each panel contains three switches for the author, reviewer, and chair role, respectively. Click on any of the switches to toggle the user role. No further confirmation is necessary.
         \end{enumerate}
-
-  \section{Manage User Roles}
-    % Managing users from a conference is a task assigned to the chair only. The chair is able to assign roles to registered users who are part of his conference. Follow the steps below to manage users.
-        \begin{enumerate}
-            \item   Log in to your account. Navigate to the drop-down box located in the top and open it by clicking on \textbf{Conference Management}. Locate \textbf{Users} and click on it. (see figure \ref{fig:conference-menu}, box \#2)
-            \item   Enter the name of an attendee as a filter and/or select the role of the user if necessary.
-            \item   Click on the switch to assign or revoke role/s to a user.
-        \end{enumerate}
-
-        %\begin{enumerate}
-        %   \item   Log in to your account. Navigate to \textbf{your name}, then click on \textbf{My Conferences}. (see figure \ref{fig:user-menu-chair})
-        %   \item   Once in \textbf{My Conferences}, click on the Manage Conference link one of your conferences. (see figure \ref{fig:conference-overview})
-        %   \item   Make the desired change from the form respectively to their labels.
-        %   \item   Click on the \textbf{Save Conference} button.
-        %\end{enumerate}
-    \textbf{*Please note:} submission deadline is not allowed to be later than review deadline.
 
   \section{Assign Reviewer to Submissions}
+  \label{ch:user:chair:assign-reviewer}
+
+    Once an author create a submission, the chair is able to assign any number of reviewers to it. These reviewers will then have the ability to write a review for this submission (individually).
+
         \begin{enumerate}
-            \item   Log in to your account. Navigate to the drop-down box located in the top and open it by clicking on \textbf{Conference Management}. Locate \textbf{Assign Reviewer} and click on it. (see figure \ref{fig:conference-menu}, box \#1)
-            \item   Enter the name of an available reviewer from the drop-down list or select directly one from the drop-down list.
-            \item   Click on the \textbf{Save Changes} button to assign the reviewer/s to the submission.
+            \setlength\itemsep{0em}
+            \item Navigate to the review assignment page (Figure~\ref{fig:appendix:screenshots:ui-reviewer-assignment}) by clicking \texttt{Conference Management > Assign Reviewer} (Figure~\ref{fig:user:intro:ui-menus}, \#3.2).
+            \item Each available submission is now displayed in its own panel. You may assign reviewers by one of the following methods:
+            \begin{enumerate}
+                \item \texttt{Manual assignment}: Within the individual panels, select the reviewers manually from the pre-populated drop down lists. They hold a list of all known reviewers of the conference.
+                \item \texttt{Automatic assignment}: For an effortless mass-assignment of reviewers, use the \texttt{Auto Assignment} button on top of the page. It will randomly assign an equal number of reviewers to each submission (if possible). However, it wont assign reviewers to submissions of which they are a co-author.\\
+                When using this function, be aware of the fact that manual assignments will be overridden.
+            \end{enumerate}
+            \item Click on the \texttt{Save Changes} button to confirm the assignments.
         \end{enumerate}
-    % End: Huzeyfe changes
+
+  \section{Statistics}
+  \label{ch:user:chair:statistics}
+
+    The statistics (Figure~\ref{fig:appendix:screenshots:ui-statistics}) are reached by navigating to the corresponding page via \texttt{Conference Management > Statistics} (Figure~\ref{fig:user:intro:ui-menus}, \#3.6). This page aggregates available information about the conference in five diagrams:
+        \begin{itemize}
+            \setlength\itemsep{0em}
+            \item \texttt{User Role Distribution}:\\
+            Shows the number of attendees, authors, reviewers, and chairs of a conference as a bar diagram.
+            \item \texttt{Author/Submission Relationship}:\\
+            A bar diagram that displays the number of total submissions and the number of total authors of these submissions.
+            \item \texttt{Review Status}:\\
+            Shows a doughnut diagram that visualizes the relationship between reviews in draft- and finish state.
+            \item \texttt{Submissions by Affiliation}:\\
+            Shows a bar diagram with the top 3 affiliations, i.e., the ones with the highest number of (co-)authors.
+            \item \texttt{Submission Status}:\\
+            Shows a doughnut diagram that visualizes the relationship between submissions in draft-, finish-, and approved status.
+        \end{itemize}
 
 \part{Technical Documentation}
 \label{part:tech}
