@@ -698,7 +698,7 @@
                 \end{itemize}
                 \item[$\boxtimes$] access current submissions (overview)
                 \begin{itemize}
-                    \item[$\square$] status: incompleted, completed, closed, accepted, rejected
+                    \item[$\boxtimes$] status: incompleted, completed, closed, accepted, rejected
                 \end{itemize}
                 \item[$\boxtimes$] look at a submission
                 \item[$\boxtimes$] edit a submission (if submission is open)
@@ -752,7 +752,7 @@
                     \item[$\boxtimes$] automatic: set close deadlines for submissions and reviews
                     \item[$\boxtimes$] manual: (re-)open/close submissions and reviews
                 \end{itemize}
-                \item[$\square$] view fancy summary charts or reports (e.g., total submission, acceptances, topics, countries etc.)
+                \item[$\boxtimes$] view fancy summary charts or reports (e.g., total submission, acceptances, topics, countries etc.)
             \end{itemize}
 
             \item Bonus features (OPTIONAL)
@@ -760,8 +760,9 @@
                 \item[$\square$] users must confirm their registration by clicking on a registration link sent via email
                 \item[$\square$] email notification to submitters and reviewers (status changes)
                 \item[$\square$] chat with other online authors
-                \item[$\square$] automatic assignment (even distribution) and conflict resolving
-                \item[$\boxtimes$] a user can create multiple conference events and becomes the chair (=administrator) of them
+                \item[$\boxtimes$] automatic assignment (even distribution) and conflict resolving
+                \item[$\boxtimes$] a user can create multiple conference events and becomes the chair (=administrator) of them%
+                \footnote{Implementing this feature sadly broke the server side ACL mechanisms. In \texttt{LoopBack}, ACL roles can only be defined globally, i.e. a user can either have the role \texttt{chair} or not, but not selectively for only some database records. We noted this after implementing this bonus feature and decided to leave it as is. This means that server side access checks are currently not working and a workaround must be found when used in production mode.}
             \end{itemize}
         \end{itemize}
 
