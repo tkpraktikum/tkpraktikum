@@ -320,6 +320,7 @@ angular
     // --------------
     if ($state.current.name.endsWith('submission.list')) {
       loadAllSubmissions();
+      $scope.conferenceId = conferenceId;
     }
 
     if ($state.current.name.endsWith('submission.create') ||
