@@ -348,7 +348,7 @@
   \label{sec:tech:architecture:overview}
     On a high-level view, the application follows a client-server approach. The server part of the application primarily manages the database and provides a public REST API%
     \footnote{\url{https://en.wikipedia.org/wiki/Representational_state_transfer}}
-    whereas the client part runs in the browser of the user and provides an user interface (UI). The client part is responsible to translates user interactions into requests against the server API and reflect the responses in the UI.
+    whereas the client part runs in the browser of the user and provides an user interface (UI). The client part is responsible to translate user interactions into requests against the server API and reflect the responses in the UI.
 
   \section{Third Party Software}
   \label{sec:tech:architecture:3rd-party}
@@ -363,7 +363,7 @@
   \paragraph{StrongLoop}
     \emph{StrongLoop} is a mandatory library on which the application is primarily build upon.%
     \footnote{\url{https://strongloop.com/}}
-    This tool is able to generate code files for both server and client that can be used to manipulate a previously defined database schema. It comes bundles with a framework called \emph{LoopBack} and a library called \emph{Express.js} that is used internally to parse and route HTTP requests. It can be installed (and kept up-to-date) via \emph{npm}.
+    This tool is able to generate code files for both server and client that can be used to manipulate a previously defined database schema. It comes bundled with a framework called \emph{LoopBack} and a library called \emph{Express.js} that is used internally to parse and route HTTP requests. It can be installed (and kept up-to-date) via \emph{npm}.
 
   \paragraph{Bower}
     Analogous to \emph{npm}, \emph{Bower} is a package manager for JavaScript libraries.%
@@ -423,13 +423,13 @@
   \section{Entry Scripts}
   \label{sec:tech:implementation:bootstrapping}
 
-    Entry scripts are the first step in the bootstrapping process of the application. These are somewhat comparable to the \emph{main()} method of a \emph{C++} program. Since the application runs in a distributed fashon, i.e., on a client and a server, it has entry scripts for both of them.
+    Entry scripts are the first step in the bootstrapping process of the application. These are somewhat comparable to the \emph{main()} method of a \emph{C++} program. Since the application runs in a distributed fashion, i.e., on a client and a server, it has entry scripts for both of them.
 
   \subsection{Server Application}
   \label{sec:tech:implementation:bootstrapping:server}
 
-    As described in section~\ref{sec:tech:implementation:dirs}, the server part of the application resides inside \emph{/server}. When \emph{Node.js} is started inside the project root directory via \texttt{node .}, it executes the script \emph{server/server.js}, as defined in \emph{package.json}. Like most of the files inside \emph{server/}, this file is in large parts the unmodified version of the \emph{LoopBack} example application.%
-    \footnote{\url{https://github.com/strongloop/loopback-example-passport}}. It setups some preliminary routes for \emph{Express.js} as well as configuring some middleware components, e.g., to parse form data. Eventually, the start-up routine is invoked and forwards all requests to \emph{LoopBack} which than handles the request accordingly.
+    As described in section~\ref{sec:tech:implementation:dirs}, the server part of the application resides inside \emph{/server}. When \emph{Node.js} is started inside the project root directory via \texttt{node .}, it executes the script \emph{server/server.js}, as defined in \emph{package.json}. Like most of the files inside \emph{server/}, this file is a slightly modified version of the \emph{LoopBack} example application%
+    \footnote{\url{https://github.com/strongloop/loopback-example-passport}}. It setups some preliminary routes for \emph{Express.js} as well as configuring some middleware components, e.g., to parse form data. Eventually, the start-up routine is invoked and forwards all requests to \emph{LoopBack} which then handles the request accordingly.
 
     The purpose of \emph{StrongLoop} is to provide a REST API to do basic CRUD\footnote{Create/Read/Update/Delete operations on a persistent storage} operations on a predefined database schema. Since all the magic is done by \emph{StrongLoop}, a developer usually does not need to dive further into the topic of request handling etc. Everything that a developer needs to do is defining and/or extending the models inside \emph{/common/models} and \emph{StrongLoop} will take care of the rest. The process of model creation and modification is described later in section~\ref{sec:tech:implementation:strongloop:models}.
 
@@ -443,7 +443,7 @@
   \section{StrongLoop}
   \label{sec:tech:implementation:strongloop}
 
-    As explained in section~\ref{sec:tech:architecture:3rd-party}, \emph{StrongLoop} is the tool that the application uses to execute CRUD operations on the database. Besides utilizing \emph{StrongLoop} as an ORM, the application makes also use of its other features such as authentication- \& session management, access control and file upload support. The application is mainly managed by the command line tool, \texttt{slc}, that comes together with \emph{StrongLoop}. It allows to generate and extend models, define access control rules and more things. For an exhaustive description of the tool please refer to the official documentation.\footnote{\url{https://docs.strongloop.com/display/public/LB/Command-line+reference}}
+    As explained in section~\ref{sec:tech:architecture:3rd-party}, \emph{StrongLoop} is the tool that the application uses to execute CRUD operations on the database. Besides utilizing \emph{StrongLoop} as an ORM, the application makes also use of its other features such as authentication- \& session management, access control and file upload support. The application is mainly managed by the command line tool, \texttt{slc}, that comes together with \emph{StrongLoop}. It allows to generate and extend models, define access control rules, and more things. For an exhaustive description of the tool, please refer to the official documentation.\footnote{\url{https://docs.strongloop.com/display/public/LB/Command-line+reference}}
 
   \subsection{Creating and Updating Models}
   \label{sec:tech:implementation:strongloop:models}
@@ -499,7 +499,7 @@
   \label{sec:tech:implementation:angularjs:controllers}
 
     % TODO: Add a figure to describe how controllers interact with the view and includes services
-    In AngularJS a controller is usually associated with a view and is responsible to manage the logic behind it, i.e., it provides the data that is being displayed by the view and react to user interactions. The data exchange between the controller and the view happens implicitly through the built-in \texttt{\$scope} service\footnote{See section~\ref{sec:tech:implementation:angularjs:app} for a simple explaination of a service.} by using two-way data binding, i.e., whenever a value changes inside the view (through user interaction), the changes are reflected in the controller and vice versa. More information on controllers and the important concept of two-way data binding can be found in the official documentation.\footnote{\url{https://docs.angularjs.org/guide/controller} and \url{https://docs.angularjs.org/guide/databinding}}
+    In AngularJS, a controller is usually associated with a view and is responsible to manage the logic behind it, i.e., it provides the data that is being displayed by the view and react to user interactions. The data exchange between the controller and the view happens implicitly through the built-in \texttt{\$scope} service\footnote{See section~\ref{sec:tech:implementation:angularjs:app} for a simple explaination of a service.} by using two-way data binding, i.e., whenever a value changes inside the view (through user interaction), the changes are reflected in the controller and vice versa. More information on controllers and the important concept of two-way data binding can be found in the official documentation.\footnote{\url{https://docs.angularjs.org/guide/controller} and \url{https://docs.angularjs.org/guide/databinding}}
 
     Controllers are defined inside the \emph{client/js/controllers/} directory.
 
@@ -511,7 +511,7 @@
   \section{Role Based Access Control (RBAC)}
   \label{sec:tech:implementation:rbac}
 
-    Access control has to happen in both parts of the application, server and client. On the server side, the application needs to ensure that data can only be accessed and manipulated by users that are actually authorized to do so, i.e., a user should not be able to edit the submission of someone else, unless he is chair of the corresponding conference. On the client side, permissions also need to be checked, e.g., to dynamically display administration links in the navigation bar based on whether the user is chair of the conference.
+    Access control has to happen in both parts of the application, i.e., server and client. On the server side, the application needs to ensure that data can only be accessed and manipulated by users that are actually authorized to do so, i.e., a user should not be able to edit the submission of someone else, unless he is chair of the corresponding conference. On the client side, permissions also need to be checked, e.g., to dynamically display administration links in the navigation bar based on whether the user is chair of the conference.
 
   \subsection{Roles}
   \label{sec:tech:implementation:acl:roles}
@@ -570,7 +570,7 @@
         $scope.time = new Date();
     });
         \end{lstlisting}
-    These lines add a controller named \emph{TimeController} the \texttt{app} module that is managed by the angular framework. The second parameter of the \emph{controller()} method defines the function to be executed whenever this controller is invoked by angular. Also note the specified \emph{\$scope} parameter inside that function. This parameter will automatically be populated by AngularJS with the instance of the service with the same name. As mentioned earlier~(\ref{sec:tech:implementation:angularjs:controllers}) \emph{\$scope} is the name of a built-in service in AngularJS. It resembles the namespace that is implicitly made available to the view. More on controllers and the \emph{\$scope} service is found on the official documentation pages.\footnote{\url{https://docs.angularjs.org/guide/controller}}
+    These lines add a controller named \emph{TimeController} to the \texttt{app} module that is managed by the angular framework. The second parameter of the \emph{controller()} method defines the function to be executed whenever this controller is invoked by angular. Also note the specified \emph{\$scope} parameter inside that function. This parameter will automatically be populated by AngularJS with the instance of the service with the same name. As mentioned earlier~(\ref{sec:tech:implementation:angularjs:controllers}) \emph{\$scope} is the name of a built-in service in AngularJS. It resembles the namespace that is implicitly made available to the view. More on controllers and the \emph{\$scope} service is found on the official documentation pages.\footnote{\url{https://docs.angularjs.org/guide/controller}}
 
   \section{Adding a new Route Definition}
   \label{sec:tech:handson:add-route}
