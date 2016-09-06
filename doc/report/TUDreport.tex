@@ -494,13 +494,14 @@
 \part{Appendix}
 \label{part:appendix}
 
-  \chapter*{A.\quad Application Installation}
-  \addcontentsline{toc}{chapter}{A.\quad Application Installation}
+\appendix
+
+  \chapter{Application Installation}
   \label{ch:appendix:setup}
 
     The application does not enforce the usage of a specific operating system. However, we recommend to use a Linux system with a package manager in order to install the required prerequisites to make the setup process as smooth as possible.
 
-  \section*{Prerequisites}
+  \section{Prerequisites}
   \label{sec:appendix:setup:prerequisites}
 
     Before starting with the installation process, please make sure that your system does met the following prerequisites:
@@ -517,7 +518,7 @@
     # npm install -g strongloop bower
         \end{lstlisting}
 
-  \section*{Installation}
+  \section{Installation}
   \label{sec:appendix:setup:install}
 
     \noindent Use the git command to fetch a copy of the source code repository.%
@@ -528,11 +529,11 @@
         \end{lstlisting}
     For further installation instructions, please stick to the \emph{readme.md} file which is now found inside the directory.
 
-  \chapter*{B.\quad Database Entity Relationship Model}
-  \addcontentsline{toc}{chapter}{B.\quad Database Entity Relationship Model}
+  \chapter{Database Entity Relationship Model}
+  \label{ch:appendix:erm}
 
-  \chapter*{C.\quad Application Screenshots}
-  \addcontentsline{toc}{chapter}{C.\quad Application Screenshots}
+  \chapter{Application Screenshots}
+  \label{ch:appendix:screenshots}
 
         \begin{figure}[!ht]
             \centering
@@ -635,8 +636,8 @@
     % Ensure to keep figures grouped together
     \clearpage
 
-  \chapter*{D.\quad (Un)Implemented Features}
-  \addcontentsline{toc}{chapter}{D.\quad (Un)Implemented Features}
+  \chapter{(Un)Implemented Features}
+  \label{ch:appendix:features}
 
     % List of features goes here
     Below is the list of (un)implemented features, copied from the SCM wiki page.%
