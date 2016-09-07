@@ -12,43 +12,41 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th class="col-xs-5">Title</th>
-              <th class="col-xs-2">Authors</th>
-              <th class="col-xs-5">Reviewer</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="s in submissions">
-              <td>{{s.title}}</td>
-              <td><span ng-repeat="a in s.authors">{{a.fullName}} </span></td>
-              <td>
-                <div ng-repeat="r in assignedReviewer[s.id] track by $index" ng-class="{'reviewer-assignment-dropdown': !$first}">
-                  <div class="input-group">
-                    <ui-select id="reviewer-{{s.id}}-{{$index}}" ng-model="assignedReviewer[s.id][$index]" ng-change="filterValidReviewers()">
-                      <ui-select-match placeholder="Select reviewer...">{{ $select.selected.fullName }} &lt;{{$select.selected.email}}&gt;</ui-select-match>
-                      <ui-select-choices repeat="reviewer in reviewer | filter: $select.search">
-                        <div ng-bind-html="reviewer.fullName | highlight: $select.search"></div>
-                        <small>
-                          email: <span ng-bind-html="reviewer.email | highlight: $select.search"></span>
-                        </small>
-                      </ui-select-choices>
-                    </ui-select>
-                    <span class="input-group-btn">
-                      <button type="button" ng-click="assignedReviewer[s.id][$index] = undefined; filterValidReviewers()" class="btn btn-default">
-                        <span class="glyphicon glyphicon-trash"></span>
-                      </button>
-                    </span>
-                  </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th class="col-xs-5">Title</th>
+            <th class="col-xs-2">Authors</th>
+            <th class="col-xs-5">Reviewer</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="s in submissions">
+            <td>{{s.title}}</td>
+            <td><span ng-repeat="a in s.authors">{{a.fullName}} </span></td>
+            <td>
+              <div ng-repeat="r in assignedReviewer[s.id] track by $index" ng-class="{'reviewer-assignment-dropdown': !$first}">
+                <div class="input-group">
+                  <ui-select id="reviewer-{{s.id}}-{{$index}}" ng-model="assignedReviewer[s.id][$index]" ng-change="filterValidReviewers()">
+                    <ui-select-match placeholder="Select reviewer...">{{ $select.selected.fullName }} &lt;{{$select.selected.email}}&gt;</ui-select-match>
+                    <ui-select-choices repeat="reviewer in reviewer | filter: $select.search">
+                      <div ng-bind-html="reviewer.fullName | highlight: $select.search"></div>
+                      <small>
+                        email: <span ng-bind-html="reviewer.email | highlight: $select.search"></span>
+                      </small>
+                    </ui-select-choices>
+                  </ui-select>
+                  <span class="input-group-btn">
+                    <button type="button" ng-click="assignedReviewer[s.id][$index] = undefined; filterValidReviewers()" class="btn btn-default">
+                      <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                  </span>
                 </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
