@@ -5,14 +5,14 @@ angular
     $scope.user = {};
     $scope.conferences = [];
     $scope.currentConferenceId = ConferenceService.getCurrentConferenceId();
-    $scope.conferenceName = 'TK Project - Team Whisky';
+    $scope.conferenceName = 'TKonference - Team Whisky';
     $scope.deadlines = null;
 
     // Since HeaderController is not attached to a state with url parameters,
     // We need to listen for the stateChangeSuccess event to happen and check
     // whether we can extract the conferenceId from it.
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-      $scope.conferenceName = 'TK Project - Team Whisky';
+      $scope.conferenceName = 'TKonference - Team Whisky';
       $scope.deadlines = null;
 
       // Only display conference name on pages that are actually conference
