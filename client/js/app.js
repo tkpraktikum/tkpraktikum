@@ -288,7 +288,7 @@ angular
     },
     isReviewPhase: function() {
       return currentConference.then(function(c) {
-        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now())
+        return c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now()
           && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
       });
     },
