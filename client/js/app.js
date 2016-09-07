@@ -10,7 +10,8 @@ angular
     'ngSanitize',
     'btford.markdown',
     'simplemde',
-    'uiGmapgoogle-maps'
+    'uiGmapgoogle-maps',
+    'angularUtils.directives.uiBreadcrumbs'
   ])
   .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -34,36 +35,52 @@ angular
           'footer@app': {
             templateUrl: 'views/footer.html'
           }
-        }
+        },
+        data: { breadcrumbProxy: 'app.login' }
       })
       .state('app.login', {
         url: 'login',
         templateUrl: 'views/user/login.html',
-        controller: 'LoginController'
+        controller: 'LoginController',
+        data: {
+          permissions: { except: ['hasValidSession'], redirectTo: 'app.logout' },
+          displayName: 'Start'
+        }
       })
       .state('app.logout', {
         url: 'logout',
-        controller: 'LogoutController'
+        controller: 'LogoutController',
+        data: { displayName: 'Logout' }
       })
       .state('app.signup', {
         url: 'signup',
         templateUrl: 'views/user/signup.html',
-        controller: 'SignupController'
+        controller: 'SignupController',
+        data: { displayName: 'Create Account' }
       })
       .state('app.about', {
         url: 'about',
         templateUrl: 'views/about.html',
+        data: { displayName: 'About' }
       })
 
       // User area
       .state('app.protected', {
+        abstract: true,
         template: '<div ui-view></div>',
-        data: { permissions: { only: ['USER'], redirectTo: 'app.login' } }
+        data: {
+          permissions: { only: ['USER'], redirectTo: 'app.login' },
+          breadcrumbProxy: 'app.protected.home'
+        },
+        resolve: { u: function (AuthService) {
+          return AuthService.getUser().then(function (user) { return user; });
+        }}
       })
       .state('app.protected.home', {
         url: 'account',
         templateUrl: 'views/user/home.html',
-        controller: 'HomeController'
+        controller: 'HomeController',
+        data: { displayName: '{{ u.fullName }}' }
       })
       .state('app.protected.user', {
         url: 'user',
@@ -75,24 +92,31 @@ angular
         abstract: true,
         url: '/profile',
         templateUrl: 'views/user/profile.html',
-        controller: 'ProfileController',
+        controller: 'ProfileController'
       })
       .state('app.protected.user.profile.edit', {
         url: '/edit',
         templateUrl: 'views/user/profile.edit.html',
+        data: { displayName: 'Edit Profile' }
       })
       .state('app.protected.user.profile.changePassword', {
         url: '/changePassword',
         templateUrl: 'views/user/profile.changePassword.html',
+        data: { displayName: 'Change Password' }
       })
       .state('app.protected.user.profile.delete', {
         url: '/delete',
         templateUrl: 'views/user/profile.delete.html',
+        data: { displayName: 'Delete Account' }
       })
       .state('app.protected.user.view', {
         url: '/users/:userId',
         templateUrl: 'views/user/profile.view.html',
-        controller: 'ProfileViewController'
+        controller: 'ProfileViewController',
+        data: { displayName: 'View Profile ({{ u.fullName }})' },
+        resolve: { u: function ($stateParams, User) {
+          return User.findById({ id: $stateParams.userId, filter: { fields: ['fullName'] }}).$promise;
+        }}
       })
       .state('app.protected.user.conference', {
         url: '/conference',
@@ -103,6 +127,7 @@ angular
         url: '/join',
         templateUrl: 'views/user/joinConference.html',
         controller: 'JoinConferenceController',
+        data: { displayName: 'Join Conference' }
       })
       .state('app.protected.user.conference.manage', {
         url: '/manage',
@@ -113,42 +138,62 @@ angular
         templateUrl: 'views/user/manageConference.html',
         controller: 'CreateConferenceController',
         url: '/create',
+        data: { displayName: 'Create Conference' }
       })
       .state('app.protected.user.conference.manage.edit', {
         templateUrl: 'views/user/manageConference.html',
         controller: 'CreateConferenceController',
         url: '/:conferenceId',
+        data: { displayName: 'Edit Conference ({{ c.name }})' },
+        resolve: { c: function ($stateParams, Conference) {
+          return Conference.findById({ id: $stateParams.conferenceId, filter: { fields: ['name'] }}).$promise;
+        }}
       })
       .state('app.protected.user.conference.my', {
         url: '/my',
         templateUrl: 'views/user/myConferences.html',
         controller: 'MyConferencesController',
+        data: { displayName: 'My Conferences' },
       })
       .state('app.protected.conference', {
         url: 'conference/:conferenceId/',
         template: '<div ui-view></div>',
         abstract: true,
-        controller: 'ConferenceController'
+        controller: 'ConferenceController',
+        data: { breadcrumbProxy: 'app.protected.conference.home' },
+        resolve: { c: function (Conference, $stateParams) {
+          return Conference.findById({ id: $stateParams.conferenceId, filter: { fields: ['name'] }}).$promise;
+        }}
       })
       .state('app.protected.conference.home', {
         url: 'home',
         templateUrl: 'views/user/conference.landing.html',
-        controller: 'ConferenceLandingController'
+        controller: 'ConferenceLandingController',
+        data: { displayName: '{{ c.name }}' }
       })
       .state('app.protected.conference.statistics', {
         url: 'statistics',
         templateUrl: 'views/chair/statistics.html',
-        controller: 'StatisticsController'
+        controller: 'StatisticsController',
+        data: { displayName: 'Statistics' }
       })
       .state('app.protected.conference.tag', {
         url: 'tag',
         templateUrl: 'views/chair/tag.html',
-        controller: 'TagController'
+        controller: 'TagController',
+        data: { displayName: 'Tag List' }
       })
       .state('app.protected.conference.affiliation', {
         url: 'affiliation',
         templateUrl: 'views/chair/affiliation.html',
-        controller: 'AffiliationController'
+        controller: 'AffiliationController',
+        data: { displayName: 'Affiliation List' }
+      })
+      .state('app.protected.conference.users', {
+        url: 'usermanagement',
+        templateUrl: 'views/chair/userManagement.html',
+        controller: 'ChairUserManagementController',
+        data: { permissions: { only: ['CHAIR'] }, displayName: 'Manage Users' }
       })
       .state('app.protected.conference.admin', {
         url: 'admin',
@@ -160,49 +205,70 @@ angular
         url: '/reviews',
         abstract: true,
         template: '<div ui-view></div>',
-        data: { permissions: { only: ['CHAIR'] }}
+        data: { permissions: { only: ['CHAIR'] } }
       })
       .state('app.protected.conference.admin.reviews.assignment', {
         url: '/assignment',
         templateUrl: 'views/chair/reviewer.assignment.html',
         controller: 'ReviewerAssignmentController',
-        data: { permissions: { only: ['CHAIR'] }}
+        data: { permissions: { only: ['CHAIR'] }, displayName: 'Assign Reviewer' }
       })
       .state('app.protected.conference.admin.reviews.submissionList', {
         url: '/submission/:submissionId',
         templateUrl: 'views/shared/reviews.list.html',
         controller: 'SubmissionReviewListController',
-        data: { permissions: { only: ['CHAIR'] }}
+        data: { permissions: { only: ['CHAIR'] }, displayName: 'Reviews for {{ s.title }}' },
+        resolve: { s: function ($stateParams, Submission) {
+          return Submission.findById({ id: $stateParams.submissionId, filter: { fields: ['title'] }}).$promise;
+        }}
       })
       .state('app.protected.conference.admin.reviews.list', {
         url: '/reviews',
         templateUrl: 'views/shared/reviews.list.html',
         controller: 'ChairReviewListController',
-        data: { permissions: { only: ['CHAIR'] }}
+        data: { permissions: { only: ['CHAIR'] }, displayName: 'All Reviews' }
       })
       .state('app.protected.conference.admin.submissions', {
         url: '/submissions',
         templateUrl: 'views/chair/submissions.html',
         controller: 'SubmissionsChairController',
-        data: { permissions: { only: ['CHAIR'] }}
+        data: { permissions: { only: ['CHAIR'] }, displayName: 'All Submissions' }
       })
       .state('app.protected.conference.admin.submissionsDetails', {
         url: '/submissions/:submissionId',
         templateUrl: 'views/shared/submission.details.html',
         controller: 'ViewSubmissionController',
-        data: { permissions: { only: ['CHAIR'] }}
+        data: { permissions: { only: ['CHAIR'] }, displayName: 'Show Submission: {{ s.title }}' },
+        resolve : { s: function (Submission, $stateParams) {
+          return Submission.findById({ id: $stateParams.submissionId, filter: { fields: ['title'] }}).$promise;
+        }}
       })
       .state('app.protected.conference.submission', {
         url: 'submission',
         abstract: true,
         template: '<div ui-view></div>',
-        data: { permissions: { only: ['AUTHOR'] }}
+        data: { permissions: { only: ['AUTHOR'] }, breadcrumbProxy: 'app.protected.conference.submission.list' }
       })
       .state('app.protected.conference.submission.list', {
         url: '/list',
         templateUrl: 'views/author/submissions.list.html',
         controller: 'SubmissionController',
-        data: { permissions: { only: ['AUTHOR'] }}
+        data: { permissions: { only: ['AUTHOR'] }, displayName: 'Submissions' }
+      })
+      .state('app.protected.conference.submission.create', {
+        url: '/create',
+        controller: 'SubmissionController',
+        templateUrl: 'views/author/submissions.create.html',
+        data: { displayName: 'Create' }
+      })
+      .state('app.protected.conference.submission.edit', {
+        url: '/edit/:submissionId',
+        controller: 'SubmissionController',
+        templateUrl: 'views/author/submissions.create.html',
+        data: { displayName: 'Edit: {{ s.title }}' },
+        resolve: { s: function (Submission, $stateParams) {
+          return Submission.findById({ id: $stateParams.submissionId, filter: { fields: ['title'] }}).$promise;
+        }}
       })
       .state('app.protected.conference.submission.reviews', {
         url: '/reviews',
@@ -214,55 +280,51 @@ angular
         url: '/:submissionId',
         templateUrl: 'views/shared/reviews.list.html',
         controller: 'SubmissionReviewListController',
-        data: { permissions: { only: ['AUTHOR'] }}
-      })
-      .state('app.protected.conference.submission.create', {
-        url: '/create',
-        controller: 'SubmissionController',
-        templateUrl: 'views/author/submissions.create.html'
-      })
-      .state('app.protected.conference.submission.edit', {
-        url: '/edit/:submissionId',
-        controller: 'SubmissionController',
-        templateUrl: 'views/author/submissions.create.html'
+        data: { permissions: { only: ['AUTHOR'] }, displayName: 'Reviews for {{ s.title }}' },
+        resolve: { s: function ($stateParams, Submission) {
+          return Submission.findById({ id: $stateParams.submissionId, filter: { fields: ['title'] }}).$promise;
+        }}
       })
       .state('app.protected.conference.review', {
         abstract: true,
         url: 'review',
         template: '<div ui-view></div>',
         controller: 'ReviewController',
-        data: { permissions: { only: ['REVIEWER'] }}
-      })
-      .state('app.protected.conference.review.submission', {
-        url: '/submission/:submissionId',
-        templateUrl: 'views/shared/submission.details.html',
-        controller: 'ViewSubmissionController',
-        data: { permissions: { only: ['REVIEWER'] }}
+        data: { permissions: { only: ['REVIEWER'] }, breadcrumbProxy: 'app.protected.conference.review.overview' }
       })
       .state('app.protected.conference.review.overview', {
         url: '/overview',
         templateUrl: 'views/reviewer/reviews.overview.html',
         controller: 'ReviewOverviewController',
-        data: { permissions: { only: ['REVIEWER'] }}
+        data: { permissions: { only: ['REVIEWER'] }, displayName: 'Reviews' }
       })
       .state('app.protected.conference.review.list', {
         url: '/list',
         templateUrl: 'views/shared/reviews.list.html',
         controller: 'ReviewListController',
-        data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
+        data: { permissions: { only: ['REVIEWER', 'CHAIR'] }, displayName: 'List Reviews' }
+      })
+      .state('app.protected.conference.review.submission', {
+        url: '/submission/:submissionId',
+        templateUrl: 'views/shared/submission.details.html',
+        controller: 'ViewSubmissionController',
+        data: { permissions: { only: ['REVIEWER'] }, displayName: 'Show Submission: {{ s.title }}' },
+        resolve: { s: function (Submission, $stateParams) {
+          return Submission.findById({ id: $stateParams.submissionId, filter: { fields: ['title'] }}).$promise;
+        }}
       })
       .state('app.protected.conference.review.edit', {
         url: '/edit/:reviewId',
         templateUrl: 'views/reviewer/reviews.edit.html',
         controller: 'ReviewCreateController',
-        data: { permissions: { only: ['REVIEWER'] }}
-      })
-      .state('app.protected.conference.users', {
-        url: 'usermanagement',
-        templateUrl: 'views/chair/userManagement.html',
-        controller: 'ChairUserManagementController',
-        data: { permissions: { only: ['CHAIR'] }}
-      })
+        data: { permissions: { only: ['REVIEWER'] }, displayName: 'Edit Review: {{ r.submission.title }}' },
+        resolve: { r: function ($stateParams, Review) {
+          return Review.findById({
+            id: $stateParams.reviewId,
+            filter: { fields: ['submissionId'], include: [{ relation: 'submission', scope: { fields: ['title'] }}] }
+          }).$promise;
+        }}
+      });
   }])
 .factory('ConferenceService', ['$q', 'Conference', function ($q, Conference) {
   var currentConferenceId = null, currentConference = $q.reject(),
@@ -277,21 +339,25 @@ angular
     getCurrentConferenceId: function () {
       return currentConferenceId;
     },
+    getCurrentConference: function () {
+      return currentConference;
+    },
     setCurrentConferenceId: setCurrentConferenceId,
     isSubmissionPhase: function() {
       return currentConference.then(function(c) {
-        return (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now());
+        return c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now();
       });
     },
     isReviewPhase: function() {
       return currentConference.then(function(c) {
-        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now())
-          && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
+        return c.forceReview ||
+          (new Date(c.reviewDeadline)).getTime() > Date.now() &&
+          (new Date(c.submissionDeadline)).getTime() < Date.now();
       });
     },
     reviewsDone: function() {
       return currentConference.then(function(c) {
-        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() < Date.now());
+        return (new Date(c.reviewDeadline)).getTime() < Date.now();
       });
     },
     invalidate: function () {
@@ -324,6 +390,7 @@ angular
     logout = function () {
       LoopBackAuth.clearUser();
       LoopBackAuth.clearStorage();
+      ConferenceService.setCurrentConferenceId();
       return $q.resolve();
     },
     hasRole = function (role) {

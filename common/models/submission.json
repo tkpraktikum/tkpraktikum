@@ -36,6 +36,11 @@
       "through": "authorship",
       "keyThrough": "authorId"
     },
+    "reviews": {
+      "type": "hasMany",
+      "model": "review",
+      "foreignKey": "submissionId"
+    },
     "reviewers": {
       "type": "hasMany",
       "model": "user",

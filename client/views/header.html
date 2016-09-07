@@ -8,7 +8,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" ui-sref-active="active" ui-sref="app.protected.home"><span class="highlight">TK Project - Team Whisky</span></a>
+
+      <a class="navbar-brand" ui-sref-active="active" ui-sref="app.protected.home"><span class="highlight">{{ conferenceName }}</span></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -17,27 +18,27 @@
         <li class="dropdown" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Submissions <span class="caret"></span></a>
           <ul class="dropdown-menu" permission permission-only="'AUTHOR'">
-            <li ng-show="isSubmissionPhase" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.conference.submission.create({conferenceId: currentConferenceId})">Create</a></li>
-            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.submission.list({conferenceId: currentConferenceId})">Show</a></li>
+            <li ng-show="isSubmissionPhase" ui-sref-active="active" permission permission-only="'AUTHOR'" ng-cloak><a ui-sref="app.protected.conference.submission.create({conferenceId: currentConferenceId})">Create Submission</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.submission.list({conferenceId: currentConferenceId})">Manage Submissions</a></li>
           </ul>
         </li>
 
         <li class="dropdown" ui-sref-active="active" permission permission-only="'REVIEWER'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reviews <span class="caret"></span></a>
           <ul class="dropdown-menu" permission permission-only="'REVIEWER'">
-            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.review.overview({conferenceId: currentConferenceId})">Overview</a></li>
-            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.review.list({conferenceId: currentConferenceId})">My Reviews</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.review.list({conferenceId: currentConferenceId})">Show Reviews</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.review.overview({conferenceId: currentConferenceId})">Manage Reviews</a></li>
           </ul>
         </li>
         <li class="dropdown" ui-sref-active="active" permission permission-only="'CHAIR'" ng-cloak>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Conference Management <span class="caret"></span></a>
           <ul class="dropdown-menu" permission permission-only="'CHAIR'">
-            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.admin.submissions({conferenceId: currentConferenceId})">Submissions</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.admin.submissions({conferenceId: currentConferenceId})">List Submissions</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.admin.reviews.list({conferenceId: currentConferenceId})">List Reviews</a></li>
             <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.admin.reviews.assignment({conferenceId: currentConferenceId})">Assign Reviewer</a></li>
-            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.admin.reviews.list({conferenceId: currentConferenceId})">Reviews</a></li>
-            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.users({conferenceId: currentConferenceId})">Users</a></li>
-            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.conference.manage.edit({conferenceId: currentConferenceId})">Conference</a></li>
-            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.statistics({conferenceId: currentConferenceId})">Statistics</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.users({conferenceId: currentConferenceId})">Assign User Roles</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.user.conference.manage.edit({conferenceId: currentConferenceId})">Manage Conference</a></li>
+            <li ui-sref-active="active" ng-cloak><a ui-sref="app.protected.conference.statistics({conferenceId: currentConferenceId})">Show Statistics</a></li>
           </ul>
         </li>
       </ul>
@@ -61,3 +62,15 @@
   </div><!-- /.container-fluid -->
   </div>
 </nav>
+
+<div class="row no-gutters content">
+  <div class="col-md-2 col-md-push-10">
+    <div class="conference-phase">
+      &nbsp;<span class="pull-right" ng-bind-html="phase"></span>
+    </div>
+  </div>
+  <div class="col-md-10 col-md-pull-2">
+    <ui-breadcrumbs displayname-property="data.displayName" template-url="views/breadcrumbs.html" abstract-proxy-property="data.breadcrumbProxy">
+    </ui-breadcrumbs>
+  </div>
+</div>
