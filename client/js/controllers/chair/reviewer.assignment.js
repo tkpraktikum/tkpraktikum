@@ -31,7 +31,7 @@ angular
             });
           });
         });
-        console.log(newReviews, removeReviews);
+
         var deleteGetFilter = {filter: { where: { or: removeReviews}}};
         $q.all([
           newReviews.map(function(r) { return Review.create(r).$promise}),
@@ -41,7 +41,6 @@ angular
             });
           })
         ]).then(function(result) {
-          console.log(result);
           SessionService.setFlash('Updated reviewers!')
           $state.reload();
         });

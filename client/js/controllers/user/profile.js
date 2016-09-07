@@ -22,8 +22,6 @@ angular
               }];
               var ll = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
               $scope.map.control.getGMap().panTo(ll);
-            } else {
-              console.log('Geocode was not successful for the following reason: ' + status);
             }
           });
         }
@@ -139,7 +137,8 @@ angular
           password: $scope.changeUserPassword.newPassword
         };
         User.prototype$updateAttributes({id: $scope.user.id}, updates).$promise.then(function() {
-          console.log("Success");
+          SessionService.setFlash('Your password was changed successfully');
+          $state.go('app.protected.user.conference.my', {}, { reload: true });
         });
       }
     };

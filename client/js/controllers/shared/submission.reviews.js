@@ -12,7 +12,10 @@ angular
         4: "Very Good"
       };
 
-      Review.find({ filter: { where: { submissionId: $stateParams.submissionId}, include: ['submission']}}).$promise.then(function(reviews) {
+      Review.find({ filter: {
+        where: { submissionId: $stateParams.submissionId },
+        include: ['submission', { relation: 'reviewer', scope : { fields: ['fullName'] }}]
+      }}).$promise.then(function(reviews) {
         $scope.reviews = reviews.map(function(r) {
           r.expertise = ranking[(r.expertise || 0) - 1];
           r.overall = ranking[(r.overall || 0) - 1];

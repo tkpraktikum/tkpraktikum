@@ -11,8 +11,8 @@
         </div>
       </div>
     </div>
-    <div class="card-columns">
-      <div class="col-xs-12" ng-repeat="s in submissions | filter:{title: filterSubmission} track by $index ">
+    <div class="row">
+      <div class="col-md-4" ng-repeat="s in submissions | filter:{title: filterSubmission} track by $index ">
         <div class="panel panel-default">
           <div class="panel-heading clearfix">
             <h2 class="panel-title">{{s.title}}</h2>
@@ -25,12 +25,17 @@
           <div class="panel-body">
             <p><b>Tags:</b><span ng-repeat="t in s.tags"><span ng-show="!$first">, </span> {{t.name}}</span></p>
             <p><b>Authors:</b><span ng-repeat="a in s.authors"><span ng-show="!$first">, </span> <a ui-sref="app.protected.user.view({userId: a.id})">{{a.fullName}}</a></span></span></p>
+            <p><b>Status:</b>
+              <span class="label" ng-repeat-start="(label, class) in (s.status | submissionStatus)" ng-class="class" ng-bind="label"></span>
+              <span ng-repeat-end></span><!-- required for spacing between labels -->
+            </p>
             <p ng-repeat="d in s.documents">
               <b>Attached file:</b> <a ng-href="{{d.url}}">{{ d.originalFilename }}</a> ({{ d.size | bytes }})
             </p>
 
-            <a class="btn btn-primary btn-sm col-xs-5" ui-sref="app.protected.conference.admin.submissionsDetails({submissionId: s.id})">Details</a>
-            <a class="btn btn-primary btn-sm col-xs-5 col-xs-offset-2" ui-sref="app.protected.conference.admin.reviews.submissionList({submissionId: s.id})">Reviews</a>
+            <a class="btn btn-primary btn-sm col-xs-5" ui-sref="app.protected.conference.admin.submissionsDetails({submissionId: s.id})">Show Abstract</a>
+            <a class="btn btn-primary btn-sm col-xs-3 col-xs-offset-1" ui-sref="app.protected.conference.admin.reviews.submissionList({submissionId: s.id})">Reviews</a>
+            <a class="btn btn-default btn-sm col-xs-2 col-xs-offset-1" ng-click="deleteSubmission(s.id)"><span class="glyphicon glyphicon-trash"></span></a>
           </div>
         </div>
       </div>

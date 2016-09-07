@@ -60,7 +60,7 @@ angular
           Conference.prototype$updateAttributes({id: $stateParams.conferenceId}, $scope.conference).$promise
             .then(function() {
               ConferenceService.invalidate().finally(function () {
-                $state.go('app.protected.user.conference.my', $state.params, {reload: true});
+                $state.go('app.protected.conference.home', { conferenceId: $stateParams.conferenceId }, {reload: true});
               });
             });
         } else {
@@ -77,7 +77,9 @@ angular
                   .$promise
                   .then(function () {
                     ConferenceService.invalidate().finally(function () {
-                      $state.go('app.protected.user.conference.my', $state.params, {reload: true});
+                      AuthService.invalidate().finally(function () {
+                        $state.go('app.protected.conference.home', { conferenceId: conference.id }, {reload: true});
+                      });
                     });
                   });
               });

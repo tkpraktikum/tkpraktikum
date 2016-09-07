@@ -32,12 +32,13 @@ angular
       oldTagIds = [],
       oldAuthorIds = [],
       deleteSubmission = function (submissionId) {
-        asyncReq.start(); asyncReq.start(); asyncReq.start();
+        asyncReq.start(); asyncReq.start(); asyncReq.start(); asyncReq.start();
         var p1 = Submission.tags.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end),
           p2 = Submission.authors.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end),
-          p3 = Submission.documents.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end);
+          p3 = Submission.documents.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end),
+          p4 = Submission.reviews.destroyAll({ id: submissionId }).$promise.finally(asyncReq.end);
 
-        return $q.all([p1, p2, p3]).then(function () {
+        return $q.all([p1, p2, p3, p4]).then(function () {
           return Submission.deleteById({ id: submissionId }).$promise;
         });
       },
@@ -320,6 +321,7 @@ angular
     // --------------
     if ($state.current.name.endsWith('submission.list')) {
       loadAllSubmissions();
+      $scope.conferenceId = conferenceId;
     }
 
     if ($state.current.name.endsWith('submission.create') ||
