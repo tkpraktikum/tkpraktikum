@@ -288,10 +288,22 @@ h2.panel-title {
 
 .angular-google-map-container { height: 400px; }
 
-.navbar-header .dual-line {
-  display: inline-block;
-  margin-top: 18px;
-  line-height: 1.5em;
-  font-weight: bold;
-  text-align: right;
+.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.row.no-gutters > [class^="col-"],
+.row.no-gutters > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.no-gutters .breadcrumb {
+  border-radius: 0;
+}
+
+.conference-phase {
+  background-color: #f5f5f5;
+  padding: 8px 15px;
 }
