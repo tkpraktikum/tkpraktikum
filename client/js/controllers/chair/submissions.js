@@ -17,9 +17,10 @@ angular
       deleteSubmission = function (submissionId) {
         var p1 = Submission.tags.destroyAll({ id: submissionId }).$promise,
           p2 = Submission.authors.destroyAll({ id: submissionId }).$promise,
-          p3 = Submission.documents.destroyAll({ id: submissionId }).$promise;
+          p3 = Submission.documents.destroyAll({ id: submissionId }).$promise,
+          p4 = Submission.reviews.destroyAll({ id: submissionId }).$promise;
 
-        return $q.all([p1, p2, p3]).then(function () {
+        return $q.all([p1, p2, p3, p4]).then(function () {
           return Submission.deleteById({ id: submissionId }).$promise;
         });
       };
