@@ -150,6 +150,12 @@ angular
         templateUrl: 'views/chair/affiliation.html',
         controller: 'AffiliationController'
       })
+      .state('app.protected.conference.users', {
+        url: 'usermanagement',
+        templateUrl: 'views/chair/userManagement.html',
+        controller: 'ChairUserManagementController',
+        data: { permissions: { only: ['CHAIR'] }}
+      })
       .state('app.protected.conference.admin', {
         url: 'admin',
         abstract: true,
@@ -204,6 +210,16 @@ angular
         controller: 'SubmissionController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
+      .state('app.protected.conference.submission.create', {
+        url: '/create',
+        controller: 'SubmissionController',
+        templateUrl: 'views/author/submissions.create.html'
+      })
+      .state('app.protected.conference.submission.edit', {
+        url: '/edit/:submissionId',
+        controller: 'SubmissionController',
+        templateUrl: 'views/author/submissions.create.html'
+      })
       .state('app.protected.conference.submission.reviews', {
         url: '/reviews',
         abstract: true,
@@ -216,27 +232,11 @@ angular
         controller: 'SubmissionReviewListController',
         data: { permissions: { only: ['AUTHOR'] }}
       })
-      .state('app.protected.conference.submission.create', {
-        url: '/create',
-        controller: 'SubmissionController',
-        templateUrl: 'views/author/submissions.create.html'
-      })
-      .state('app.protected.conference.submission.edit', {
-        url: '/edit/:submissionId',
-        controller: 'SubmissionController',
-        templateUrl: 'views/author/submissions.create.html'
-      })
       .state('app.protected.conference.review', {
         abstract: true,
         url: 'review',
         template: '<div ui-view></div>',
         controller: 'ReviewController',
-        data: { permissions: { only: ['REVIEWER'] }}
-      })
-      .state('app.protected.conference.review.submission', {
-        url: '/submission/:submissionId',
-        templateUrl: 'views/shared/submission.details.html',
-        controller: 'ViewSubmissionController',
         data: { permissions: { only: ['REVIEWER'] }}
       })
       .state('app.protected.conference.review.overview', {
@@ -251,18 +251,18 @@ angular
         controller: 'ReviewListController',
         data: { permissions: { only: ['REVIEWER', 'CHAIR'] }}
       })
+      .state('app.protected.conference.review.submission', {
+        url: '/submission/:submissionId',
+        templateUrl: 'views/shared/submission.details.html',
+        controller: 'ViewSubmissionController',
+        data: { permissions: { only: ['REVIEWER'] }}
+      })
       .state('app.protected.conference.review.edit', {
         url: '/edit/:reviewId',
         templateUrl: 'views/reviewer/reviews.edit.html',
         controller: 'ReviewCreateController',
         data: { permissions: { only: ['REVIEWER'] }}
-      })
-      .state('app.protected.conference.users', {
-        url: 'usermanagement',
-        templateUrl: 'views/chair/userManagement.html',
-        controller: 'ChairUserManagementController',
-        data: { permissions: { only: ['CHAIR'] }}
-      })
+      });
   }])
 .factory('ConferenceService', ['$q', 'Conference', function ($q, Conference) {
   var currentConferenceId = null, currentConference = $q.reject(),
