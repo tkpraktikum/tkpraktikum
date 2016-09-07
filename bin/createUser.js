@@ -11,7 +11,7 @@ app.models.affiliation.find({fields: ['id']}, function (err, affiliations) {
     conferences = [],
     author = {
       firstname: 'Anton',
-      lastname: 'Autor',
+      lastname: 'Author',
       username: 'author',
       password: 'tk',
       email: 'author1@chair.de',
