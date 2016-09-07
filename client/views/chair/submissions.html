@@ -11,8 +11,8 @@
         </div>
       </div>
     </div>
-    <div class="card-columns">
-      <div class="col-xs-12" ng-repeat="s in submissions | filter:{title: filterSubmission} track by $index ">
+    <div class="row">
+      <div class="col-md-4" ng-repeat="s in submissions | filter:{title: filterSubmission} track by $index ">
         <div class="panel panel-default">
           <div class="panel-heading clearfix">
             <h2 class="panel-title">{{s.title}}</h2>
