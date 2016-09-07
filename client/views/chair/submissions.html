@@ -34,7 +34,8 @@
             </p>
 
             <a class="btn btn-primary btn-sm col-xs-5" ui-sref="app.protected.conference.admin.submissionsDetails({submissionId: s.id})">Show Abstract</a>
-            <a class="btn btn-primary btn-sm col-xs-5 col-xs-offset-2" ui-sref="app.protected.conference.admin.reviews.submissionList({submissionId: s.id})">Reviews</a>
+            <a class="btn btn-primary btn-sm col-xs-3 col-xs-offset-1" ui-sref="app.protected.conference.admin.reviews.submissionList({submissionId: s.id})">Reviews</a>
+            <a class="btn btn-default btn-sm col-xs-2 col-xs-offset-1" ng-click="deleteSubmission(s.id)"><span class="glyphicon glyphicon-trash"></span></a>
           </div>
         </div>
       </div>
