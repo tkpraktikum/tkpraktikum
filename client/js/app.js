@@ -283,18 +283,19 @@ angular
     setCurrentConferenceId: setCurrentConferenceId,
     isSubmissionPhase: function() {
       return currentConference.then(function(c) {
-        return (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now());
+        return c.forceSubmission || (new Date(c.submissionDeadline)).getTime() > Date.now();
       });
     },
     isReviewPhase: function() {
       return currentConference.then(function(c) {
-        return c.forceReview || (new Date(c.reviewDeadline)).getTime() > Date.now()
-          && (c.forceSubmission || (new Date(c.submissionDeadline)).getTime() < Date.now());
+        return c.forceReview ||
+          (new Date(c.reviewDeadline)).getTime() > Date.now() &&
+          (new Date(c.submissionDeadline)).getTime() < Date.now();
       });
     },
     reviewsDone: function() {
       return currentConference.then(function(c) {
-        return (c.forceReview || (new Date(c.reviewDeadline)).getTime() < Date.now());
+        return (new Date(c.reviewDeadline)).getTime() < Date.now();
       });
     },
     invalidate: function () {
