@@ -15,7 +15,9 @@ angular
       $scope.reviewer = true;
 
       AuthService.getUserId().then(function(userId) {
-        User.reviews({id: userId, filter: {include: ['submission']}}).$promise.then(function(reviews) {
+        User.reviews({id: userId, filter: {
+          include: ['submission', { relation: 'reviewer', scope : { fields: ['fullName'] }}]
+        }}).$promise.then(function(reviews) {
           $scope.reviews = reviews.map(function(r) {
             r.expertise = ranking[(r.expertise || 0) - 1];
             r.overall = ranking[(r.overall || 0) - 1];
